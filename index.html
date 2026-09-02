@@ -871,19 +871,16 @@
             </button>
         </header>
 
-        <!-- 4 App Module Tabs -->
+        <!-- Client Navigation Tabs (Pure Customer Experience) -->
         <nav class="app-module-tabs" role="tablist">
             <button class="module-tab-btn active" onclick="switchView('TIENDA', this)" role="tab" aria-selected="true">
-                <span>🛍️ Tienda</span>
+                <span>🛍️ Tienda Fresca</span>
             </button>
             <button class="module-tab-btn" onclick="switchView('IA_NUTRI', this)" role="tab" aria-selected="false">
-                <span>🤖 Asesor IA</span>
-            </button>
-            <button class="module-tab-btn" onclick="switchView('PICKING', this)" role="tab" aria-selected="false">
-                <span>⏱️ Bodega</span>
+                <span>🤖 Asesor IA &amp; Recetas</span>
             </button>
             <button class="module-tab-btn" onclick="switchView('GPS', this)" role="tab" aria-selected="false">
-                <span>🛵 Rastreo GPS</span>
+                <span>🛵 Rastrear mi Pedido</span>
             </button>
         </nav>
 
@@ -1023,10 +1020,8 @@
             </div>
         </section>
 
-        <!-- ============================================================
-             MODULE 3: BODEGA & PICKING DASHBOARD CON CRONÓMETRO
-             ============================================================ -->
-        <section class="app-view" id="viewPicking">
+        <!-- Internal Warehouse Module moved to admin.html -->
+        <section class="app-view" id="viewPicking" style="display:none !important;">
             <div class="picking-card">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
                     <div>

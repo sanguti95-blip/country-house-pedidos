@@ -278,6 +278,45 @@
             }
         }
 
+        function resolverRutasNavegacion(rawDireccion) {
+            if (!rawDireccion) {
+                const def = encodeURIComponent('Heredia, Costa Rica');
+                return {
+                    waze: `https://waze.com/ul?q=${def}&navigate=yes`,
+                    maps: `https://www.google.com/maps/dir/?api=1&destination=${def}`,
+                    esGpsExacto: false,
+                    direccionMostrable: 'Coordinar con cliente'
+                };
+            }
+
+            // Detectar coordenadas lat,lng (ej: [GPS: 9.9982,-84.1234] o ?q=9.9982,-84.1234)
+            const match = rawDireccion.match(/(-?\d{1,2}\.\d{3,})[,\s]+(-?\d{1,3}\.\d{3,})/);
+            if (match) {
+                const lat = match[1];
+                const lng = match[2];
+                let direccionLimpia = rawDireccion.replace(/\[GPS:.*?\]/gi, '').replace(/\[Mapa:.*?\]/gi, '').trim();
+                if (!direccionLimpia) direccionLimpia = `Ubicación GPS precisa (${lat}, ${lng})`;
+                return {
+                    waze: `https://waze.com/ul?ll=${lat},${lng}&navigate=yes`,
+                    maps: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+                    esGpsExacto: true,
+                    direccionMostrable: direccionLimpia,
+                    lat,
+                    lng
+                };
+            }
+
+            // Si no tiene coordenadas numéricas, limpiar enlaces de texto
+            let direccionLimpia = rawDireccion.replace(/\[.*?\]/gi, '').trim();
+            const encoded = encodeURIComponent(direccionLimpia + ', Costa Rica');
+            return {
+                waze: `https://waze.com/ul?q=${encoded}&navigate=yes`,
+                maps: `https://www.google.com/maps/dir/?api=1&destination=${encoded}`,
+                esGpsExacto: false,
+                direccionMostrable: direccionLimpia || rawDireccion
+            };
+        }
+
         async function cargarPedidosRepartidor() {
             const container = document.getElementById('ordersDeliveryContainer');
             if (!supabaseClient) return;
@@ -302,7 +341,7 @@
                 }
 
                 container.innerHTML = data.map(ord => {
-                    const encodedAddr = encodeURIComponent((ord.direccion_entrega || 'Heredia, Costa Rica') + ', Costa Rica');
+                    const nav = resolverRutasNavegacion(ord.direccion_entrega);
                     return `
                         <div class="order-delivery-card">
                             <div class="order-card-head">
@@ -314,17 +353,20 @@
                             </div>
 
                             <div style="background:var(--bg-input); padding:0.65rem 0.85rem; border-radius:10px; font-size:0.78rem;">
-                                <div style="color:var(--text-muted);">📍 <b>Dirección:</b> ${ord.direccion_entrega || 'Coordinar con cliente'}</div>
-                                <div style="color:var(--text-dim); margin-top:2px;">💳 <b>Pago:</b> ${ord.forma_pago}</div>
-                                ${ord.notas_cliente ? `<div style="color:#fef08a; margin-top:2px;">📝 <b>Notas:</b> ${ord.notas_cliente}</div>` : ''}
+                                <div style="color:var(--text-muted); display:flex; align-items:flex-start; justify-content:space-between; gap:0.5rem;">
+                                    <div>📍 <b>Dirección:</b> ${nav.direccionMostrable}</div>
+                                    ${nav.esGpsExacto ? `<span style="background:rgba(16,185,129,0.2); color:#34d399; font-weight:800; font-size:0.68rem; padding:2px 7px; border-radius:9999px; white-space:nowrap;">📍 GPS Exacto</span>` : ''}
+                                </div>
+                                <div style="color:var(--text-dim); margin-top:3px;">💳 <b>Pago:</b> ${ord.forma_pago}</div>
+                                ${ord.notas_cliente ? `<div style="color:#fef08a; margin-top:3px;">📝 <b>Notas:</b> ${ord.notas_cliente}</div>` : ''}
                             </div>
 
                             <div style="display:flex; gap:0.4rem; margin-bottom: 0.75rem;">
-                                <a href="https://waze.com/ul?q=${encodedAddr}&navigate=yes" target="_blank" class="btn-nav-action btn-waze" style="text-decoration:none;">
-                                    🚗 Waze
+                                <a href="${nav.waze}" target="_blank" class="btn-nav-action btn-waze" style="text-decoration:none;">
+                                    🚗 Waze ${nav.esGpsExacto ? '📍' : ''}
                                 </a>
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=${encodedAddr}" target="_blank" class="btn-nav-action btn-maps" style="text-decoration:none;">
-                                    🗺️ Maps
+                                <a href="${nav.maps}" target="_blank" class="btn-nav-action btn-maps" style="text-decoration:none;">
+                                    🗺️ Maps ${nav.esGpsExacto ? '📍' : ''}
                                 </a>
                                 <a href="https://api.whatsapp.com/send?phone=${ord.telefono_contacto}&text=Hola%20${encodeURIComponent(ord.nombre_contacto)},%20soy%20el%20repartidor%20de%20Country%20House,%20voy%20en%20camino%20con%20tu%20pedido%20🛵" target="_blank" class="btn-nav-action btn-wa-client" style="text-decoration:none;">
                                     💬 Contactar

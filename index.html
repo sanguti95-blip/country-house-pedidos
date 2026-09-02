@@ -6885,6 +6885,11 @@
                     mapLinkInput.value = googleMapsUrl;
                     badge.innerText = `✓ GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
                     badge.style.color = '#34d399';
+                    
+                    const addrInput = document.getElementById('custAddressInput');
+                    if (!addrInput.value.trim() || addrInput.value.startsWith('📍 Ubicación GPS')) {
+                        addrInput.value = `📍 Ubicación GPS (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
+                    }
                     mostrarToast('📍 ¡Ubicación GPS capturada con éxito!');
                 },
                 (err) => {
@@ -6909,8 +6914,9 @@
 
         async function confirmarPedidoEnLinea() {
             const name = document.getElementById('custNameInput').value.trim();
-            const addr = document.getElementById('custAddressInput').value.trim();
+            const rawAddr = document.getElementById('custAddressInput').value.trim();
             const notes = document.getElementById('custNotesInput').value.trim();
+            const mapLink = document.getElementById('custMapLinkInput') ? document.getElementById('custMapLinkInput').value.trim() : '';
 
             if (!name) {
                 alert("Por favor ingresa tu nombre completo para el pedido.");
@@ -6918,10 +6924,18 @@
                 return;
             }
 
-            if (modalidadEntregaActual === 'DOMICILIO' && !addr) {
-                alert("Por favor ingresa tu dirección exacta de entrega en Heredia.");
-                document.getElementById('custAddressInput').focus();
-                return;
+            let addr = rawAddr;
+            if (modalidadEntregaActual === 'DOMICILIO') {
+                if (!addr && (coordenadasCliente || mapLink)) {
+                    addr = coordenadasCliente 
+                        ? `📍 Ubicación GPS (${coordenadasCliente.lat.toFixed(5)}, ${coordenadasCliente.lng.toFixed(5)})` 
+                        : '📍 Ubicación GPS compartida por enlace';
+                }
+                if (!addr) {
+                    alert("Por favor ingresa tu dirección de entrega o presiona 'Usar mi GPS Actual'.");
+                    document.getElementById('custAddressInput').focus();
+                    return;
+                }
             }
 
             const items = Object.keys(carrito).filter(k => carrito[k] > 0);
@@ -6946,10 +6960,16 @@
             const tot = sub + envio;
 
             const orderId = 'CH-' + Math.floor(100000 + Math.random() * 900000);
-            const mapLink = document.getElementById('custMapLinkInput') ? document.getElementById('custMapLinkInput').value.trim() : '';
-            const direccionCompleta = modalidadEntregaActual === 'DOMICILIO' 
-                ? (addr + (mapLink ? ` [Mapa: ${mapLink}]` : ''))
-                : 'Retiro en Tienda Country House (Punto de Venta)';
+            let direccionCompleta = 'Retiro en Tienda Country House (Punto de Venta)';
+            if (modalidadEntregaActual === 'DOMICILIO') {
+                if (coordenadasCliente) {
+                    direccionCompleta = `[GPS: ${coordenadasCliente.lat},${coordenadasCliente.lng}] ${addr}`;
+                } else if (mapLink) {
+                    direccionCompleta = `${addr} [Mapa: ${mapLink}]`;
+                } else {
+                    direccionCompleta = addr;
+                }
+            }
 
             ultimoPedidoCreado = {
                 id: orderId,

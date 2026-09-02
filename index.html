@@ -865,7 +865,13 @@
     <!-- Sticky Navigation Container -->
     <div class="sticky-nav-container">
         <header class="header-top-row">
-            <img src="data:image/png;base64," alt="Logo oficial de Country House" class="logo-img">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.5rem;">🌿</span>
+                <div>
+                    <span style="font-weight: 900; font-size: 1.05rem; letter-spacing: -0.5px; color: var(--text-white); display: block; line-height: 1.1;">COUNTRY HOUSE</span>
+                    <span style="font-size: 0.62rem; color: #34d399; font-weight: 700;">Calidad y frescura todos los días®</span>
+                </div>
+            </div>
             <button class="btn-theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" style="background:var(--bg-card); border:1px solid var(--border-subtle); color:var(--text-white); padding:0.4rem 0.8rem; border-radius:9999px; font-weight:800; cursor:pointer;">
                 ☀️ Claro
             </button>
@@ -1291,6 +1297,25 @@
     <div class="toast" id="toast">✨ ¡Agregado al pedido!</div>
 
     <script>
+        
+        // Safe Storage Helpers (Compatible with Brave Shield & iOS Private Mode)
+        function safeGet(key, defVal) {
+            try {
+                if (typeof window !== 'undefined' && window.localStorage) {
+                    const v = window.localStorage.getItem(key);
+                    return v !== null ? v : defVal;
+                }
+            } catch(e) {}
+            return defVal;
+        }
+        function safeSet(key, val) {
+            try {
+                if (typeof window !== 'undefined' && window.localStorage) {
+                    window.localStorage.setItem(key, val);
+                }
+            } catch(e) {}
+        }
+
         // Supabase Live Client Configuration
         const SUPABASE_URL = 'https://brjralkrguufpkzwnlhl.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_p61DQUM4Bg7ktnxLOo76DA_m5dzz5M1';
@@ -6597,18 +6622,18 @@
         let categoriaActual = 'TODOS';
         let metaDietActual = 'ALL';
         let terminoBusqueda = '';
-        let metodoPagoSeleccionado = localStorage.getItem('country_house_payment') || 'Sinpe Móvil';
-        let modalidadEntregaActual = localStorage.getItem('country_house_modalidad') || 'DOMICILIO';
-        let horarioSeleccionado = localStorage.getItem('country_house_horario') || '⚡ Lo antes posible (10am - 4pm)';
+        let metodoPagoSeleccionado = safeGet('country_house_payment', 'Sinpe Móvil');
+        let modalidadEntregaActual = safeGet('country_house_modalidad', 'DOMICILIO');
+        let horarioSeleccionado = safeGet('country_house_horario', '⚡ Lo antes posible (10am - 4pm)');
         const TELEFONO_WHATSAPP = '5068941610';
 
         // Favorites
-        const favoritos = new Set(JSON.parse(localStorage.getItem('country_house_favs') || '[]'));
+        const favoritos = new Set(JSON.parse(safeGet('country_house_favs', '[]')));
         function toggleFavorito(id, e) {
             if (e) e.stopPropagation();
             if (favoritos.has(id)) favoritos.delete(id);
             else favoritos.add(id);
-            localStorage.setItem('country_house_favs', JSON.stringify(Array.from(favoritos)));
+            safeSet('country_house_favs', JSON.stringify(Array.from(favoritos)));
             document.getElementById('favCountBadge').innerText = favoritos.size;
             renderizarGrid();
         }
@@ -6814,9 +6839,9 @@
         }
 
         function guardarDatosCliente() {
-            localStorage.setItem('ch_name', document.getElementById('custNameInput').value);
-            localStorage.setItem('ch_addr', document.getElementById('custAddressInput').value);
-            localStorage.setItem('ch_notes', document.getElementById('custNotesInput').value);
+            if(document.getElementById('custNameInput')) safeSet('ch_name', document.getElementById('custNameInput').value);
+            if(document.getElementById('custAddressInput')) safeSet('ch_addr', document.getElementById('custAddressInput').value);
+            if(document.getElementById('custNotesInput')) safeSet('ch_notes', document.getElementById('custNotesInput').value);
         }
 
         function onSearch() {
@@ -6833,8 +6858,6 @@
 
         
         let ultimoPedidoCreado = null;
-
-        async 
         let coordenadasCliente = null;
 
         function detectarUbicacionClienteGPS() {
@@ -7406,10 +7429,25 @@
             }
         }
 
-        // Init App & Realtime Listeners
-        renderizarGrid();
-        actualizarTotales();
-        setTimeout(iniciarRealtimePedidos, 600);
+
+        // Robust Cross-Browser Startup
+        function iniciarAplicacion() {
+            try {
+                renderizarGrid();
+                actualizarTotales();
+                setTimeout(iniciarRealtimePedidos, 600);
+            } catch(err) {
+                console.error('Init error:', err);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', iniciarAplicacion);
+        } else {
+            iniciarAplicacion();
+        }
+        window.addEventListener('load', iniciarAplicacion);
+
     </script>
 
     <!-- Order Success Modal -->

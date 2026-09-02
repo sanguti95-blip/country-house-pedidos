@@ -1174,7 +1174,7 @@
     <!-- Floating Bottom Bar (In Tienda) -->
     <div class="floating-cart-bar" id="floatingCartBar">
         <div>
-            <div style="font-size: 0.68rem; color: var(--text-dim); font-weight: 700;">TOTAL ESTIMADO (-10%)</div>
+            <div style="font-size: 0.68rem; color: var(--text-dim); font-weight: 700;">TOTAL ESTIMADO</div>
             <div style="font-size: 1.3rem; font-weight: 900;" id="barTotalNum">₡0.00</div>
         </div>
         <button class="btn-view-order" onclick="abrirPedido()">
@@ -1197,8 +1197,7 @@
 
         <div style="max-width: 600px; width: 100%; margin: 0 auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem;">
             <!-- Savings & Macros -->
-            <div style="background: var(--bg-card); border: 1px solid var(--bg-card-border); border-radius: 14px; padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center;">
-                <span style="background: rgba(14, 117, 74, 0.2); color: #34d399; font-size: 0.76rem; font-weight: 800; padding: 4px 10px; border-radius: 9999px;" id="savingsAmountText">🎉 Ahorras ₡0.00</span>
+            <div style="background: var(--bg-card); border: 1px solid var(--bg-card-border); border-radius: 14px; padding: 0.85rem 1rem; display: flex; justify-content: center; align-items: center;">
                 <span style="font-size: 0.74rem; color: var(--text-muted); font-weight: 700;">⚡ <b style="color: #d97706;" id="cartTotalCal">0 kcal</b> • 💪 <span id="cartTotalProt">0g</span> prot</span>
             </div>
 
@@ -1277,7 +1276,6 @@
             <section class="order-section-card">
                 <div class="summary-receipt">
                     <div class="summary-row"><span>Subtotal Catálogo</span><span id="sheetSubtotal">₡0.00</span></div>
-                    <div class="summary-row" style="color: #34d399; font-weight: 800;"><span>Descuento Especial (10%)</span><span id="sheetDiscount">-₡0.00</span></div>
                     <div class="summary-row"><span id="deliverySummaryLabel">🚚 Envío (10am - 4pm)</span><span id="deliverySummaryValue">₡1.000,00</span></div>
                     <div class="summary-total"><span>Total a Pagar</span><span id="sheetTotal" style="color: #34d399;">₡0.00</span></div>
                 </div>
@@ -6626,7 +6624,6 @@
         let modalidadEntregaActual = safeGet('country_house_modalidad', 'DOMICILIO');
         let horarioSeleccionado = safeGet('country_house_horario', '⚡ Lo antes posible (10am - 4pm)');
         const TELEFONO_WHATSAPP = '5068941610';
-        const DESCUENTO_PORCENTAJE = 0.10;
         const COSTO_ENVIO_DOMICILIO = 1000;
 
         // Favorites
@@ -6797,18 +6794,15 @@
             });
 
             const costoEnvio = (items.length > 0 && modalidadEntregaActual === 'DOMICILIO') ? 1000 : 0;
-            const disc = subtotal * 0.10;
-            const total = (subtotal > 0) ? (subtotal - disc + costoEnvio) : 0;
+            const total = (subtotal > 0) ? (subtotal + costoEnvio) : 0;
 
             document.getElementById('barTotalNum').innerText = formatearDinero(total);
             document.getElementById('barCountBadge').innerText = totalItems;
             document.getElementById('orderPageCountBadge').innerText = totalItems;
-            document.getElementById('savingsAmountText').innerText = '🎉 Ahorras ' + formatearDinero(disc);
             document.getElementById('cartTotalCal').innerText = Math.round(totalCal) + ' kcal';
             document.getElementById('cartTotalProt').innerText = Math.round(totalProt) + 'g';
 
             document.getElementById('sheetSubtotal').innerText = formatearDinero(subtotal);
-            document.getElementById('sheetDiscount').innerText = '-' + formatearDinero(disc);
             document.getElementById('sheetTotal').innerText = formatearDinero(total);
 
             const delVal = document.getElementById('deliverySummaryValue');
@@ -6940,9 +6934,8 @@
                 }
             });
 
-            const disc = Math.round(sub * DESCUENTO_PORCENTAJE);
             const envio = modalidadEntregaActual === 'DOMICILIO' ? COSTO_ENVIO_DOMICILIO : 0;
-            const tot = sub - disc + envio;
+            const tot = sub + envio;
 
             const orderId = 'CH-' + Math.floor(100000 + Math.random() * 900000);
             const mapLink = document.getElementById('custMapLinkInput') ? document.getElementById('custMapLinkInput').value.trim() : '';
@@ -6960,7 +6953,7 @@
                 notas_cliente: notes,
                 forma_pago: metodoPagoSeleccionado,
                 subtotal: sub,
-                descuento_especial: disc,
+                descuento_especial: 0,
                 costo_envio: envio,
                 total_a_pagar: tot,
                 total_calorias: cal,
@@ -7030,10 +7023,9 @@
                     msg += `• *${qty}x* ${p.nombre} -> ${formatearDinero(qty * p.precio)}\n`;
                 }
             });
-            const disc = sub * 0.10;
             const envio = (modalidadEntregaActual === 'DOMICILIO') ? 1000 : 0;
-            const tot = sub - disc + envio;
-            msg += `\n💰 *Subtotal:* ${formatearDinero(sub)}\n✨ *Descuento (10%):* -${formatearDinero(disc)}\n🚚 *Envío:* ${formatearDinero(envio)}\n🔥 *TOTAL:* *${formatearDinero(tot)}*`;
+            const tot = sub + envio;
+            msg += `\n💰 *Subtotal:* ${formatearDinero(sub)}\n🚚 *Envío:* ${formatearDinero(envio)}\n🔥 *TOTAL:* *${formatearDinero(tot)}*`;
 
             const url = "https://api.whatsapp.com/send?phone=" + TELEFONO_WHATSAPP + "&text=" + encodeURIComponent(msg);
             
@@ -7049,7 +7041,7 @@
                     direccion_entrega: addr,
                     forma_pago: metodoPagoSeleccionado,
                     subtotal: sub,
-                    descuento_especial: disc,
+                    descuento_especial: 0,
                     costo_envio: envio,
                     total_a_pagar: tot,
                     estado: 'PENDIENTE'

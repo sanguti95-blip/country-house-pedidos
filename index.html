@@ -6812,6 +6812,111 @@
             document.getElementById('themeToggleBtn').innerText = (next === 'dark') ? '☀️ Claro' : '🌙 Oscuro';
         }
 
+        
+        let ultimoPedidoCreado = null;
+
+        async function confirmarPedidoEnLinea() {
+            const name = document.getElementById('custNameInput').value.trim();
+            const addr = document.getElementById('custAddressInput').value.trim();
+            const notes = document.getElementById('custNotesInput').value.trim();
+
+            if (!name) {
+                alert("Por favor ingresa tu nombre completo para el pedido.");
+                document.getElementById('custNameInput').focus();
+                return;
+            }
+
+            if (modalidadEntregaActual === 'DOMICILIO' && !addr) {
+                alert("Por favor ingresa tu dirección exacta de entrega en Heredia.");
+                document.getElementById('custAddressInput').focus();
+                return;
+            }
+
+            const items = Object.keys(carrito).filter(k => carrito[k] > 0);
+            if (items.length === 0) {
+                alert("Tu canasta está vacía. Selecciona productos antes de confirmar.");
+                return;
+            }
+
+            let sub = 0;
+            let cal = 0;
+            let prot = 0;
+            items.forEach(id => {
+                const p = productos.find(x => x.id === id);
+                if (p) {
+                    sub += p.precio * carrito[id];
+                    cal += (p.nutri ? p.nutri.cal : 0) * carrito[id];
+                    prot += (p.nutri ? p.nutri.prot : 0) * carrito[id];
+                }
+            });
+
+            const disc = Math.round(sub * DESCUENTO_PORCENTAJE);
+            const envio = modalidadEntregaActual === 'DOMICILIO' ? COSTO_ENVIO_DOMICILIO : 0;
+            const tot = sub - disc + envio;
+
+            const orderId = 'CH-' + Math.floor(100000 + Math.random() * 900000);
+
+            ultimoPedidoCreado = {
+                id: orderId,
+                nombre_contacto: name,
+                telefono_contacto: TELEFONO_WHATSAPP,
+                modalidad: modalidadEntregaActual,
+                horario_rango: horarioSeleccionado,
+                direccion_entrega: modalidadEntregaActual === 'DOMICILIO' ? addr : 'Retiro en Tienda Country House (Punto de Venta)',
+                notas_cliente: notes,
+                forma_pago: metodoPagoSeleccionado,
+                subtotal: sub,
+                descuento_especial: disc,
+                costo_envio: envio,
+                total_a_pagar: tot,
+                total_calorias: cal,
+                total_proteinas: prot,
+                estado: 'PENDIENTE'
+            };
+
+            // Save to Supabase Cloud Database in Realtime
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient.from('pedidos').insert([ultimoPedidoCreado]);
+                    if (error) console.warn('Supabase insert note:', error.message);
+                    else console.log('✅ Pedido insertado en Supabase Cloud con éxito');
+                } catch(e) { console.warn(e); }
+            }
+
+            // Show Success Modal
+            document.getElementById('successModalOrderId').innerText = '#' + orderId;
+            document.getElementById('successModalTotal').innerText = formatearDinero(tot);
+            document.getElementById('successModalMode').innerText = modalidadEntregaActual === 'DOMICILIO' ? '🛵 A Domicilio' : '🏬 Recoger en Tienda';
+            document.getElementById('orderSuccessModal').style.display = 'flex';
+
+            // Clear Cart
+            carrito = {};
+            guardarCarritoLocal();
+            renderizarGrid();
+            actualizarTotales();
+            cerrarPedido();
+        }
+
+        function verRastreoDesdeExito() {
+            document.getElementById('orderSuccessModal').style.display = 'none';
+            switchView('GPS', document.querySelectorAll('.module-tab-btn')[3]);
+        }
+
+        function cerrarModalExito() {
+            document.getElementById('orderSuccessModal').style.display = 'none';
+        }
+
+        function enviarCopiaWhatsAppOpcional() {
+            if (!ultimoPedidoCreado) return;
+            const msg = `🌿 *COUNTRY HOUSE* - Respaldo de Pedido Oficial\n` +
+                        `📋 Orden: #${ultimoPedidoCreado.id}\n` +
+                        `👤 Cliente: ${ultimoPedidoCreado.nombre_contacto}\n` +
+                        `🛵 Modalidad: ${ultimoPedidoCreado.modalidad}\n` +
+                        `⏰ Horario: ${ultimoPedidoCreado.horario_rango}\n` +
+                        `💵 Total: ${formatearDinero(ultimoPedidoCreado.total_a_pagar)}`;
+            window.open("https://api.whatsapp.com/send?phone=" + TELEFONO_WHATSAPP + "&text=" + encodeURIComponent(msg), '_blank');
+        }
+
         function enviarPorWhatsApp() {
             const items = Object.keys(carrito);
             if (items.length === 0) return alert('Tu lista está vacía');
@@ -7237,5 +7342,43 @@
         actualizarTotales();
         setTimeout(iniciarRealtimePedidos, 600);
     </script>
+
+    <!-- Order Success Modal -->
+    <div class="modal-overlay" id="orderSuccessModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 3000; display: none; align-items: center; justify-content: center; padding: 1rem;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; max-width: 480px; width: 100%; padding: 1.5rem; text-align: center; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
+            <div style="font-size: 3rem;">🎉</div>
+            <h2 style="font-size: 1.3rem; font-weight: 900; color: #34d399;">¡Pedido Confirmado con Éxito!</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Hemos recibido tu orden y ya está en la pantalla de nuestro equipo de alisto y repartidores.
+            </p>
+            <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.85rem; font-size: 0.82rem; text-align: left;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="color: var(--text-dim);">Número de Orden:</span>
+                    <b id="successModalOrderId" style="color: #60a5fa;">#CH-1049</b>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="color: var(--text-dim);">Total a Pagar:</span>
+                    <b id="successModalTotal" style="color: #34d399;">₡0.00</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-dim);">Modalidad:</span>
+                    <b id="successModalMode" style="color: var(--text-white);">A Domicilio</b>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                <button onclick="verRastreoDesdeExito()" style="width: 100%; height: 46px; background: linear-gradient(135deg, #3b82f6, #2563eb); border: none; border-radius: 9999px; color: #fff; font-weight: 800; font-size: 0.9rem; cursor: pointer;">
+                    🛵 Rastrear mi Pedido en Tiempo Real
+                </button>
+                <button onclick="enviarCopiaWhatsAppOpcional()" style="width: 100%; height: 42px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 9999px; color: #25D366; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+                    💬 Enviar Copia de Respaldo a mi WhatsApp
+                </button>
+                <button onclick="cerrarModalExito()" style="background: none; border: none; color: var(--text-dim); font-size: 0.78rem; cursor: pointer; padding: 0.3rem;">
+                    Seguir Navegando
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

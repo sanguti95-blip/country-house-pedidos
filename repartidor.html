@@ -19,9 +19,10 @@
             --brand-green: #0e754a;
             --brand-green-light: #18b775;
             --brand-whatsapp: #25D366;
-            --bg-main: #090e17;
-            --bg-surface: #111a2e;
-            --bg-input: #060a12;
+            --bg-main: #070c14;
+            --bg-surface: #0e1726;
+            --bg-card: #131f33;
+            --bg-input: #080d17;
             --border-subtle: #1e2c47;
             --text-white: #ffffff;
             --text-muted: #94a3b8;
@@ -49,7 +50,7 @@
             z-index: 100;
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border-subtle);
-            padding: 0.75rem 1rem;
+            padding: 0.85rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -82,7 +83,7 @@
         }
 
         .driver-gps-box {
-            background: var(--bg-surface);
+            background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 1rem;
@@ -115,20 +116,21 @@
 
         .map-wrapper {
             width: 100%;
-            height: 260px;
+            height: 250px;
             border-radius: 12px;
             border: 1px solid var(--border-subtle);
             overflow: hidden;
         }
 
         .order-delivery-card {
-            background: var(--bg-surface);
+            background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 1.1rem;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .order-card-head {
@@ -156,7 +158,7 @@
         .btn-waze { background: #33ccff; color: #000; }
         .btn-maps { background: #4285f4; color: #fff; }
         .btn-wa-client { background: #25D366; color: #fff; }
-        .btn-delivered { background: #059669; color: #fff; width: 100%; height: 48px; }
+        .btn-delivered { background: #059669; color: #fff; width: 100%; height: 48px; border: none; border-radius: 9999px; font-weight: 800; font-size: 0.92rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -170,7 +172,7 @@
     </header>
 
     <main class="driver-container">
-        <!-- GPS Control Box -->
+        <!-- GPS Transmitter -->
         <section class="driver-gps-box">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span style="font-size: 0.84rem; font-weight: 800;">📡 Transmisor GPS en Vivo</span>
@@ -184,15 +186,15 @@
             <div id="driverMap" class="map-wrapper"></div>
         </section>
 
-        <!-- Active Deliveries Section -->
+        <!-- Active Deliveries -->
         <section>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
-                <h2 style="font-size: 0.95rem; font-weight: 900;">📦 Pedidos para Entrega</h2>
+                <h2 style="font-size: 0.95rem; font-weight: 900;">📦 Pedidos Asignados para Entrega</h2>
                 <button onclick="cargarPedidosRepartidor()" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 9999px; cursor: pointer;">🔄 Actualizar</button>
             </div>
 
             <div id="ordersDeliveryContainer" style="display: flex; flex-direction: column; gap: 0.9rem;">
-                <!-- Active delivery orders loaded dynamically -->
+                <!-- Loaded from Supabase -->
             </div>
         </section>
     </main>
@@ -285,15 +287,15 @@
                     .from('pedidos')
                     .select('*')
                     .eq('modalidad', 'DOMICILIO')
-                    .order('creado_en', { ascending: false })
-                    .limit(5);
+                    .neq('estado', 'ENTREGADO')
+                    .order('creado_en', { ascending: false });
 
                 if (!data || data.length === 0) {
                     container.innerHTML = `
-                        <div style="background:var(--bg-surface); padding:2rem 1rem; text-align:center; border-radius:14px; color:var(--text-dim);">
+                        <div style="background:var(--bg-card); padding:2rem 1rem; text-align:center; border-radius:14px; color:var(--text-dim); border:1px solid var(--border-subtle);">
                             <p style="font-size:2rem;">🎉</p>
                             <p style="font-weight:800; color:var(--text-white); margin-top:0.4rem;">No hay entregas pendientes</p>
-                            <p style="font-size:0.75rem; margin-top:2px;">Te notificaremos cuando bodega empaque un nuevo pedido.</p>
+                            <p style="font-size:0.75rem; margin-top:2px;">Te notificaremos cuando el panel asigne una nueva entrega.</p>
                         </div>
                     `;
                     return;
@@ -325,7 +327,7 @@
                                     🗺️ Maps
                                 </a>
                                 <a href="https://api.whatsapp.com/send?phone=${ord.telefono_contacto}&text=Hola%20${encodeURIComponent(ord.nombre_contacto)},%20soy%20el%20repartidor%20de%20Country%20House,%20voy%20en%20camino%20con%20tu%20pedido%20🛵" target="_blank" class="btn-nav-action btn-wa-client" style="text-decoration:none;">
-                                    💬 WhatsApp
+                                    💬 Contactar
                                 </a>
                             </div>
 
@@ -349,8 +351,19 @@
             cargarPedidosRepartidor();
         }
 
+        function iniciarRealtimeRepartidor() {
+            if (!supabaseClient) return;
+            supabaseClient
+                .channel('repartidor:pedidos')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, payload => {
+                    cargarPedidosRepartidor();
+                })
+                .subscribe();
+        }
+
         initMap();
         cargarPedidosRepartidor();
+        iniciarRealtimeRepartidor();
     </script>
 </body>
 </html>

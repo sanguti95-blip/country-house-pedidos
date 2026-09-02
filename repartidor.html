@@ -342,14 +342,44 @@
 
                 container.innerHTML = data.map(ord => {
                     const nav = resolverRutasNavegacion(ord.direccion_entrega);
+                    const statusBadge = ord.estado === 'EN_ALISTO' 
+                        ? `<span style="background:rgba(139,92,246,0.25); color:#c084fc; font-weight:800; font-size:0.72rem; padding:3px 8px; border-radius:6px;">📦 En Alisto</span>`
+                        : (ord.estado === 'EN_RUTA' 
+                            ? `<span style="background:rgba(249,115,22,0.25); color:#fb923c; font-weight:800; font-size:0.72rem; padding:3px 8px; border-radius:6px;">🛵 En Ruta</span>`
+                            : `<span style="background:rgba(245,158,11,0.25); color:#f59e0b; font-weight:800; font-size:0.72rem; padding:3px 8px; border-radius:6px;">🟡 Pendiente</span>`);
+
+                    let actionButtonHtml = '';
+                    if (ord.estado === 'PENDIENTE') {
+                        actionButtonHtml = `
+                            <button class="btn-delivered" style="background:#8b5cf6;" onclick="cambiarEstadoRepartidor('${ord.id}', 'EN_ALISTO')">
+                                ⏱️ Iniciar Alisto en Bodega
+                            </button>
+                        `;
+                    } else if (ord.estado === 'EN_ALISTO' || ord.estado === 'EMPACADO') {
+                        actionButtonHtml = `
+                            <button class="btn-delivered" style="background:#f97316;" onclick="cambiarEstadoRepartidor('${ord.id}', 'EN_RUTA')">
+                                🛵 Salir En Ruta hacia el Cliente
+                            </button>
+                        `;
+                    } else {
+                        actionButtonHtml = `
+                            <button class="btn-delivered" onclick="marcarEntregado('${ord.id}')">
+                                ✓ Confirmar Pedido Entregado
+                            </button>
+                        `;
+                    }
+
                     return `
                         <div class="order-delivery-card">
                             <div class="order-card-head">
                                 <div>
                                     <div style="font-size:0.95rem; font-weight:900;">#${ord.id} • ${ord.nombre_contacto}</div>
-                                    <div style="font-size:0.72rem; color:#f59e0b; font-weight:700;">⏰ Horario: ${ord.horario_rango}</div>
+                                    <div style="font-size:0.72rem; color:#f59e0b; font-weight:700; margin-top:2px;">⏰ Horario: ${ord.horario_rango}</div>
                                 </div>
-                                <span style="font-weight:900; color:#34d399; font-size:1.05rem;">₡${Number(ord.total_a_pagar).toLocaleString('es-CR')}</span>
+                                <div style="text-align:right;">
+                                    <div style="font-weight:900; color:#34d399; font-size:1.05rem;">₡${Number(ord.total_a_pagar).toLocaleString('es-CR')}</div>
+                                    <div style="margin-top:3px;">${statusBadge}</div>
+                                </div>
                             </div>
 
                             <div style="background:var(--bg-input); padding:0.65rem 0.85rem; border-radius:10px; font-size:0.78rem;">
@@ -387,9 +417,7 @@
                                 </div>
                             ` : ''}
 
-                            <button class="btn-delivered" onclick="marcarEntregado('${ord.id}')">
-                                ✓ Confirmar Pedido Entregado
-                            </button>
+                            ${actionButtonHtml}
                         </div>
                     `;
                 }).join('');
@@ -398,12 +426,20 @@
             }
         }
 
+        async function cambiarEstadoRepartidor(orderId, nuevoEstado) {
+            if (!supabaseClient) return;
+            try {
+                const { error } = await supabaseClient.from('pedidos').update({ estado: nuevoEstado }).eq('id', orderId);
+                if (error) console.error('Error actualizando estado:', error);
+                cargarPedidosRepartidor();
+            } catch(e) { console.warn(e); }
+        }
+
         async function marcarEntregado(orderId) {
             if (!supabaseClient) return;
             if (!confirm(`¿Confirmas que el pedido #${orderId} fue entregado exitosamente?`)) return;
             try {
                 await supabaseClient.from('pedidos').update({ estado: 'ENTREGADO' }).eq('id', orderId);
-                // Also update local ui
                 alert(`✅ ¡Pedido #${orderId} marcado como entregado!`);
                 cargarPedidosRepartidor();
             } catch(e) { console.warn(e); }

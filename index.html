@@ -1107,10 +1107,48 @@
             <div class="gps-status-card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
                     <div>
-                        <h2 style="font-size: 1.1rem; font-weight: 900;">🛵 Rastreo GPS en Tiempo Real</h2>
-                        <p style="font-size: 0.72rem; color: var(--text-muted);">Pedido #PED-1048 • En camino a tu domicilio</p>
+                        <h2 style="font-size: 1.1rem; font-weight: 900;">🛵 Rastreo en Tiempo Real</h2>
+                        <p style="font-size: 0.72rem; color: var(--text-muted);" id="trackerSubtitleText">Seguimiento en vivo desde bodega hasta tu puerta</p>
                     </div>
-                    <span style="background: rgba(37, 211, 102, 0.2); color: #25D366; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 9999px;">● GPS Activo</span>
+                    <span style="background: rgba(37, 211, 102, 0.2); color: #25D366; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 9999px;">● En Vivo</span>
+                </div>
+
+                <!-- Dynamic Order Status Stepper -->
+                <div class="order-status-timeline" id="clientOrderStatusTimeline" style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 0.9rem; margin-bottom: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span id="trackerOrderIdBadge" style="font-size: 0.78rem; font-weight: 900; color: #60a5fa; background: rgba(96, 165, 250, 0.15); padding: 3px 8px; border-radius: 6px;">#CH-ACTUAL</span>
+                            <span id="trackerOrderStatusBadge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; background: rgba(59, 130, 246, 0.2); color: #60a5fa;">📝 Pedido Recibido</span>
+                        </div>
+                        <span style="font-size: 0.68rem; color: #34d399; font-weight: 800; display: flex; align-items: center; gap: 5px;">
+                            <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #34d399;"></span>
+                            Tiempo Real
+                        </span>
+                    </div>
+
+                    <!-- Steps Bar -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem;">
+                        <div id="stepRecibido" style="text-align: center; transition: all 0.3s;">
+                            <div class="step-icon" style="width: 32px; height: 32px; border-radius: 50%; background: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px; font-size: 0.9rem; font-weight: 900; border: 2px solid #3b82f6;">📝</div>
+                            <div style="font-size: 0.66rem; font-weight: 800; color: #fff;">1. Recibido</div>
+                        </div>
+                        <div id="stepAlisto" style="text-align: center; opacity: 0.35; transition: all 0.3s;">
+                            <div class="step-icon" style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-card); color: var(--text-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 4px; font-size: 0.9rem; border: 2px solid var(--border-subtle);">📦</div>
+                            <div style="font-size: 0.66rem; font-weight: 600; color: var(--text-dim);">2. En Alisto</div>
+                        </div>
+                        <div id="stepRuta" style="text-align: center; opacity: 0.35; transition: all 0.3s;">
+                            <div class="step-icon" style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-card); color: var(--text-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 4px; font-size: 0.9rem; border: 2px solid var(--border-subtle);">🛵</div>
+                            <div style="font-size: 0.66rem; font-weight: 600; color: var(--text-dim);">3. En Ruta</div>
+                        </div>
+                        <div id="stepEntregado" style="text-align: center; opacity: 0.35; transition: all 0.3s;">
+                            <div class="step-icon" style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-card); color: var(--text-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 4px; font-size: 0.9rem; border: 2px solid var(--border-subtle);">🎉</div>
+                            <div style="font-size: 0.66rem; font-weight: 600; color: var(--text-dim);">4. Entregado</div>
+                        </div>
+                    </div>
+
+                    <div id="trackerStatusDescription" style="margin-top: 0.75rem; background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 8px; font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.4;">
+                        🕒 Tu orden ha sido confirmada. El equipo de bodega iniciará el alisto en breve.
+                    </div>
                 </div>
 
                 <!-- Leaflet Interactive Map -->
@@ -6671,6 +6709,10 @@
                 searchRow.style.display = 'none';
                 cartBar.style.display = 'none';
                 setTimeout(initMap, 200);
+                if (typeof renderClientChecklist === 'function') renderClientChecklist();
+                if (typeof actualizarEstadoRastreoCliente === 'function') {
+                    actualizarEstadoRastreoCliente(ultimoPedidoCreado ? ultimoPedidoCreado.estado : 'PENDIENTE');
+                }
             }
         }
 
@@ -6862,6 +6904,10 @@
 
         
         let ultimoPedidoCreado = null;
+        try {
+            const guardado = safeGet('ch_ultimo_pedido', null);
+            if (guardado) ultimoPedidoCreado = JSON.parse(guardado);
+        } catch(e) {}
         let coordenadasCliente = null;
 
         function detectarUbicacionClienteGPS() {
@@ -6988,6 +7034,7 @@
                 total_proteinas: prot,
                 estado: 'PENDIENTE'
             };
+            safeSet('ch_ultimo_pedido', JSON.stringify(ultimoPedidoCreado));
 
             // Save to Supabase Cloud Database in Realtime
             if (supabaseClient) {
@@ -7030,7 +7077,97 @@
             cerrarPedido();
             const gpsTab = document.querySelectorAll('.module-tab-btn')[2];
             if (gpsTab) switchView('GPS', gpsTab);
+            actualizarEstadoRastreoCliente(ultimoPedidoCreado ? ultimoPedidoCreado.estado : 'PENDIENTE');
             renderClientChecklist();
+        }
+
+        function actualizarEstadoRastreoCliente(estado) {
+            const st = (estado || 'PENDIENTE').toUpperCase();
+            const sRecibido = document.getElementById('stepRecibido');
+            const sAlisto = document.getElementById('stepAlisto');
+            const sRuta = document.getElementById('stepRuta');
+            const sEntregado = document.getElementById('stepEntregado');
+            const badge = document.getElementById('trackerOrderStatusBadge');
+            const desc = document.getElementById('trackerStatusDescription');
+            const orderBadge = document.getElementById('trackerOrderIdBadge');
+
+            if (ultimoPedidoCreado && orderBadge) {
+                orderBadge.innerText = '#' + ultimoPedidoCreado.id;
+            }
+
+            function setStepActive(el, active, icon, bgColor) {
+                if (!el) return;
+                el.style.opacity = active ? '1' : '0.35';
+                const ic = el.querySelector('.step-icon');
+                if (ic) {
+                    ic.style.background = active ? bgColor : 'var(--bg-card)';
+                    ic.style.borderColor = active ? bgColor : 'var(--border-subtle)';
+                    ic.style.color = active ? '#fff' : 'var(--text-dim)';
+                    if (icon) ic.innerText = icon;
+                }
+                const label = el.querySelector('div:last-child');
+                if (label) {
+                    label.style.color = active ? '#fff' : 'var(--text-dim)';
+                    label.style.fontWeight = active ? '800' : '600';
+                }
+            }
+
+            if (st === 'PENDIENTE') {
+                setStepActive(sRecibido, true, '📝', '#3b82f6');
+                setStepActive(sAlisto, false, '📦');
+                setStepActive(sRuta, false, '🛵');
+                setStepActive(sEntregado, false, '🎉');
+                if (badge) {
+                    badge.style.background = 'rgba(59, 130, 246, 0.2)';
+                    badge.style.color = '#60a5fa';
+                    badge.innerText = '📝 Pedido Confirmado';
+                }
+                if (desc) desc.innerHTML = '🕒 Hemos recibido tu orden. El equipo de bodega iniciará el alisto pronto.';
+            } else if (st === 'EN_ALISTO') {
+                setStepActive(sRecibido, true, '✓', '#10b981');
+                setStepActive(sAlisto, true, '📦', '#8b5cf6');
+                setStepActive(sRuta, false, '🛵');
+                setStepActive(sEntregado, false, '🎉');
+                if (badge) {
+                    badge.style.background = 'rgba(139, 92, 246, 0.25)';
+                    badge.style.color = '#c084fc';
+                    badge.innerText = '📦 En Alisto en Bodega';
+                }
+                if (desc) desc.innerHTML = '⚡ <b>¡Tu orden se está alistando!</b> El personal de bodega está empacando tus productos frescos.';
+            } else if (st === 'EMPACADO') {
+                setStepActive(sRecibido, true, '✓', '#10b981');
+                setStepActive(sAlisto, true, '✓', '#10b981');
+                setStepActive(sRuta, false, '🛵');
+                setStepActive(sEntregado, false, '🎉');
+                if (badge) {
+                    badge.style.background = 'rgba(16, 185, 129, 0.2)';
+                    badge.style.color = '#34d399';
+                    badge.innerText = '✅ Empacado y Listo';
+                }
+                if (desc) desc.innerHTML = '📦 Tu paquete está empacado e inspeccionado, esperando salida.';
+            } else if (st === 'EN_RUTA') {
+                setStepActive(sRecibido, true, '✓', '#10b981');
+                setStepActive(sAlisto, true, '✓', '#10b981');
+                setStepActive(sRuta, true, '🛵', '#f97316');
+                setStepActive(sEntregado, false, '🎉');
+                if (badge) {
+                    badge.style.background = 'rgba(249, 115, 22, 0.25)';
+                    badge.style.color = '#fb923c';
+                    badge.innerText = '🛵 ¡En Ruta hacia tu Domicilio!';
+                }
+                if (desc) desc.innerHTML = '🛵 <b>¡El repartidor va en camino!</b> Tu entrega va hacia tu ubicación.';
+            } else if (st === 'ENTREGADO') {
+                setStepActive(sRecibido, true, '✓', '#10b981');
+                setStepActive(sAlisto, true, '✓', '#10b981');
+                setStepActive(sRuta, true, '✓', '#10b981');
+                setStepActive(sEntregado, true, '🎉', '#10b981');
+                if (badge) {
+                    badge.style.background = 'rgba(16, 185, 129, 0.25)';
+                    badge.style.color = '#34d399';
+                    badge.innerText = '🎉 ¡Pedido Entregado!';
+                }
+                if (desc) desc.innerHTML = '✨ <b>¡Tu pedido fue entregado con éxito!</b> Muchas gracias por comprar en Country House.';
+            }
         }
 
         async function renderClientChecklist() {
@@ -7368,6 +7505,15 @@
                         reproducirCampanaNuevoPedido();
                         mostrarToast('🔔 ¡Nuevo pedido entrante: ' + payload.new.nombre_contacto + '!');
                         cargarPedidosSupabase();
+                    })
+                    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'pedidos' }, payload => {
+                        if (ultimoPedidoCreado && payload.new.id === ultimoPedidoCreado.id) {
+                            console.log('🔄 Estado de tu pedido actualizado en tiempo real:', payload.new.estado);
+                            ultimoPedidoCreado.estado = payload.new.estado;
+                            safeSet('ch_ultimo_pedido', JSON.stringify(ultimoPedidoCreado));
+                            actualizarEstadoRastreoCliente(payload.new.estado);
+                            mostrarToast('📦 Estado de tu pedido: ' + payload.new.estado);
+                        }
                     })
                     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'detalles_pedido' }, payload => {
                         if (ultimoPedidoCreado && payload.new.pedido_id === ultimoPedidoCreado.id) {

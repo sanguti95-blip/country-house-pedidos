@@ -541,13 +541,28 @@
                                 }">${ord.estado}</span>
                             </td>
                             <td>
-                                <select onchange="actualizarEstadoPedido('${ord.id}', this.value)" style="background:var(--bg-input); border:1px solid var(--border-subtle); color:#fff; padding:4px 8px; border-radius:6px; font-size:0.72rem; outline:none;">
-                                    <option value="PENDIENTE" ${ord.estado === 'PENDIENTE' ? 'selected' : ''}>🟡 Pendiente</option>
-                                    <option value="EN_ALISTO" ${ord.estado === 'EN_ALISTO' ? 'selected' : ''}>🟣 En Alisto</option>
-                                    <option value="EMPACADO" ${ord.estado === 'EMPACADO' ? 'selected' : ''}>🔵 Empacado</option>
-                                    <option value="EN_RUTA" ${ord.estado === 'EN_RUTA' ? 'selected' : ''}>🟠 En Ruta (Repartidor)</option>
-                                    <option value="ENTREGADO" ${ord.estado === 'ENTREGADO' ? 'selected' : ''}>🟢 Entregado</option>
-                                </select>
+                                <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+                                    ${ord.estado === 'PENDIENTE' ? `
+                                        <button onclick="actualizarEstadoPedido('${ord.id}', 'EN_ALISTO')" style="background:#8b5cf6; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px;">
+                                            ⏱️ Iniciar Alisto
+                                        </button>
+                                    ` : (ord.estado === 'EN_ALISTO' || ord.estado === 'EMPACADO') ? `
+                                        <button onclick="actualizarEstadoPedido('${ord.id}', 'EN_RUTA')" style="background:#f97316; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px;">
+                                            🛵 Despachar (En Ruta)
+                                        </button>
+                                    ` : ord.estado === 'EN_RUTA' ? `
+                                        <button onclick="actualizarEstadoPedido('${ord.id}', 'ENTREGADO')" style="background:#10b981; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px;">
+                                            ✅ Entregado
+                                        </button>
+                                    ` : ''}
+                                    <select onchange="actualizarEstadoPedido('${ord.id}', this.value)" style="background:var(--bg-input); border:1px solid var(--border-subtle); color:#fff; padding:4px 6px; border-radius:6px; font-size:0.72rem; outline:none;">
+                                        <option value="PENDIENTE" ${ord.estado === 'PENDIENTE' ? 'selected' : ''}>🟡 Pendiente</option>
+                                        <option value="EN_ALISTO" ${ord.estado === 'EN_ALISTO' ? 'selected' : ''}>🟣 En Alisto</option>
+                                        <option value="EMPACADO" ${ord.estado === 'EMPACADO' ? 'selected' : ''}>🔵 Empacado</option>
+                                        <option value="EN_RUTA" ${ord.estado === 'EN_RUTA' ? 'selected' : ''}>🟠 En Ruta</option>
+                                        <option value="ENTREGADO" ${ord.estado === 'ENTREGADO' ? 'selected' : ''}>🟢 Entregado</option>
+                                    </select>
+                                </div>
                             </td>
                         </tr>
                     `).join('');

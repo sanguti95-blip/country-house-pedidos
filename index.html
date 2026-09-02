@@ -1052,6 +1052,17 @@
                     </div>
                 </div>
 
+                <!-- Live Incoming Orders Queue from Supabase -->
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-white);">🔔 Pedidos Entrantes en Tiempo Real (Supabase)</span>
+                        <button onclick="cargarPedidosSupabase()" style="background: var(--bg-input); border: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 9999px; cursor: pointer;">🔄 Refrescar</button>
+                    </div>
+                    <div id="liveOrdersQueueList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <!-- Live orders will be rendered here -->
+                    </div>
+                </div>
+
                 <!-- Active Order for Picking -->
                 <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1120,12 +1131,23 @@
                     </div>
                 </div>
 
-                <!-- Driver Simulation Controls -->
-                <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
-                    <button onclick="simularMovimientoRepartidor()" style="flex: 1; height: 42px; background: #2563eb; color: #fff; border: none; border-radius: 9999px; font-weight: 800; font-size: 0.8rem; cursor: pointer;">
-                        🛵 Simular Avance GPS
+                <!-- Driver Mode Switch & Live GPS Broadcast -->
+                <div style="margin-top: 0.85rem; padding: 0.85rem; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-white);">📡 Modo Repartidor en Vivo (GPS Real)</span>
+                        <span id="gpsLiveBroadcastStatus" style="font-size: 0.68rem; color: #94a3b8; font-weight: 700;">○ Inactivo</span>
+                    </div>
+                    <button id="btnToggleGpsBroadcast" onclick="toggleTransmitirGpsReal()" style="width: 100%; height: 44px; background: #059669; color: #fff; border: none; border-radius: 9999px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                        <span>📍 Transmitir mi Ubicación GPS Real</span>
                     </button>
-                    <button onclick="reiniciarRutaGPS()" style="height: 42px; padding: 0 1rem; background: var(--bg-input); color: var(--text-muted); border: 1px solid var(--border-subtle); border-radius: 9999px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+                </div>
+
+                <!-- Simulation Option for Testing -->
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.6rem;">
+                    <button onclick="simularMovimientoRepartidor()" style="flex: 1; height: 40px; background: var(--bg-input); border: 1px solid var(--border-subtle); color: #60a5fa; border-radius: 9999px; font-weight: 800; font-size: 0.78rem; cursor: pointer;">
+                        🛵 Simular Avance de Ruta Demo
+                    </button>
+                    <button onclick="reiniciarRutaGPS()" style="height: 40px; padding: 0 1rem; background: var(--bg-input); color: var(--text-muted); border: 1px solid var(--border-subtle); border-radius: 9999px; font-weight: 700; font-size: 0.78rem; cursor: pointer;">
                         ↺ Reiniciar
                     </button>
                 </div>
@@ -7039,9 +7061,167 @@
             document.getElementById('gpsSpeedText').innerText = '38 km/h';
         }
 
-        // Init App
+
+        // Web Audio Chime for Live Orders Alert
+        function reproducirCampanaNuevoPedido() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.6);
+            } catch(e) { console.log('Audio alert fallback'); }
+        }
+
+        // Realtime Supabase Orders Listener
+        function iniciarRealtimePedidos() {
+            if (!supabaseClient) return;
+
+            cargarPedidosSupabase();
+
+            try {
+                supabaseClient
+                    .channel('public:pedidos')
+                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pedidos' }, payload => {
+                        console.log('🔔 Nuevo pedido entrante en tiempo real:', payload.new);
+                        reproducirCampanaNuevoPedido();
+                        mostrarToast('🔔 ¡Nuevo pedido entrante: ' + payload.new.nombre_contacto + '!');
+                        cargarPedidosSupabase();
+                    })
+                    .subscribe();
+            } catch(e) {
+                console.warn('Realtime subscription note:', e);
+            }
+        }
+
+        async function cargarPedidosSupabase() {
+            if (!supabaseClient) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('pedidos')
+                    .select('*')
+                    .order('creado_en', { ascending: false })
+                    .limit(6);
+
+                if (error) throw error;
+
+                const queueContainer = document.getElementById('liveOrdersQueueList');
+                if (!queueContainer) return;
+
+                if (!data || data.length === 0) {
+                    queueContainer.innerHTML = `
+                        <div style="padding: 0.75rem; text-align: center; background: var(--bg-input); border-radius: 10px; font-size: 0.74rem; color: var(--text-dim);">
+                            No hay pedidos pendientes en este momento.
+                        </div>
+                    `;
+                    document.getElementById('kpiQueueCount').innerText = '0';
+                    return;
+                }
+
+                document.getElementById('kpiQueueCount').innerText = data.length;
+
+                queueContainer.innerHTML = data.map(ord => `
+                    <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.65rem 0.85rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-white);">#${ord.id} • ${ord.nombre_contacto}</div>
+                            <div style="font-size: 0.7rem; color: #34d399;">${formatearDinero(ord.total_a_pagar)} • ${ord.modalidad} (${ord.horario_rango})</div>
+                        </div>
+                        <button onclick="seleccionarPedidoAlisto('${ord.id}', '${ord.nombre_contacto}', '${ord.modalidad}')" style="background: #2563eb; color: #fff; border: none; padding: 0.35rem 0.75rem; border-radius: 9999px; font-weight: 800; font-size: 0.74rem; cursor: pointer;">
+                            📦 Alistar
+                        </button>
+                    </div>
+                `).join('');
+            } catch(e) {
+                console.warn('Error al cargar pedidos Supabase:', e);
+            }
+        }
+
+        function seleccionarPedidoAlisto(orderId, cliente, modalidad) {
+            document.getElementById('pickingOrderId').innerText = 'Orden #' + orderId;
+            document.getElementById('pickingCustomerName').innerText = `Cliente: ${cliente} (${modalidad})`;
+            document.getElementById('pickingStatusBadge').innerText = '🟡 Listo para Iniciar';
+            document.getElementById('pickingStatusBadge').style.background = 'rgba(245, 158, 11, 0.2)';
+            document.getElementById('pickingStatusBadge').style.color = '#f59e0b';
+            window.scrollTo({ top: document.getElementById('pickingOrderId').offsetTop - 120, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // REAL MOBILE GPS GEOLOCATION SHARING FOR DRIVERS
+        // ============================================================
+        let watchPositionId = null;
+        let isTransmittingGps = false;
+
+        function toggleTransmitirGpsReal() {
+            const btn = document.getElementById('btnToggleGpsBroadcast');
+            const statusLabel = document.getElementById('gpsLiveBroadcastStatus');
+
+            if (!isTransmittingGps) {
+                if (!navigator.geolocation) {
+                    alert('Tu navegador o dispositivo no soporta geolocalización GPS.');
+                    return;
+                }
+
+                isTransmittingGps = true;
+                btn.style.background = '#ef4444';
+                btn.innerHTML = '<span>🛑 Detener Transmisión GPS</span>';
+                statusLabel.innerText = '● Transmitiendo GPS en Vivo';
+                statusLabel.style.color = '#34d399';
+
+                watchPositionId = navigator.geolocation.watchPosition(
+                    (pos) => {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        const spd = pos.coords.speed ? Math.round(pos.coords.speed * 3.6) : 32;
+
+                        if (!mapInstance) initMap();
+                        if (driverMarker) driverMarker.setLatLng([lat, lng]);
+                        if (mapInstance) mapInstance.panTo([lat, lng]);
+
+                        document.getElementById('gpsSpeedText').innerText = spd + ' km/h';
+                        document.getElementById('gpsEtaText').innerText = `Coordenadas: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+
+                        // Update in Supabase for all customers to see
+                        if (supabaseClient) {
+                            supabaseClient.from('rutas_gps_envio').insert([{
+                                pedido_id: 'PED-1048',
+                                repartidor_nombre: 'Repartidor Country House',
+                                latitud_actual: lat,
+                                longitud_actual: lng,
+                                velocidad_kmh: spd,
+                                minutos_estimados: 10
+                            }]).then(({ error }) => {
+                                if (error) console.warn('GPS Supabase sync:', error.message);
+                            }).catch(console.warn);
+                        }
+                    },
+                    (err) => {
+                        console.warn('GPS permission / signal error:', err);
+                        alert('Por favor permite el acceso al GPS en tu teléfono para transmitir la ubicación.');
+                        toggleTransmitirGpsReal();
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            } else {
+                isTransmittingGps = false;
+                if (watchPositionId) navigator.geolocation.clearWatch(watchPositionId);
+                btn.style.background = '#059669';
+                btn.innerHTML = '<span>📍 Transmitir mi Ubicación GPS Real</span>';
+                statusLabel.innerText = '○ Inactivo';
+                statusLabel.style.color = '#94a3b8';
+            }
+        }
+
+        // Init App & Realtime Listeners
         renderizarGrid();
         actualizarTotales();
+        setTimeout(iniciarRealtimePedidos, 600);
     </script>
 </body>
 </html>

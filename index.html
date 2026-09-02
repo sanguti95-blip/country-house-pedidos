@@ -1891,17 +1891,23 @@
 
                     <!-- Domicilio Section -->
                     <div id="sectionDomicilio">
+                        <div class="pickup-info-box" style="background: rgba(14, 117, 74, 0.15); border-color: rgba(24, 183, 117, 0.35);">
+                            <div style="font-size: 1.25rem;" aria-hidden="true">🛵</div>
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.8rem; color: var(--text-white);">Entrega a Domicilio (10:00 AM - 4:00 PM)</div>
+                                <div style="font-size: 0.68rem; color: #34d399; margin-top: 1px; font-weight: 700;">Costo fijo de envío: ₡1.000</div>
+                            </div>
+                        </div>
                         <div class="cust-field" style="margin-top: 0.35rem;">
                             <label class="cust-label" for="custAddressInput">📍 Dirección de Entrega</label>
                             <input type="text" id="custAddressInput" class="cust-input" placeholder="Ej: Heredia Centro, 200m norte..." oninput="guardarDatosCliente()">
                         </div>
                         <div class="cust-field" style="margin-top: 0.35rem;">
-                            <span class="cust-label">⏰ Rango de Entrega Preferido</span>
+                            <span class="cust-label">⏰ Rango de Horario (10:00 AM a 4:00 PM)</span>
                             <div class="time-slots-grid" id="deliveryTimeSlots" role="radiogroup" aria-label="Rango de horario de entrega">
-                                <button type="button" class="time-chip active" role="radio" aria-checked="true" onclick="setHorario('⚡ Lo antes posible', this)">⚡ Lo antes posible</button>
-                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌅 Mañana (8am - 12md)', this)">🌅 Mañana (8am-12md)</button>
-                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('☀️ Tarde (1pm - 4pm)', this)">☀️ Tarde (1pm-4pm)</button>
-                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌇 Tarde-Noche (4pm - 7pm)', this)">🌇 Noche (4pm-7pm)</button>
+                                <button type="button" class="time-chip active" role="radio" aria-checked="true" onclick="setHorario('⚡ Lo antes posible (10am - 4pm)', this)">⚡ Lo antes posible</button>
+                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌅 Mañana (10:00 AM - 1:00 PM)', this)">🌅 Mañana (10am-1pm)</button>
+                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('☀️ Tarde (1:00 PM - 4:00 PM)', this)">☀️ Tarde (1pm-4pm)</button>
                             </div>
                         </div>
                     </div>
@@ -1909,19 +1915,19 @@
                     <!-- Recoger en Punto de Venta Section -->
                     <div id="sectionRecoger" style="display: none;">
                         <div class="pickup-info-box">
-                            <div style="font-size: 1.25rem;">🏬</div>
+                            <div style="font-size: 1.25rem;" aria-hidden="true">🏬</div>
                             <div>
-                                <div style="font-weight: 800; font-size: 0.8rem; color: var(--text-white);">Retiro en Local Country House</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); margin-top: 1px;">Te avisamos por WhatsApp en cuanto tu pedido esté empacado y listo.</div>
+                                <div style="font-weight: 800; font-size: 0.8rem; color: var(--text-white);">Retiro en Tienda (9:00 AM - 6:30 PM)</div>
+                                <div style="font-size: 0.68rem; color: #34d399; margin-top: 1px; font-weight: 700;">Retiro en Local Country House • GRATIS</div>
                             </div>
                         </div>
                         <div class="cust-field" style="margin-top: 0.35rem;">
-                            <span class="cust-label">⏰ Hora Estimada de Recogida</span>
+                            <span class="cust-label">⏰ Hora Estimada de Recogida (9:00 AM a 6:30 PM)</span>
                             <div class="time-slots-grid" id="pickupTimeSlots" role="radiogroup" aria-label="Hora estimada de recogida">
-                                <button type="button" class="time-chip active" role="radio" aria-checked="true" onclick="setHorario('⚡ En ~30-45 minutos', this)">⚡ En ~30-45 min</button>
-                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌅 Mañana (8:30am - 12md)', this)">🌅 Mañana (8:30am-12md)</button>
-                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('☀️ Tarde (1pm - 4:30pm)', this)">☀️ Tarde (1pm-4:30pm)</button>
-                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌇 Tarde (4:30pm - 6:30pm)', this)">🌇 Tarde (4:30-6:30pm)</button>
+                                <button type="button" class="time-chip active" role="radio" aria-checked="true" onclick="setHorario('⚡ En ~30-45 min (9am - 6:30pm)', this)">⚡ En ~30-45 min</button>
+                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌅 Mañana (9:00 AM - 1:00 PM)', this)">🌅 Mañana (9am-1pm)</button>
+                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('☀️ Tarde (1:00 PM - 4:30 PM)', this)">☀️ Tarde (1pm-4:30pm)</button>
+                                <button type="button" class="time-chip" role="radio" aria-checked="false" onclick="setHorario('🌇 Tarde-Noche (4:30 PM - 6:30 PM)', this)">🌇 Tarde (4:30-6:30pm)</button>
                             </div>
                         </div>
                     </div>
@@ -7537,10 +7543,7 @@
 
                 const activeDomTime = secDom.querySelector('.time-chip.active');
                 if (activeDomTime) horarioSeleccionado = activeDomTime.innerText.trim();
-                else horarioSeleccionado = '⚡ Lo antes posible';
-
-                document.getElementById('deliverySummaryLabel').innerText = '🚚 Entrega';
-                document.getElementById('deliverySummaryValue').innerText = 'A Domicilio';
+                else horarioSeleccionado = '⚡ Lo antes posible (10am - 4pm)';
             } else {
                 recBtn.classList.add('active');
                 recBtn.setAttribute('aria-checked', 'true');
@@ -7551,13 +7554,11 @@
 
                 const activeRecTime = secRec.querySelector('.time-chip.active');
                 if (activeRecTime) horarioSeleccionado = activeRecTime.innerText.trim();
-                else horarioSeleccionado = '⚡ En ~30-45 minutos';
-
-                document.getElementById('deliverySummaryLabel').innerText = '🏬 Retiro';
-                document.getElementById('deliverySummaryValue').innerText = 'En Local (GRATIS)';
+                else horarioSeleccionado = '⚡ En ~30-45 min (9am - 6:30pm)';
             }
 
             localStorage.setItem('country_house_horario', horarioSeleccionado);
+            actualizarTotales();
         }
 
         function setHorario(horario, btn) {
@@ -7861,8 +7862,9 @@
                 });
             }
 
+            const costoEnvio = (items.length > 0 && modalidadEntregaActual === 'DOMICILIO') ? 1000 : 0;
             const discount = subtotal * 0.10;
-            const total = subtotal - discount;
+            const total = (subtotal > 0) ? (subtotal - discount + costoEnvio) : 0;
 
             // Update Quick Stats Pills
             document.getElementById('cartTotalCal').innerText = Math.round(totalCal).toLocaleString('es-CR') + ' kcal';
@@ -7872,7 +7874,20 @@
             document.getElementById('barTotalNum').innerText = formatearDinero(total);
             document.getElementById('barCountBadge').innerText = totalItems;
 
-            // Update Sheet
+            // Update Sheet Delivery Row
+            const deliveryLabel = document.getElementById('deliverySummaryLabel');
+            const deliveryVal = document.getElementById('deliverySummaryValue');
+            if (modalidadEntregaActual === 'DOMICILIO') {
+                deliveryLabel.innerText = '🚚 Envío (10am - 4pm)';
+                deliveryVal.innerText = (items.length > 0) ? '₡1.000,00' : '₡0,00';
+                deliveryVal.style.color = 'var(--text-white)';
+            } else {
+                deliveryLabel.innerText = '🏬 Retiro Tienda (9am - 6:30pm)';
+                deliveryVal.innerText = 'GRATIS';
+                deliveryVal.style.color = '#34d399';
+            }
+
+            // Update Sheet Totals
             document.getElementById('sheetCountBadge').innerText = totalItems;
             document.getElementById('savingsAmountText').innerText = 'Ahorras ' + formatearDinero(discount);
             document.getElementById('sheetSubtotal').innerText = formatearDinero(subtotal);

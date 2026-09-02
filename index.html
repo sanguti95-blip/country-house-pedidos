@@ -255,6 +255,7 @@
         /* Visible Focus Indicators (WCAG 2.4.7) */
         button:focus-visible,
         input:focus-visible,
+        textarea:focus-visible,
         [tabindex]:focus-visible {
             outline: 2px solid var(--brand-green-light);
             outline-offset: 2px;
@@ -353,7 +354,7 @@
             white-space: nowrap;
         }
 
-        /* Theme Toggle Button (44px Minimum Touch Area) */
+        /* Theme Toggle Button */
         .btn-theme-toggle {
             background: var(--btn-theme-bg);
             border: 1px solid var(--btn-theme-border);
@@ -414,7 +415,7 @@
             pointer-events: none;
         }
 
-        /* Search Clear Button (44px Touch Target) */
+        /* Search Clear Button */
         .search-clear-btn {
             position: absolute;
             right: 0.35rem;
@@ -440,7 +441,7 @@
             display: flex;
         }
 
-        /* Liquid Glass Category Pills (44px Touch Friendly) */
+        /* Liquid Glass Category Pills */
         .category-scroll {
             display: flex;
             gap: 0.5rem;
@@ -528,7 +529,7 @@
             transform: scale(1.02);
         }
 
-        /* Main Content Feed (Solid, Unrestricted Opaque Content) */
+        /* Main Content Feed */
         .mobile-feed {
             padding: 0.85rem 0.85rem 130px;
             max-width: 600px;
@@ -575,7 +576,7 @@
             width: 100%;
         }
 
-        /* Product Card: Opaque Solid Tile with High-Legibility Tokens */
+        /* Product Card: Opaque Solid Tile */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--bg-card-border);
@@ -652,7 +653,7 @@
             word-wrap: break-word;
         }
 
-        /* Favorite Button (44px Minimum Touch Area) */
+        /* Favorite Button */
         .btn-fav {
             background: var(--fav-btn-bg);
             border: 1px solid var(--fav-btn-border);
@@ -795,7 +796,6 @@
             color: #059669;
         }
 
-        /* Combo CTA Button (44px Minimum Touch Area) */
         .btn-load-combo {
             background: var(--brand-green);
             border: 1px solid rgba(255, 255, 255, 0.25);
@@ -928,7 +928,7 @@
             flex: 1;
         }
 
-        /* Liquid Glass Capsule Buttons (44px Height Standard) */
+        /* Liquid Glass Capsule Buttons */
         .btn-add-touch {
             width: 100%;
             height: 44px;
@@ -1001,7 +1001,7 @@
             text-align: center;
         }
 
-        /* Apple Liquid Glass: Floating Cart Capsule Dock */
+        /* Floating Cart Capsule Dock */
         .floating-cart-bar {
             position: fixed;
             bottom: 12px;
@@ -1061,7 +1061,7 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* View Order Button (44px Minimum Touch Target) */
+        /* View Order Button */
         .btn-view-order {
             height: 46px;
             min-height: 46px;
@@ -1110,13 +1110,15 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Bottom Sheet (Liquid Glass Modal + Scrim) */
+        /* ============================================================
+           OPTIMIZED BOTTOM SHEET: VER PEDIDO (ORDER MODAL)
+           ============================================================ */
         .sheet-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
             opacity: 0;
             visibility: hidden;
@@ -1140,9 +1142,9 @@
             -webkit-backdrop-filter: var(--liquid-glass-blur);
             border-top: 1px solid var(--sheet-border);
             border-radius: 28px 28px 0 0;
-            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 -20px 50px rgba(0, 0, 0, 0.65);
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 -20px 50px rgba(0, 0, 0, 0.75);
             z-index: 101;
-            max-height: 90vh;
+            max-height: 92vh;
             display: flex;
             flex-direction: column;
             transform: translateY(100%);
@@ -1153,32 +1155,50 @@
             transform: translateY(0);
         }
 
+        .sheet-handle-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 0.75rem;
+            cursor: pointer;
+        }
+
         .sheet-handle {
-            width: 44px;
+            width: 48px;
             height: 5px;
             background: var(--sheet-handle);
             border-radius: var(--radius-capsule);
-            margin: 0.75rem auto 0.25rem;
         }
 
         .sheet-head {
-            padding: 0.65rem 1.15rem 0.85rem;
+            padding: 0.5rem 1.15rem 0.75rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--sheet-head-border);
         }
 
-        .sheet-head h3 {
-            font-size: 1.1rem;
+        .sheet-head-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sheet-head-title {
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--text-white);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
 
-        /* Close Sheet Button (44px Minimum Touch Area) */
+        .sheet-head-sub {
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        /* Close Sheet Button */
         .btn-sheet-close {
             background: var(--sheet-btn-close-bg);
             border: none;
@@ -1188,7 +1208,7 @@
             min-height: 44px;
             border-radius: 50%;
             color: var(--text-white);
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             display: flex;
@@ -1201,129 +1221,114 @@
             transform: scale(0.92);
         }
 
-        /* Savings Banner */
-        .savings-progress-box {
-            background: rgba(14, 117, 74, 0.18);
-            border: 1px solid rgba(24, 183, 117, 0.35);
-            box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 0.65rem 0.95rem;
-            margin: 0.65rem 1.15rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .savings-top-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: #059669;
-        }
-
-        .savings-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: var(--radius-capsule);
-            overflow: hidden;
-        }
-
-        .savings-fill {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, var(--brand-green-light), #fef08a);
-            border-radius: var(--radius-capsule);
-        }
-
-        /* Cart Nutrition Summary Card (Gym & Macro Totals) */
-        .cart-nutrition-card {
-            background: var(--cart-nutri-bg);
-            border: 1px solid var(--cart-nutri-border);
-            box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 0.65rem 0.85rem;
-            margin: 0.5rem 1.15rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.45rem;
-        }
-
-        .cart-nutri-header {
+        /* Compact Savings & Health Summary Banner */
+        .sheet-quick-stats-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.74rem;
+            gap: 0.5rem;
+            padding: 0.6rem 1.15rem 0.3rem;
+        }
+
+        .savings-pill-compact {
+            background: rgba(14, 117, 74, 0.15);
+            border: 1px solid rgba(24, 183, 117, 0.35);
+            border-radius: var(--radius-capsule);
+            padding: 0.35rem 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             color: #059669;
-        }
-
-        .nutri-badge-gym {
-            font-size: 0.58rem;
-            font-weight: 800;
-            color: #2563eb;
-            background: rgba(59, 130, 246, 0.18);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 2px 7px;
-            border-radius: var(--radius-capsule);
-            text-transform: uppercase;
-        }
-
-        .cart-nutri-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.35rem;
-            text-align: center;
-        }
-
-        .cart-nutri-stat {
-            background: var(--cart-nutri-stat-bg);
-            border-radius: 8px;
-            padding: 5px 3px;
             display: flex;
-            flex-direction: column;
-            gap: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            align-items: center;
+            gap: 0.35rem;
+            white-space: nowrap;
         }
 
-        .stat-lbl {
-            font-size: 0.54rem;
+        /* Compact Nutri Pill */
+        .cart-macro-pill-compact {
+            background: var(--cart-nutri-stat-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-capsule);
+            padding: 0.35rem 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            color: var(--text-dim);
-            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
         }
 
-        .stat-val {
-            font-size: 0.76rem;
-            font-weight: 800;
-            line-height: 1.1;
+        .cart-macro-pill-compact b {
+            color: #d97706;
         }
 
-        .stat-val.cal { color: #d97706; }
-        .stat-val.prot { color: #059669; }
-        .stat-val.carb { color: #2563eb; }
-        .stat-val.fat { color: #dc2626; }
-
+        /* Scrollable Sheet Content */
         .sheet-content {
             flex: 1;
             overflow-y: auto;
-            padding: 0.85rem 1.15rem;
+            padding: 0.6rem 1.15rem 1rem;
             display: flex;
             flex-direction: column;
-            gap: 0.65rem;
+            gap: 0.75rem;
             -webkit-overflow-scrolling: touch;
         }
 
+        /* Section Title in Sheet */
+        .sheet-section-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-dim);
+            margin-top: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sheet-section-title button {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 2px 6px;
+        }
+
+        /* Order Item Rows */
         .order-item-row {
             background: var(--order-item-bg);
             border: 1px solid var(--order-item-border);
             border-radius: 14px;
-            padding: 0.85rem 0.95rem;
+            padding: 0.75rem 0.85rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 0.65rem;
+            transition: all 0.2s ease;
+        }
+
+        .order-item-left {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .order-item-emoji {
+            width: 38px;
+            height: 38px;
+            background: var(--emoji-circle-bg);
+            border: 1px solid var(--emoji-circle-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
         }
 
         .item-info {
@@ -1332,34 +1337,40 @@
         }
 
         .item-title {
-            font-size: 0.86rem;
-            font-weight: 700;
+            font-size: 0.88rem;
+            font-weight: 800;
             color: var(--text-white);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1.2;
         }
 
         .item-sub {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--text-dim);
             margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
         }
 
         .item-total-col {
             display: flex;
-            align-items: center;
-            gap: 0.65rem;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.35rem;
         }
 
         .item-subtotal {
-            font-size: 0.94rem;
-            font-weight: 800;
+            font-size: 0.96rem;
+            font-weight: 900;
             color: #059669;
             white-space: nowrap;
+            font-variant-numeric: tabular-nums;
         }
 
-        /* Mini Stepper (Touch Targets >= 38px) */
+        /* Mini Stepper */
         .mini-stepper {
             display: flex;
             align-items: center;
@@ -1369,10 +1380,10 @@
         }
 
         .mini-btn {
-            width: 38px;
-            height: 38px;
-            min-width: 38px;
-            min-height: 38px;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            min-height: 36px;
             background: none;
             border: none;
             color: var(--text-white);
@@ -1382,6 +1393,12 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .mini-btn.trash {
+            color: #f87171;
+            font-size: 0.95rem;
         }
 
         .mini-btn:active {
@@ -1390,25 +1407,29 @@
             border-radius: 50%;
         }
 
+        .mini-btn.trash:active {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
         .mini-num {
-            font-size: 0.85rem;
-            font-weight: 800;
+            font-size: 0.88rem;
+            font-weight: 900;
             color: var(--text-white);
             padding: 0 4px;
             min-width: 24px;
             text-align: center;
         }
 
-        /* Customer Delivery Details */
+        /* Customer Delivery Details Card */
         .customer-details-card {
             background: var(--cust-card-bg);
             border: 1px solid var(--cust-card-border);
             border-radius: 14px;
             padding: 0.85rem;
-            margin-top: 0.25rem;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.65rem;
         }
 
         .cust-field {
@@ -1419,9 +1440,10 @@
 
         .cust-label {
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .cust-input {
@@ -1429,11 +1451,12 @@
             background: var(--cust-input-bg);
             border: 1px solid var(--cust-input-border);
             border-radius: 8px;
-            padding: 0 0.75rem;
+            padding: 0 0.85rem;
             color: var(--text-white);
             font-size: 0.86rem;
             font-family: inherit;
             outline: none;
+            transition: border-color 0.2s ease;
         }
 
         .cust-input:focus {
@@ -1446,7 +1469,7 @@
             gap: 0.4rem;
         }
 
-        /* Payment Chips (44px Minimum Touch Area) */
+        /* Payment Chips */
         .pay-chip {
             min-height: 44px;
             padding: 0.45rem 0.3rem;
@@ -1474,32 +1497,48 @@
 
         /* Summary / Footer of Sheet */
         .sheet-bottom {
-            padding: 0.95rem 1.15rem env(safe-area-inset-bottom, 1.15rem);
+            padding: 0.85rem 1.15rem env(safe-area-inset-bottom, 1.15rem);
             background: var(--sheet-bottom-bg);
             border-top: 1px solid var(--sheet-head-border);
             display: flex;
             flex-direction: column;
-            gap: 0.55rem;
+            gap: 0.5rem;
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .summary-receipt {
+            background: var(--order-item-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 0.65rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
         }
 
         .summary-row.disc {
             color: #059669;
-            font-weight: 700;
+            font-weight: 800;
+        }
+
+        .summary-row.delivery {
+            color: var(--text-dim);
+            font-size: 0.75rem;
         }
 
         .summary-total {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-top: 0.2rem;
-            padding-top: 0.55rem;
+            margin-top: 0.25rem;
+            padding-top: 0.45rem;
             border-top: 1px solid var(--border-subtle);
             font-size: 1.35rem;
             font-weight: 900;
@@ -1510,24 +1549,24 @@
             color: #059669;
         }
 
-        /* Liquid Glass WhatsApp Checkout CTA (50px Height) */
+        /* Liquid Glass WhatsApp Checkout CTA */
         .btn-whatsapp-order {
             width: 100%;
-            height: 50px;
-            min-height: 50px;
+            height: 52px;
+            min-height: 52px;
             background: linear-gradient(135deg, #25D366, #128C7E);
             border: 1px solid rgba(255, 255, 255, 0.35);
             box-shadow: inset 0 1.2px 1px 0 rgba(255, 255, 255, 0.5), var(--shadow-glow-wa);
             border-radius: var(--radius-capsule);
             color: #ffffff;
-            font-weight: 800;
-            font-size: 0.98rem;
+            font-weight: 900;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.55rem;
             cursor: pointer;
-            margin-top: 0.35rem;
+            margin-top: 0.2rem;
             transition: transform 0.2s var(--ease-spring);
         }
 
@@ -1535,11 +1574,11 @@
             transform: scale(0.97);
         }
 
-        /* Copy Quote Button (44px Height) */
+        /* Copy Quote Button */
         .btn-copy-quote {
             width: 100%;
-            height: 44px;
-            min-height: 44px;
+            height: 42px;
+            min-height: 42px;
             background: var(--btn-copy-bg);
             border: 1px solid var(--btn-copy-border);
             border-radius: var(--radius-capsule);
@@ -1556,21 +1595,6 @@
 
         .btn-copy-quote:active {
             background: rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-empty-cart {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 0.76rem;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            padding: 0.4rem;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         /* Empty State */
@@ -1832,110 +1856,109 @@
         </div>
     </div>
 
-    <!-- Bottom Sheet Modal -->
+    <!-- Optimized Bottom Sheet Modal (Ver Pedido) -->
     <div class="sheet-overlay" id="sheetOverlay" onclick="cerrarPedido(event)" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
-            <div class="sheet-handle" aria-hidden="true"></div>
+            <div class="sheet-handle-bar" onclick="cerrarPedido()">
+                <div class="sheet-handle" aria-hidden="true"></div>
+            </div>
             
             <div class="sheet-head">
-                <h3 id="sheetTitle">
-                    <span>🛒 Tu Lista de Compras</span>
-                    <span style="font-size: 0.8rem; color: var(--text-dim);">(<span id="sheetCountBadge">0</span>)</span>
-                </h3>
+                <div class="sheet-head-left">
+                    <h3 class="sheet-head-title" id="sheetTitle">
+                        <span>🛒 Tu Pedido</span>
+                        <span class="count-badge" id="sheetCountBadge">0</span>
+                    </h3>
+                    <span class="sheet-head-sub">Revisa tus productos y envía a WhatsApp</span>
+                </div>
                 <button class="btn-sheet-close" onclick="cerrarPedido()" aria-label="Cerrar resumen de compras">✕</button>
             </div>
 
-            <!-- Savings Banner -->
-            <div class="savings-progress-box">
-                <div class="savings-top-text">
-                    <span>🎉 10% Descuento Especial Aplicado</span>
+            <!-- Compact Savings & Macro Quick Stats -->
+            <div class="sheet-quick-stats-row">
+                <div class="savings-pill-compact" id="savingsPill">
+                    <span>🎉 -10%:</span>
                     <span id="savingsAmountText">Ahorras ₡0.00</span>
                 </div>
-                <div class="savings-track" aria-hidden="true">
-                    <div class="savings-fill"></div>
+                <div class="cart-macro-pill-compact" id="cartMacroPill" title="Calorías y proteína total">
+                    <span>⚡ <b id="cartTotalCal">0 kcal</b></span>
+                    <span>•</span>
+                    <span>💪 <span id="cartTotalProt">0g</span> prot</span>
                 </div>
             </div>
 
-            <!-- Cart Nutrition Summary Card (Gym & Macro Totals) -->
-            <div class="cart-nutrition-card" id="cartNutritionCard" aria-label="Resumen nutricional total">
-                <div class="cart-nutri-header">
-                    <span>📊 Nutrientes Totales del Pedido</span>
-                    <span class="nutri-badge-gym">Gym &amp; Salud</span>
-                </div>
-                <div class="cart-nutri-grid">
-                    <div class="cart-nutri-stat">
-                        <span class="stat-lbl">Calorías</span>
-                        <span class="stat-val cal" id="cartTotalCal">0 kcal</span>
-                    </div>
-                    <div class="cart-nutri-stat">
-                        <span class="stat-lbl">Proteína</span>
-                        <span class="stat-val prot" id="cartTotalProt">0g</span>
-                    </div>
-                    <div class="cart-nutri-stat">
-                        <span class="stat-lbl">Carbohidratos</span>
-                        <span class="stat-val carb" id="cartTotalCarb">0g</span>
-                    </div>
-                    <div class="cart-nutri-stat">
-                        <span class="stat-lbl">Grasas Buenas</span>
-                        <span class="stat-val fat" id="cartTotalFat">0g</span>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Scrollable Content -->
             <div class="sheet-content" id="sheetContent">
                 <!-- Products injected via JS -->
             </div>
 
-            <!-- Customer Optional Delivery Form -->
-            <div style="padding: 0 1.15rem 0.5rem;">
+            <!-- Customer Delivery & Notes Form -->
+            <div style="padding: 0 1.15rem 0.4rem;">
                 <div class="customer-details-card">
-                    <div class="cust-field">
-                        <label class="cust-label" for="custNameInput">👤 Tu Nombre (Opcional)</label>
-                        <input type="text" id="custNameInput" class="cust-input" placeholder="Ej: María González">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <div class="cust-field" style="flex: 1;">
+                            <label class="cust-label" for="custNameInput">👤 Tu Nombre</label>
+                            <input type="text" id="custNameInput" class="cust-input" placeholder="Ej: María González" oninput="guardarDatosCliente()">
+                        </div>
+                        <div class="cust-field" style="flex: 1;">
+                            <label class="cust-label" for="custAddressInput">📍 Dirección</label>
+                            <input type="text" id="custAddressInput" class="cust-input" placeholder="Ej: Heredia Centro..." oninput="guardarDatosCliente()">
+                        </div>
                     </div>
+
                     <div class="cust-field">
-                        <label class="cust-label" for="custAddressInput">📍 Dirección de Entrega (Opcional)</label>
-                        <input type="text" id="custAddressInput" class="cust-input" placeholder="Ej: Heredia Centro, 200m norte...">
+                        <label class="cust-label" for="custNotesInput">📝 Notas de Entrega / Preferencias (Opcional)</label>
+                        <input type="text" id="custNotesInput" class="cust-input" placeholder="Ej: Aguacates maduros para hoy, bananos verdes..." oninput="guardarDatosCliente()">
                     </div>
+
                     <div class="cust-field">
                         <span class="cust-label">💳 Forma de Pago</span>
                         <div class="payment-options-row" role="radiogroup" aria-label="Método de pago">
-                            <button class="pay-chip active" role="radio" aria-checked="true" onclick="setPaymentMethod('Sinpe Móvil', this)">Sinpe Móvil</button>
-                            <button class="pay-chip" role="radio" aria-checked="false" onclick="setPaymentMethod('Efectivo', this)">Efectivo</button>
-                            <button class="pay-chip" role="radio" aria-checked="false" onclick="setPaymentMethod('Tarjeta', this)">Tarjeta</button>
+                            <button class="pay-chip active" role="radio" aria-checked="true" onclick="setPaymentMethod('Sinpe Móvil', this)">📲 Sinpe Móvil</button>
+                            <button class="pay-chip" role="radio" aria-checked="false" onclick="setPaymentMethod('Efectivo', this)">💵 Efectivo</button>
+                            <button class="pay-chip" role="radio" aria-checked="false" onclick="setPaymentMethod('Tarjeta', this)">💳 Tarjeta</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Bottom Sticky Summary & Actions -->
             <div class="sheet-bottom">
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span id="sheetSubtotal">₡0.00</span>
-                </div>
-                <div class="summary-row disc">
-                    <span>Descuento Especial (10%)</span>
-                    <span id="sheetDiscount">-₡0.00</span>
-                </div>
-                <div class="summary-total">
-                    <span>Total a Pagar</span>
-                    <span id="sheetTotal">₡0.00</span>
+                <div class="summary-receipt">
+                    <div class="summary-row">
+                        <span>Subtotal Catálogo</span>
+                        <span id="sheetSubtotal">₡0.00</span>
+                    </div>
+                    <div class="summary-row disc">
+                        <span>Descuento Especial (10%)</span>
+                        <span id="sheetDiscount">-₡0.00</span>
+                    </div>
+                    <div class="summary-row delivery">
+                        <span>🚚 Envío</span>
+                        <span>Coordinar por WhatsApp</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total a Pagar</span>
+                        <span id="sheetTotal">₡0.00</span>
+                    </div>
                 </div>
 
                 <!-- Premium WhatsApp Checkout CTA -->
                 <button class="btn-whatsapp-order" onclick="enviarPorWhatsApp()" aria-label="Enviar pedido formal directamente por WhatsApp">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                     </svg>
                     <span>Enviar Pedido por WhatsApp</span>
                 </button>
 
-                <button class="btn-copy-quote" onclick="copiarResumen()" aria-label="Copiar resumen del pedido al portapapeles">
-                    📋 Copiar Lista de Pedido
-                </button>
-                <button class="btn-empty-cart" onclick="vaciarTodo()" aria-label="Vaciar todo el contenido del carrito">
-                    Vaciar todo el carrito
-                </button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn-copy-quote" onclick="copiarResumen()" aria-label="Copiar resumen del pedido al portapapeles">
+                        📋 Copiar Lista
+                    </button>
+                    <button class="btn-copy-quote" style="color: #ef4444;" onclick="vaciarTodo()" aria-label="Vaciar todo el contenido del carrito">
+                        🗑️ Vaciar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -7240,7 +7263,8 @@
         let categoriaActual = 'TODOS';
         let metaDietActual = 'ALL';
         let terminoBusqueda = '';
-        let metodoPagoSeleccionado = 'Sinpe Móvil';
+        let metodoPagoSeleccionado = localStorage.getItem('country_house_payment') || 'Sinpe Móvil';
+        const TELEFONO_WHATSAPP = '5068941610';
 
         // LocalStorage Favorites
         const favoritos = new Set(JSON.parse(localStorage.getItem('country_house_favs') || '[]'));
@@ -7472,6 +7496,7 @@
 
         function setPaymentMethod(method, btn) {
             metodoPagoSeleccionado = method;
+            localStorage.setItem('country_house_payment', method);
             document.querySelectorAll('.pay-chip').forEach(el => {
                 el.classList.remove('active');
                 el.setAttribute('aria-checked', 'false');
@@ -7479,6 +7504,38 @@
             if (btn) {
                 btn.classList.add('active');
                 btn.setAttribute('aria-checked', 'true');
+            }
+        }
+
+        function guardarDatosCliente() {
+            const nombre = document.getElementById('custNameInput').value;
+            const dir = document.getElementById('custAddressInput').value;
+            const notas = document.getElementById('custNotesInput').value;
+            localStorage.setItem('country_house_cust_name', nombre);
+            localStorage.setItem('country_house_cust_address', dir);
+            localStorage.setItem('country_house_cust_notes', notas);
+        }
+
+        function cargarDatosCliente() {
+            const nombre = localStorage.getItem('country_house_cust_name') || '';
+            const dir = localStorage.getItem('country_house_cust_address') || '';
+            const notas = localStorage.getItem('country_house_cust_notes') || '';
+            
+            const nameEl = document.getElementById('custNameInput');
+            const dirEl = document.getElementById('custAddressInput');
+            const notesEl = document.getElementById('custNotesInput');
+
+            if (nameEl) nameEl.value = nombre;
+            if (dirEl) dirEl.value = dir;
+            if (notesEl) notesEl.value = notas;
+
+            const savedPay = localStorage.getItem('country_house_payment');
+            if (savedPay) {
+                document.querySelectorAll('.pay-chip').forEach(el => {
+                    const match = el.innerText.includes(savedPay);
+                    el.classList.toggle('active', match);
+                    el.setAttribute('aria-checked', match ? 'true' : 'false');
+                });
             }
         }
 
@@ -7659,12 +7716,18 @@
             if (items.length === 0) {
                 sheetContent.innerHTML = `
                     <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-dim);">
-                        <p style="font-size: 2.5rem;" aria-hidden="true">🥗</p>
-                        <p style="font-weight: 700; color: var(--text-white); margin-top: 0.5rem;">Tu lista de compras está vacía</p>
-                        <small>Toca "+ Agregar" en los productos del catálogo</small>
+                        <p style="font-size: 2.8rem;" aria-hidden="true">🛒</p>
+                        <p style="font-weight: 800; font-size: 1.05rem; color: var(--text-white); margin-top: 0.6rem;">Tu lista está lista para llenarse</p>
+                        <p style="font-size: 0.78rem; margin: 0.35rem 0 1.2rem; color: var(--text-muted);">Selecciona tus frutas, verduras o combos favoritos con un solo toque.</p>
+                        <button class="btn-reset-filters" onclick="cerrarPedido()">Explorar Catálogo</button>
                     </div>
                 `;
             } else {
+                const listTitle = document.createElement('div');
+                listTitle.className = 'sheet-section-title';
+                listTitle.innerHTML = `<span>Productos en tu canasta (${items.length})</span>`;
+                sheetContent.appendChild(listTitle);
+
                 items.forEach(id => {
                     const prod = productos.find(p => p.id === id);
                     if (!prod) return;
@@ -7679,17 +7742,24 @@
                     totalCarb += qty * prod.nutri.carb;
                     totalFat += qty * prod.nutri.fat;
 
+                    const isSingle = (qty === 1);
+
                     const row = document.createElement('div');
                     row.className = 'order-item-row';
                     row.innerHTML = `
-                        <div class="item-info">
-                            <div class="item-title">${prod.emoji} ${prod.nombre}</div>
-                            <div class="item-sub">${qty} × ${formatearDinero(prod.precio)} • <span style="color:#d97706; font-weight:700;">${prod.nutri.cal} kcal</span></div>
+                        <div class="order-item-left">
+                            <div class="order-item-emoji" aria-hidden="true">${prod.emoji}</div>
+                            <div class="item-info">
+                                <div class="item-title">${prod.nombre}</div>
+                                <div class="item-sub">${formatearDinero(prod.precio)} • <span style="color:#d97706; font-weight:700;">${prod.nutri.cal} kcal</span></div>
+                            </div>
                         </div>
                         <div class="item-total-col">
                             <div class="item-subtotal">${formatearDinero(itemTotal)}</div>
                             <div class="mini-stepper" role="group" aria-label="Cantidad para ${prod.nombre}">
-                                <button class="mini-btn" onclick="modificarCantidad('${prod.id}', -1)" aria-label="Disminuir ${prod.nombre}">-</button>
+                                <button class="mini-btn ${isSingle ? 'trash' : ''}" onclick="modificarCantidad('${prod.id}', -1)" aria-label="${isSingle ? 'Eliminar ' + prod.nombre : 'Disminuir ' + prod.nombre}">
+                                    ${isSingle ? '🗑️' : '-'}
+                                </button>
                                 <span class="mini-num" aria-live="polite">${qty}</span>
                                 <button class="mini-btn" onclick="modificarCantidad('${prod.id}', 1)" aria-label="Aumentar ${prod.nombre}">+</button>
                             </div>
@@ -7702,11 +7772,9 @@
             const discount = subtotal * 0.10;
             const total = subtotal - discount;
 
-            // Update Cart Nutrition Card
+            // Update Quick Stats Pills
             document.getElementById('cartTotalCal').innerText = Math.round(totalCal).toLocaleString('es-CR') + ' kcal';
-            document.getElementById('cartTotalProt').innerText = totalProt.toFixed(1) + 'g';
-            document.getElementById('cartTotalCarb').innerText = totalCarb.toFixed(1) + 'g';
-            document.getElementById('cartTotalFat').innerText = totalFat.toFixed(1) + 'g';
+            document.getElementById('cartTotalProt').innerText = totalProt.toFixed(0) + 'g';
 
             // Update Bottom Bar
             document.getElementById('barTotalNum').innerText = formatearDinero(total);
@@ -7721,12 +7789,13 @@
         }
 
         function abrirPedido() {
+            cargarDatosCliente();
             document.getElementById('sheetOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function cerrarPedido(e) {
-            if (!e || e.target === document.getElementById('sheetOverlay') || e.target.classList.contains('btn-sheet-close')) {
+            if (!e || e.target === document.getElementById('sheetOverlay') || e.target.classList.contains('btn-sheet-close') || e.target.closest('.sheet-handle-bar') || typeof e === 'undefined') {
                 document.getElementById('sheetOverlay').classList.remove('active');
                 document.body.style.overflow = '';
             }
@@ -7734,11 +7803,11 @@
 
         function vaciarTodo() {
             if (Object.keys(carrito).length === 0) return;
-            if (confirm('¿Deseas vaciar toda la lista?')) {
+            if (confirm('¿Deseas vaciar todos los productos del pedido?')) {
                 for (let k in carrito) delete carrito[k];
                 renderizarGrid();
                 actualizarTotales();
-                cerrarPedido();
+                mostrarToast('Carrito vaciado');
             }
         }
 
@@ -7748,6 +7817,7 @@
 
             const nombre = document.getElementById('custNameInput').value.trim();
             const direccion = document.getElementById('custAddressInput').value.trim();
+            const notas = document.getElementById('custNotesInput').value.trim();
             const pago = metodoPagoSeleccionado;
 
             let texto = "🌿 *NUEVO PEDIDO - COUNTRY HOUSE*\n";
@@ -7759,6 +7829,9 @@
             }
             if (direccion) {
                 texto += `📍 *Dirección:* ${direccion}\n`;
+            }
+            if (notas) {
+                texto += `📝 *Notas:* ${notas}\n`;
             }
             texto += `💳 *Forma de Pago:* ${pago}\n`;
             texto += "━━━━━━━━━━━━━━━━━━━━━\n";
@@ -7803,7 +7876,8 @@
                 return;
             }
 
-            const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(mensaje);
+            guardarDatosCliente();
+            const url = "https://api.whatsapp.com/send?phone=" + TELEFONO_WHATSAPP + "&text=" + encodeURIComponent(mensaje);
             window.open(url, '_blank');
         }
 
@@ -7811,6 +7885,7 @@
             const mensaje = construirMensajeWhatsApp();
             if (!mensaje) return;
 
+            guardarDatosCliente();
             navigator.clipboard.writeText(mensaje).then(() => {
                 mostrarToast('📋 ¡Lista copiada al portapapeles!');
             }).catch(() => {
@@ -7825,8 +7900,9 @@
             setTimeout(() => toast.classList.remove('show'), 1600);
         }
 
-        // Init App, Theme & Favorites
+        // Init App, Theme, Favorites & Customer Data
         initTheme();
+        cargarDatosCliente();
         actualizarBadgeFavoritos();
         renderizarGrid();
         actualizarTotales();

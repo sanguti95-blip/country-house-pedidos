@@ -7008,7 +7008,8 @@
 
         function verRastreoDesdeExito() {
             document.getElementById('orderSuccessModal').style.display = 'none';
-            switchView('GPS', document.querySelectorAll('.module-tab-btn')[3]);
+            const gpsTab = document.querySelectorAll('.module-tab-btn')[2];
+            if (gpsTab) switchView('GPS', gpsTab);
             renderClientChecklist();
         }
 

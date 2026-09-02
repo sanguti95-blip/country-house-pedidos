@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>COUNTRY HOUSE | Pedidos & Tabla Nutricional</title>
-    <!-- Fonts -->
+    <title>COUNTRY HOUSE | Pedidos Saludables</title>
+    <!-- Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,12 +15,14 @@
             --brand-green-dark: #075233;
             --brand-green-light: #159e65;
             --brand-gold: #c5a059;
+            --brand-gold-light: #fef08a;
             --brand-red: #d8232a;
             
             --bg-main: #0c131f;
             --bg-surface: #162032;
+            --bg-surface-hover: #1e2c44;
             --bg-card: #182438;
-            --bg-card-border: rgba(255, 255, 255, 0.07);
+            --bg-card-border: rgba(255, 255, 255, 0.08);
             
             --text-white: #ffffff;
             --text-muted: #94a3b8;
@@ -31,6 +33,11 @@
             
             --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.25);
             --shadow-glow: 0 4px 16px rgba(14, 117, 74, 0.35);
+            --shadow-glow-gold: 0 4px 16px rgba(197, 160, 89, 0.25);
+            
+            /* Spring Physics Easing (from NameThatUI) */
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -44,7 +51,6 @@
         html, body {
             overflow-x: hidden;
             width: 100%;
-            max-width: 100vw;
         }
 
         body {
@@ -52,33 +58,72 @@
             background-color: var(--bg-main);
             color: var(--text-white);
             min-height: 100vh;
-            padding-bottom: 110px;
+            padding-bottom: 120px;
             -webkit-font-smoothing: antialiased;
             background-image: 
-                radial-gradient(at 50% 0%, rgba(14, 117, 74, 0.25) 0px, transparent 40%),
+                radial-gradient(at 50% 0%, rgba(14, 117, 74, 0.22) 0px, transparent 40%),
                 radial-gradient(at 100% 100%, rgba(197, 160, 89, 0.08) 0px, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* Unified Sticky Header: Logo + Search + Categories */
+        /* Marquee Component (NameThatUI) */
+        .marquee-container {
+            background: linear-gradient(90deg, #075233, #0e754a, #075233);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            padding: 4px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            user-select: none;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            gap: 2rem;
+            animation: marquee 24s linear infinite;
+            will-change: transform;
+        }
+
+        .marquee-item {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .marquee-item b {
+            color: #fef08a;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Unified Sticky Header: Logo + Search + Filter Chips */
         .sticky-header-container {
             position: sticky;
             top: 0;
             z-index: 50;
-            background: #0c131f;
+            background: rgba(12, 19, 31, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--bg-card-border);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
 
         .app-header {
-            padding: 0.75rem 1rem 0.5rem;
+            padding: 0.65rem 0.9rem 0.45rem;
         }
 
         .header-top-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.55rem;
             gap: 0.5rem;
         }
 
@@ -89,8 +134,8 @@
         }
 
         .logo-img {
-            height: 44px;
-            max-width: 175px;
+            height: 42px;
+            max-width: 170px;
             object-fit: cover;
             border-radius: 50% / 50%;
             clip-path: ellipse(48% 46% at 50% 50%);
@@ -102,9 +147,9 @@
             background: linear-gradient(135deg, rgba(14, 117, 74, 0.35), rgba(197, 160, 89, 0.2));
             border: 1px solid rgba(197, 160, 89, 0.45);
             color: #fef08a;
-            padding: 0.35rem 0.75rem;
+            padding: 0.3rem 0.7rem;
             border-radius: var(--radius-pill);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -112,27 +157,27 @@
             white-space: nowrap;
         }
 
-        /* Search input */
-        .search-box {
+        /* Search Field with Clear Button (NameThatUI: Search Field Pattern) */
+        .search-box-wrapper {
             position: relative;
             width: 100%;
         }
 
-        .search-box input {
+        .search-box-wrapper input {
             width: 100%;
-            height: 42px;
+            height: 40px;
             background: var(--bg-surface);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-pill);
-            padding: 0 1rem 0 2.6rem;
+            padding: 0 2.2rem 0 2.4rem;
             color: #ffffff;
-            font-size: 16px;
+            font-size: 14px;
             font-family: inherit;
             outline: none;
             transition: all 0.2s ease;
         }
 
-        .search-box input:focus {
+        .search-box-wrapper input:focus {
             border-color: var(--brand-green-light);
             background: #1c293f;
             box-shadow: 0 0 0 3px rgba(21, 158, 101, 0.25);
@@ -140,22 +185,78 @@
 
         .search-icon {
             position: absolute;
-            left: 0.95rem;
+            left: 0.85rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-dim);
             pointer-events: none;
         }
 
-        /* Category Scroll Bar */
-        .category-scroll {
+        .search-clear-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-muted);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .search-clear-btn.active {
             display: flex;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem 0.75rem;
+        }
+
+        /* Quick Macro Goals Row (NameThatUI: Token Field / Filter Chips) */
+        .quick-goals-bar {
+            display: flex;
+            gap: 0.4rem;
+            padding: 0.25rem 0.9rem 0.45rem;
             overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
-            background: #0c131f;
+        }
+
+        .quick-goals-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .goal-chip {
+            padding: 0.25rem 0.65rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-pill);
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .goal-chip.active {
+            background: rgba(197, 160, 89, 0.2);
+            border-color: rgba(197, 160, 89, 0.6);
+            color: #fef08a;
+            transform: scale(1.03);
+        }
+
+        /* Category Scroll Bar (NameThatUI: Segmented Control / Pill Bar) */
+        .category-scroll {
+            display: flex;
+            gap: 0.45rem;
+            padding: 0.35rem 0.9rem 0.65rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         .category-scroll::-webkit-scrollbar {
@@ -163,19 +264,23 @@
         }
 
         .cat-chip {
-            padding: 0.45rem 0.9rem;
+            padding: 0.4rem 0.85rem;
             background: var(--bg-surface);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-pill);
             color: var(--text-muted);
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 700;
             white-space: nowrap;
             display: flex;
             align-items: center;
             gap: 0.35rem;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .cat-chip:active {
+            transform: scale(0.95);
         }
 
         .cat-chip.active {
@@ -184,46 +289,47 @@
             font-weight: 800;
             border-color: var(--brand-green-light);
             box-shadow: var(--shadow-glow);
+            transform: scale(1.02);
         }
 
         /* Main Feed */
         .mobile-feed {
-            padding: 0.85rem 0.85rem 120px;
+            padding: 0.75rem 0.75rem 120px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* Diet Info Banner */
+        /* Diet Info Banner (NameThatUI: Callout / Inline Alert) */
         .cat-banner {
             background: linear-gradient(135deg, rgba(14, 117, 74, 0.25), rgba(22, 32, 50, 0.95));
             border: 1px solid rgba(21, 158, 101, 0.35);
             border-radius: 14px;
-            padding: 0.75rem 0.9rem;
-            margin-bottom: 0.85rem;
+            padding: 0.65rem 0.85rem;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .cat-banner-icon {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
             line-height: 1;
         }
 
         .cat-banner-text h2 {
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             font-weight: 800;
             color: #34d399;
         }
 
         .cat-banner-text p {
-            font-size: 0.74rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 2px;
-            line-height: 1.3;
+            margin-top: 1px;
+            line-height: 1.25;
         }
 
-        /* Product Grid (2-column mobile) */
+        /* Product Grid (2-column mobile with minmax protection) */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -231,7 +337,7 @@
             width: 100%;
         }
 
-        /* Product Card */
+        /* Product Card (NameThatUI: Card Anatomy + Bento Aesthetics) */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--bg-card-border);
@@ -243,11 +349,12 @@
             gap: 0.65rem;
             box-shadow: var(--shadow-card);
             position: relative;
-            min-width: 0; /* Previene que la tarjeta rompa la cuadricula */
+            min-width: 0;
+            transition: transform 0.2s var(--ease-spring), border-color 0.2s ease;
         }
 
         .product-card:active {
-            transform: scale(0.985);
+            transform: scale(0.975);
         }
 
         .card-top {
@@ -367,14 +474,14 @@
         .macro-val.fat { color: #f87171; }
 
         .card-price {
-            font-size: 1.15rem;
+            font-size: 1.12rem;
             font-weight: 900;
             color: #34d399;
             margin-top: 0.35rem;
             font-variant-numeric: tabular-nums;
         }
 
-        /* Steppers & Touch Buttons */
+        /* Steppers & Touch Buttons (NameThatUI: Stepper Pattern) */
         .btn-add-touch {
             width: 100%;
             height: 38px;
@@ -383,18 +490,19 @@
             border-radius: 10px;
             color: #34d399;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.25rem;
-            transition: all 0.15s;
+            transition: all 0.2s var(--ease-spring);
         }
 
         .btn-add-touch:active {
             background: var(--brand-green);
             color: #ffffff;
+            transform: scale(0.95);
         }
 
         .stepper-touch {
@@ -407,6 +515,7 @@
             border: 1px solid var(--brand-green-light);
             border-radius: 10px;
             padding: 2px;
+            animation: springPop 0.25s var(--ease-spring);
         }
 
         .stepper-btn {
@@ -422,10 +531,12 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: transform 0.15s var(--ease-spring);
         }
 
         .stepper-btn:active {
             background: var(--brand-green);
+            transform: scale(0.88);
         }
 
         .stepper-num {
@@ -442,7 +553,7 @@
             left: 0;
             right: 0;
             z-index: 40;
-            padding: 0.75rem 1rem env(safe-area-inset-bottom, 0.75rem);
+            padding: 0.65rem 0.9rem env(safe-area-inset-bottom, 0.65rem);
             background: rgba(12, 19, 31, 0.97);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
@@ -467,11 +578,11 @@
         .cart-discount-label {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
         }
 
         .cart-discount-label span {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-dim);
             font-weight: 700;
             text-transform: uppercase;
@@ -480,49 +591,68 @@
         .tag-10 {
             background: rgba(216, 35, 42, 0.2);
             color: #f87171;
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 800;
             padding: 1px 5px;
             border-radius: 4px;
         }
 
         .cart-total-num {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 900;
             color: #ffffff;
             font-variant-numeric: tabular-nums;
         }
 
         .btn-view-order {
-            height: 46px;
-            padding: 0 1.25rem;
+            height: 44px;
+            padding: 0 1.15rem;
             background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dark));
             border: 1px solid var(--brand-green-light);
             border-radius: var(--radius-pill);
             color: #ffffff;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
             box-shadow: var(--shadow-glow);
+            transition: transform 0.2s var(--ease-spring);
         }
 
         .btn-view-order:active {
-            transform: scale(0.96);
+            transform: scale(0.94);
         }
 
+        /* Dock Badge / Pulsing Spring Badge (NameThatUI) */
         .count-badge {
             background: #ffffff;
             color: var(--brand-green-dark);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 900;
             padding: 2px 7px;
             border-radius: var(--radius-pill);
+            transition: transform 0.3s var(--ease-spring);
+            display: inline-block;
         }
 
-        /* Bottom Sheet Cart Modal */
+        .count-badge.bump {
+            animation: springBounce 0.4s var(--ease-spring);
+        }
+
+        @keyframes springBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); background: #fef08a; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes springPop {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Bottom Sheet (NameThatUI: Modal Sheet + Scrim) */
         .sheet-overlay {
             position: fixed;
             inset: 0;
@@ -531,7 +661,7 @@
             z-index: 100;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s var(--ease-smooth);
         }
 
         .sheet-overlay.active {
@@ -554,7 +684,7 @@
             display: flex;
             flex-direction: column;
             transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            transition: transform 0.35s var(--ease-spring);
             box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.8);
         }
 
@@ -562,16 +692,17 @@
             transform: translateY(0);
         }
 
+        /* Resize/Grab Handle */
         .sheet-handle {
-            width: 44px;
+            width: 40px;
             height: 4px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             border-radius: var(--radius-pill);
             margin: 0.75rem auto 0.25rem;
         }
 
         .sheet-head {
-            padding: 0.75rem 1.25rem 1rem;
+            padding: 0.65rem 1.15rem 0.85rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -579,7 +710,7 @@
         }
 
         .sheet-head h3 {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -589,22 +720,60 @@
         .btn-sheet-close {
             background: rgba(255, 255, 255, 0.08);
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: var(--radius-pill);
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Savings Progress Bar (NameThatUI: Progress Ring / Level Indicator) */
+        .savings-progress-box {
+            background: rgba(14, 117, 74, 0.15);
+            border: 1px solid rgba(21, 158, 101, 0.3);
+            border-radius: 10px;
+            padding: 0.55rem 0.75rem;
+            margin: 0.65rem 1.15rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .savings-top-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        .savings-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+        }
+
+        .savings-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--brand-green-light), #fef08a);
+            border-radius: var(--radius-pill);
         }
 
         .sheet-content {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem 1.25rem;
+            padding: 0.85rem 1.15rem;
             display: flex;
             flex-direction: column;
-            gap: 0.65rem;
+            gap: 0.6rem;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -612,11 +781,11 @@
             background: var(--bg-surface);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 0.75rem 0.9rem;
+            padding: 0.7rem 0.85rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .item-info {
@@ -625,7 +794,7 @@
         }
 
         .item-title {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: #ffffff;
             white-space: nowrap;
@@ -634,7 +803,7 @@
         }
 
         .item-sub {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-dim);
             margin-top: 2px;
         }
@@ -642,11 +811,11 @@
         .item-total-col {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .item-subtotal {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 800;
             color: #34d399;
             white-space: nowrap;
@@ -684,18 +853,18 @@
 
         /* Summary / Footer of Sheet */
         .sheet-bottom {
-            padding: 1rem 1.25rem env(safe-area-inset-bottom, 1.25rem);
+            padding: 0.85rem 1.15rem env(safe-area-inset-bottom, 1.15rem);
             background: rgba(10, 15, 26, 0.98);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             flex-direction: column;
-            gap: 0.55rem;
+            gap: 0.5rem;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
         }
 
@@ -708,10 +877,10 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-top: 0.25rem;
-            padding-top: 0.5rem;
+            margin-top: 0.2rem;
+            padding-top: 0.45rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 900;
             color: #ffffff;
         }
@@ -722,38 +891,79 @@
 
         .btn-copy-quote {
             width: 100%;
-            height: 48px;
+            height: 46px;
             background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dark));
             border: 1px solid var(--brand-green-light);
             border-radius: 12px;
             color: #ffffff;
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             cursor: pointer;
             box-shadow: var(--shadow-glow);
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
+            transition: transform 0.2s var(--ease-spring);
         }
 
         .btn-copy-quote:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         .btn-empty-cart {
             background: none;
             border: none;
             color: var(--text-dim);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             text-align: center;
             cursor: pointer;
-            padding: 0.25rem;
+            padding: 0.2rem;
         }
 
-        /* Toast */
+        /* Empty State Component (NameThatUI) */
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px dashed var(--bg-card-border);
+            border-radius: 16px;
+            margin-top: 1rem;
+        }
+
+        .empty-state-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .empty-state-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0.35rem 0 1rem;
+        }
+
+        .btn-reset-filters {
+            background: var(--brand-green);
+            color: #fff;
+            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Toast / Snackbar Component (NameThatUI: Toast Pattern with Spring Animation) */
         .toast {
             position: fixed;
             top: 1rem;
@@ -761,15 +971,18 @@
             transform: translateX(-50%) translateY(-100px);
             background: var(--brand-green);
             color: #ffffff;
-            padding: 0.6rem 1.25rem;
+            padding: 0.55rem 1.15rem;
             border-radius: var(--radius-pill);
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             z-index: 200;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s var(--ease-spring);
             pointer-events: none;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .toast.show {
@@ -778,6 +991,28 @@
     </style>
 </head>
 <body>
+
+    <!-- Marquee Component (NameThatUI: Endless Ticker) -->
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <span class="marquee-item">✨ <b>10% DESCUENTO</b> AUTOMÁTICO EN TU PEDIDO</span>
+            <span class="marquee-item">•</span>
+            <span class="marquee-item">🥑 <b>KETO, FIT & MACROS</b> CALCULADOS AL 100%</span>
+            <span class="marquee-item">•</span>
+            <span class="marquee-item">🥦 <b>CALIDAD Y FRESCURA</b> TODOS LOS DÍAS®</span>
+            <span class="marquee-item">•</span>
+            <span class="marquee-item">🚚 <b>ENTREGAS EN TODO COSTA RICA</b></span>
+            <span class="marquee-item">•</span>
+            <!-- Duplicate for loop -->
+            <span class="marquee-item">✨ <b>10% DESCUENTO</b> AUTOMÁTICO EN TU PEDIDO</span>
+            <span class="marquee-item">•</span>
+            <span class="marquee-item">🥑 <b>KETO, FIT & MACROS</b> CALCULADOS AL 100%</span>
+            <span class="marquee-item">•</span>
+            <span class="marquee-item">🥦 <b>CALIDAD Y FRESCURA</b> TODOS LOS DÍAS®</span>
+            <span class="marquee-item">•</span>
+            <span class="marquee-item">🚚 <b>ENTREGAS EN TODO COSTA RICA</b></span>
+        </div>
+    </div>
 
     <!-- Unified Sticky Header -->
     <div class="sticky-header-container">
@@ -791,16 +1026,27 @@
                 </div>
             </div>
 
-            <div class="search-box">
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Search Field with Built-in Clear Button (NameThatUI) -->
+            <div class="search-box-wrapper">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <input type="text" id="searchInput" placeholder="Buscar por producto, nutriente o código..." oninput="onSearch()">
+                <button class="search-clear-btn" id="searchClearBtn" onclick="clearSearch()">✕</button>
             </div>
         </header>
 
-        <!-- Horizontal Category Scroll -->
+        <!-- Quick Macro Target Filters (NameThatUI: Token Field / Filter Chips) -->
+        <div class="quick-goals-bar">
+            <button class="goal-chip active" onclick="setMacroGoal('TODOS', this)">Todos los Macros</button>
+            <button class="goal-chip" onclick="setMacroGoal('BAJO_CAL', this)">🔥 &lt; 50 kcal</button>
+            <button class="goal-chip" onclick="setMacroGoal('KETO', this)">🥑 Keto (&lt; 10g C)</button>
+            <button class="goal-chip" onclick="setMacroGoal('ALTA_PROT', this)">💪 +5g Proteína</button>
+            <button class="goal-chip" onclick="setMacroGoal('CERO_GRASA', this)">🌿 0% Grasa</button>
+        </div>
+
+        <!-- Horizontal Category Scroll (NameThatUI: Segmented Control) -->
         <div class="category-scroll">
             <button class="cat-chip active" onclick="filtrarCategoria('TODOS', this)">✨ Todos</button>
             <button class="cat-chip" onclick="filtrarCategoria('Verduras & Fibra', this)">🥦 Verduras & Fibra</button>
@@ -816,7 +1062,7 @@
 
     <!-- Mobile Product Grid Feed -->
     <main class="mobile-feed">
-        <!-- Diet Guidance Banner -->
+        <!-- Diet Guidance Banner (NameThatUI: Inline Alert / Callout) -->
         <div class="cat-banner" id="catBanner">
             <div class="cat-banner-icon" id="catBannerIcon">🥗</div>
             <div class="cat-banner-text">
@@ -826,11 +1072,11 @@
         </div>
 
         <div class="products-grid" id="productGrid">
-            <!-- Products rendered here -->
+            <!-- Products rendered dynamically -->
         </div>
     </main>
 
-    <!-- Floating Bottom Bar -->
+    <!-- Floating Bottom Bar (NameThatUI: Floating Action Bar + Dock Badge) -->
     <div class="floating-cart-bar">
         <div class="cart-bar-inner">
             <div class="cart-text-area">
@@ -848,9 +1094,10 @@
         </div>
     </div>
 
-    <!-- Bottom Sheet Modal -->
+    <!-- Bottom Sheet Modal (NameThatUI: Modal Sheet + Scrim) -->
     <div class="sheet-overlay" id="sheetOverlay" onclick="cerrarPedido(event)">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <!-- Grab Handle (NameThatUI: Resize Grip / Sheet Handle) -->
             <div class="sheet-handle"></div>
             
             <div class="sheet-head">
@@ -859,6 +1106,17 @@
                     <span style="font-size: 0.8rem; color: var(--text-dim);">(<span id="sheetCountBadge">0</span>)</span>
                 </h3>
                 <button class="btn-sheet-close" onclick="cerrarPedido()">✕</button>
+            </div>
+
+            <!-- Savings Progress Level Indicator (NameThatUI) -->
+            <div class="savings-progress-box">
+                <div class="savings-top-text">
+                    <span>🎉 10% Descuento Especial Aplicado</span>
+                    <span id="savingsAmountText">Ahorras ₡0.00</span>
+                </div>
+                <div class="savings-track">
+                    <div class="savings-fill"></div>
+                </div>
             </div>
 
             <div class="sheet-content" id="sheetContent">
@@ -889,8 +1147,11 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">✨ ¡Agregado!</div>
+    <!-- Toast Notification (NameThatUI: Toast / Snackbar with Spring Animation) -->
+    <div class="toast" id="toast">
+        <span>✨</span>
+        <span id="toastText">¡Agregado al pedido!</span>
+    </div>
 
     <script>
         const productos = [
@@ -5873,6 +6134,7 @@
 ];
         const carrito = {};
         let categoriaActual = 'TODOS';
+        let macroGoalActual = 'TODOS';
         let terminoBusqueda = '';
 
         const descripcionesDiet = {
@@ -5940,9 +6202,46 @@
             renderizarGrid();
         }
 
-        function onSearch() {
-            terminoBusqueda = document.getElementById('searchInput').value.toLowerCase().trim();
+        function setMacroGoal(goal, btn) {
+            macroGoalActual = goal;
+            document.querySelectorAll('.goal-chip').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
             renderizarGrid();
+        }
+
+        function onSearch() {
+            const input = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('searchClearBtn');
+            terminoBusqueda = input.value.toLowerCase().trim();
+            
+            if (terminoBusqueda.length > 0) {
+                clearBtn.classList.add('active');
+            } else {
+                clearBtn.classList.remove('active');
+            }
+            renderizarGrid();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            document.getElementById('searchClearBtn').classList.remove('active');
+            terminoBusqueda = '';
+            renderizarGrid();
+            input.focus();
+        }
+
+        function resetearFiltros() {
+            categoriaActual = 'TODOS';
+            macroGoalActual = 'TODOS';
+            terminoBusqueda = '';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchClearBtn').classList.remove('active');
+            
+            document.querySelectorAll('.cat-chip').forEach((el, idx) => el.classList.toggle('active', idx === 0));
+            document.querySelectorAll('.goal-chip').forEach((el, idx) => el.classList.toggle('active', idx === 0));
+            
+            filtrarCategoria('TODOS', document.querySelector('.cat-chip'));
         }
 
         function renderizarGrid() {
@@ -5950,20 +6249,37 @@
             grid.innerHTML = '';
 
             const filtrados = productos.filter(p => {
+                // Category filter
                 const matchCat = categoriaActual === 'TODOS' || p.cat === categoriaActual;
+                
+                // Search filter
                 const matchSearch = terminoBusqueda === '' || 
                     p.nombre.toLowerCase().includes(terminoBusqueda) || 
                     p.id.toLowerCase().includes(terminoBusqueda) ||
                     p.tag.toLowerCase().includes(terminoBusqueda);
-                return matchCat && matchSearch;
+                
+                // Macro Goal filter (NameThatUI: Token multi-filter)
+                let matchGoal = true;
+                if (macroGoalActual === 'BAJO_CAL') {
+                    matchGoal = p.nutri.cal < 50;
+                } else if (macroGoalActual === 'KETO') {
+                    matchGoal = p.nutri.carb < 10 && (p.cat === 'Grasas Buenas' || p.nutri.fat > 2 || p.nutri.carb < 5);
+                } else if (macroGoalActual === 'ALTA_PROT') {
+                    matchGoal = p.nutri.prot >= 5;
+                } else if (macroGoalActual === 'CERO_GRASA') {
+                    matchGoal = p.nutri.fat <= 0.5;
+                }
+
+                return matchCat && matchSearch && matchGoal;
             });
 
             if (filtrados.length === 0) {
                 grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; color: var(--text-dim);">
-                        <p style="font-size: 2rem;">🔍</p>
-                        <p style="font-weight: 700; margin-top: 0.5rem; color: #fff;">Sin resultados</p>
-                        <small>Prueba buscando otra palabra o revisa otra categoría</small>
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-title">No se encontraron productos</div>
+                        <div class="empty-state-desc">Prueba cambiando tu búsqueda o seleccionando otro filtro nutricional.</div>
+                        <button class="btn-reset-filters" onclick="resetearFiltros()">Restablecer Filtros</button>
                     </div>
                 `;
                 return;
@@ -5997,7 +6313,7 @@
                         </div>
                         <h3 class="card-name">${prod.nombre}</h3>
                         
-                        <!-- Nutritional Facts Box -->
+                        <!-- Nutritional Facts Box (NameThatUI: Bento Macro Indicator) -->
                         <div class="nutri-box">
                             <div class="nutri-header-row">
                                 <span>Porción:</span>
@@ -6036,10 +6352,20 @@
             carrito[id] += delta;
             if (carrito[id] <= 0) delete carrito[id];
 
-            if (delta > 0) mostrarToast('✨ Agregado al pedido');
+            if (delta > 0) {
+                mostrarToast('¡Agregado a tu lista!');
+                animarDockBadge();
+            }
             
             renderizarGrid();
             actualizarTotales();
+        }
+
+        function animarDockBadge() {
+            const badge = document.getElementById('barCountBadge');
+            badge.classList.remove('bump');
+            void badge.offsetWidth; // Trigger reflow for spring animation
+            badge.classList.add('bump');
         }
 
         function actualizarTotales() {
@@ -6056,7 +6382,7 @@
                     <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-dim);">
                         <p style="font-size: 2.5rem;">🥗</p>
                         <p style="font-weight: 700; color: #fff; margin-top: 0.5rem;">Tu lista de compras está vacía</p>
-                        <small>Toca "+ Agregar" en los productos</small>
+                        <small>Toca "+ Agregar" en los productos del catálogo</small>
                     </div>
                 `;
             } else {
@@ -6074,7 +6400,7 @@
                     row.innerHTML = `
                         <div class="item-info">
                             <div class="item-title">${prod.emoji} ${prod.nombre}</div>
-                            <div class="item-sub">${qty} × ${formatearDinero(prod.precio)} • <span style="color:#fbbf24;">${prod.nutri.cal} kcal (${prod.nutri.porcion})</span></div>
+                            <div class="item-sub">${qty} × ${formatearDinero(prod.precio)} • <span style="color:#fbbf24;">${prod.nutri.cal} kcal</span></div>
                         </div>
                         <div class="item-total-col">
                             <div class="item-subtotal">${formatearDinero(itemTotal)}</div>
@@ -6098,6 +6424,7 @@
 
             // Update Sheet
             document.getElementById('sheetCountBadge').innerText = totalItems;
+            document.getElementById('savingsAmountText').innerText = 'Ahorras ' + formatearDinero(discount);
             document.getElementById('sheetSubtotal').innerText = formatearDinero(subtotal);
             document.getElementById('sheetDiscount').innerText = '-' + formatearDinero(discount);
             document.getElementById('sheetTotal').innerText = formatearDinero(total);
@@ -6151,7 +6478,7 @@
             texto += `\n*TOTAL ESTIMADO:* *${formatearDinero(total)}*`;
 
             navigator.clipboard.writeText(texto).then(() => {
-                mostrarToast('📋 ¡Copiado al portapapeles!');
+                mostrarToast('📋 ¡Lista copiada al portapapeles!');
                 setTimeout(() => cerrarPedido(), 700);
             }).catch(() => {
                 alert(texto);
@@ -6160,7 +6487,7 @@
 
         function mostrarToast(msg) {
             const toast = document.getElementById('toast');
-            toast.innerText = msg;
+            document.getElementById('toastText').innerText = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 1600);
         }

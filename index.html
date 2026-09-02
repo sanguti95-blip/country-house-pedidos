@@ -534,6 +534,192 @@
             gap: 0.25rem;
         }
 
+        .card-top-left {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .btn-fav {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .btn-fav:active {
+            transform: scale(1.3);
+        }
+
+        .btn-fav.active {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.45);
+        }
+
+        [data-theme="light"] .btn-fav {
+            background: #f1f5f9;
+            border-color: rgba(0, 0, 0, 0.09);
+        }
+
+        /* Combos & Kits Prearmados */
+        .combos-section {
+            margin-bottom: 1.1rem;
+        }
+
+        .combos-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0 0.1rem;
+        }
+
+        .combos-title {
+            font-size: 0.84rem;
+            font-weight: 800;
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .combos-pill {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 1px 6px;
+            border-radius: var(--radius-capsule);
+            text-transform: uppercase;
+        }
+
+        .combos-sub {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .combos-scroll {
+            display: flex;
+            gap: 0.65rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .combos-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .combo-card {
+            min-width: 205px;
+            max-width: 205px;
+            background: var(--bg-card);
+            border: 1px solid rgba(24, 183, 117, 0.35);
+            border-radius: 14px;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.45rem;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            flex-shrink: 0;
+            transition: transform 0.2s var(--ease-spring);
+        }
+
+        [data-theme="light"] .combo-card {
+            background: #ffffff;
+            border-color: rgba(14, 117, 74, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+        }
+
+        .combo-badge-top {
+            font-size: 0.55rem;
+            font-weight: 800;
+            color: #34d399;
+            background: rgba(14, 117, 74, 0.25);
+            border: 1px solid rgba(24, 183, 117, 0.3);
+            padding: 1px 6px;
+            border-radius: var(--radius-capsule);
+            width: fit-content;
+            text-transform: uppercase;
+        }
+
+        [data-theme="light"] .combo-badge-top {
+            color: #065f46;
+            background: #d1fae5;
+            border-color: #a7f3d0;
+        }
+
+        .combo-icon {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .combo-name {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-white);
+            line-height: 1.2;
+        }
+
+        .combo-items-desc {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .combo-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.4rem;
+            margin-top: 0.2rem;
+        }
+
+        .combo-price {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #34d399;
+        }
+
+        [data-theme="light"] .combo-price {
+            color: #059669;
+        }
+
+        .btn-load-combo {
+            background: var(--brand-green);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 0.35rem 0.65rem;
+            border-radius: var(--radius-capsule);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.2s var(--ease-spring);
+        }
+
+        .btn-load-combo:active {
+            transform: scale(0.92);
+        }
+
         .emoji-circle {
             width: 34px;
             height: 34px;
@@ -1432,6 +1618,7 @@
         <!-- Clean Category Scroll -->
         <div class="category-scroll">
             <button class="cat-chip active" onclick="filtrarCategoria('TODOS', this)">✨ Todo el Catálogo</button>
+            <button class="cat-chip" onclick="filtrarCategoria('FAVORITOS', this)">❤️ Favoritos (<span id="favCountBadge">0</span>)</button>
             <button class="cat-chip" onclick="filtrarCategoria('Verduras & Fibra', this)">🥦 Verduras & Hojas Verdes</button>
             <button class="cat-chip" onclick="filtrarCategoria('Grasas Buenas', this)">🥑 Aguacates & Semillas</button>
             <button class="cat-chip" onclick="filtrarCategoria('Frutas & Vitaminas', this)">🍓 Frutas Frescas</button>
@@ -1461,6 +1648,62 @@
             <div class="cat-banner-text">
                 <h2 id="catBannerTitle">Calidad y Frescura Todos los Días</h2>
                 <p id="catBannerDesc">Selecciona tus productos favoritos y haz tu pedido directamente por WhatsApp.</p>
+            </div>
+        </div>
+
+        <!-- Combos & Kits Prearmados Section -->
+        <div class="combos-section" id="combosSection">
+            <div class="combos-header">
+                <div class="combos-title">
+                    <span>⚡ Combos &amp; Kits Rápidos</span>
+                    <span class="combos-pill">1 Toque</span>
+                </div>
+                <span class="combos-sub">Llena tu carrito con un solo toque</span>
+            </div>
+            <div class="combos-scroll">
+                <div class="combo-card">
+                    <div class="combo-badge-top">💪 Más Vendido Gym</div>
+                    <div class="combo-icon">🥚🥑</div>
+                    <h4 class="combo-name">Kit Gym &amp; Proteína</h4>
+                    <p class="combo-items-desc">Huevos Granja + Queso Palmito + Camote + Aguacate Hass + Fresas</p>
+                    <div class="combo-footer">
+                        <span class="combo-price">~₡11.120</span>
+                        <button class="btn-load-combo" onclick="cargarCombo('GYM')">+ Cargar Kit</button>
+                    </div>
+                </div>
+
+                <div class="combo-card">
+                    <div class="combo-badge-top">🥗 100% Fresco</div>
+                    <div class="combo-icon">🥦🍋</div>
+                    <h4 class="combo-name">Combo Ensalada &amp; Fibra</h4>
+                    <p class="combo-items-desc">Lechuga Americana + Tomate + Pepino + Brócoli + Aguacate + Limones</p>
+                    <div class="combo-footer">
+                        <span class="combo-price">~₡7.965</span>
+                        <button class="btn-load-combo" onclick="cargarCombo('ENSALADA')">+ Cargar Kit</button>
+                    </div>
+                </div>
+
+                <div class="combo-card">
+                    <div class="combo-badge-top">🍓 Smoothie Detox</div>
+                    <div class="combo-icon">🧊🍍</div>
+                    <h4 class="combo-name">Pack Batidos &amp; Detox</h4>
+                    <p class="combo-items-desc">Fresas (1kg) + Pulpa Maracuyá + Piña Dorada + Semillas Chía + Jengibre</p>
+                    <div class="combo-footer">
+                        <span class="combo-price">~₡11.050</span>
+                        <button class="btn-load-combo" onclick="cargarCombo('DETOX')">+ Cargar Kit</button>
+                    </div>
+                </div>
+
+                <div class="combo-card">
+                    <div class="combo-badge-top">🏠 Ahorro Semanal</div>
+                    <div class="combo-icon">🥔🧅</div>
+                    <h4 class="combo-name">Canasta Hogar Semanal</h4>
+                    <p class="combo-items-desc">Papas + Cebolla + Ajos + Plátanos Maduros + Zanahoria + Culantro</p>
+                    <div class="combo-footer">
+                        <span class="combo-price">~₡6.130</span>
+                        <button class="btn-load-combo" onclick="cargarCombo('CANASTA')">+ Cargar Kit</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -6897,11 +7140,103 @@
         let terminoBusqueda = '';
         let metodoPagoSeleccionado = 'Sinpe Móvil';
 
+        // LocalStorage Favorites
+        const favoritos = new Set(JSON.parse(localStorage.getItem('country_house_favs') || '[]'));
+
+        function guardarFavoritos() {
+            localStorage.setItem('country_house_favs', JSON.stringify(Array.from(favoritos)));
+            actualizarBadgeFavoritos();
+        }
+
+        function toggleFavorito(id, e) {
+            if (e) e.stopPropagation();
+            if (favoritos.has(id)) {
+                favoritos.delete(id);
+                mostrarToast('Eliminado de favoritos');
+            } else {
+                favoritos.add(id);
+                mostrarToast('❤️ ¡Guardado en tus favoritos!');
+            }
+            guardarFavoritos();
+            renderizarGrid();
+        }
+
+        function actualizarBadgeFavoritos() {
+            const b = document.getElementById('favCountBadge');
+            if (b) b.innerText = favoritos.size;
+        }
+
+        // Combos Prearmados Data
+        const combosData = {
+            'GYM': {
+                nombre: 'Kit Gym & Proteína',
+                items: [
+                    { id: 'C2180BL', qty: 1 },
+                    { id: '112026', qty: 1 },
+                    { id: '1351', qty: 1 },
+                    { id: '683', qty: 2 },
+                    { id: '15524A', qty: 1 }
+                ]
+            },
+            'ENSALADA': {
+                nombre: 'Combo Ensalada & Fibra',
+                items: [
+                    { id: '115412', qty: 1 },
+                    { id: '125150', qty: 1 },
+                    { id: '125131', qty: 1 },
+                    { id: '12531', qty: 1 },
+                    { id: '14575P', qty: 1 },
+                    { id: '683', qty: 2 }
+                ]
+            },
+            'DETOX': {
+                nombre: 'Pack Batidos & Detox',
+                items: [
+                    { id: '15523', qty: 1 },
+                    { id: '16658L', qty: 1 },
+                    { id: '1451647', qty: 1 },
+                    { id: '420P', qty: 1 },
+                    { id: '13513', qty: 1 }
+                ]
+            },
+            'CANASTA': {
+                nombre: 'Canasta Hogar Semanal',
+                items: [
+                    { id: '13556', qty: 1 },
+                    { id: '12554P', qty: 1 },
+                    { id: '771', qty: 1 },
+                    { id: '145174M', qty: 2 },
+                    { id: '13588', qty: 1 },
+                    { id: '11522N', qty: 1 }
+                ]
+            }
+        };
+
+        function cargarCombo(comboKey) {
+            const combo = combosData[comboKey];
+            if (!combo) return;
+
+            combo.items.forEach(it => {
+                if (!carrito[it.id]) carrito[it.id] = 0;
+                carrito[it.id] += it.qty;
+            });
+
+            mostrarToast(`🎉 ¡${combo.nombre} cargado al pedido!`);
+            animarDockBadge();
+            renderizarGrid();
+            actualizarTotales();
+        }
+
         const descripcionesCategorias = {
             'TODOS': {
                 icon: '🥗',
                 title: 'Calidad y Frescura Todos los Días',
                 desc: 'Selecciona tus productos favoritos y haz tu pedido directamente por WhatsApp.'
+            },
+            'FAVORITOS': {
+                icon: '❤️',
+                title: 'Tus Productos Favoritos',
+                desc: 'Accede rápidamente a tus alimentos y compras habituales de cada semana.'
             },
             'Verduras & Fibra': {
                 icon: '🥦',
@@ -6988,6 +7323,12 @@
             document.getElementById('catBannerTitle').innerText = info.title;
             document.getElementById('catBannerDesc').innerText = info.desc;
 
+            // Hide or show combos section if filtering favorites
+            const combosSec = document.getElementById('combosSection');
+            if (combosSec) {
+                combosSec.style.display = (cat === 'TODOS') ? 'block' : 'none';
+            }
+
             renderizarGrid();
         }
 
@@ -7043,7 +7384,9 @@
             grid.innerHTML = '';
 
             const filtrados = productos.filter(p => {
-                const matchCat = categoriaActual === 'TODOS' || p.cat === categoriaActual;
+                const matchCat = categoriaActual === 'FAVORITOS'
+                    ? favoritos.has(p.id)
+                    : (categoriaActual === 'TODOS' || p.cat === categoriaActual);
                 const matchMeta = metaDietActual === 'ALL' || p.goal === metaDietActual;
                 const matchSearch = terminoBusqueda === '' || 
                     p.nombre.toLowerCase().includes(terminoBusqueda) || 
@@ -7054,20 +7397,32 @@
             });
 
             if (filtrados.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
-                        <div class="empty-state-title">No se encontraron productos</div>
-                        <div class="empty-state-desc">Prueba cambiando tu objetivo fitness o buscando otra categoría.</div>
-                        <button class="btn-reset-filters" onclick="resetearFiltros()">Ver Todo el Catálogo</button>
-                    </div>
-                `;
+                if (categoriaActual === 'FAVORITOS') {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">❤️</div>
+                            <div class="empty-state-title">Aún no tienes favoritos</div>
+                            <div class="empty-state-desc">Toca el corazón 🤍 en cualquier producto para guardarlo en tu lista de compras habituales.</div>
+                            <button class="btn-reset-filters" onclick="resetearFiltros()">Explorar Catálogo</button>
+                        </div>
+                    `;
+                } else {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔍</div>
+                            <div class="empty-state-title">No se encontraron productos</div>
+                            <div class="empty-state-desc">Prueba cambiando tu objetivo fitness o buscando otra categoría.</div>
+                            <button class="btn-reset-filters" onclick="resetearFiltros()">Ver Todo el Catálogo</button>
+                        </div>
+                    `;
+                }
                 return;
             }
 
             filtrados.forEach(prod => {
                 const qty = carrito[prod.id] || 0;
                 const n = prod.nutri;
+                const isFav = favoritos.has(prod.id);
                 
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -7088,8 +7443,13 @@
                 card.innerHTML = `
                     <div>
                         <div class="card-top">
-                            <div class="emoji-circle">${prod.emoji}</div>
-                            <span class="diet-tag">${prod.tag}</span>
+                            <div class="card-top-left">
+                                <div class="emoji-circle">${prod.emoji}</div>
+                                <span class="diet-tag">${prod.tag}</span>
+                            </div>
+                            <button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFavorito('${prod.id}', event)" title="${isFav ? 'Quitar de Favoritos' : 'Guardar en Favoritos'}">
+                                ${isFav ? '❤️' : '🤍'}
+                            </button>
                         </div>
                         <h3 class="card-name">${prod.nombre}</h3>
                         
@@ -7333,8 +7693,9 @@
             setTimeout(() => toast.classList.remove('show'), 1600);
         }
 
-        // Init App & Theme
+        // Init App, Theme & Favorites
         initTheme();
+        actualizarBadgeFavoritos();
         renderizarGrid();
         actualizarTotales();
     </script>

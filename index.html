@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>COUNTRY HOUSE | Pedidos Saludables</title>
-    <!-- Fonts: Plus Jakarta Sans -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,6 +14,8 @@
             --brand-green: #0e754a;
             --brand-green-dark: #075233;
             --brand-green-light: #159e65;
+            --brand-whatsapp: #25D366;
+            --brand-whatsapp-dark: #128C7E;
             --brand-gold: #c5a059;
             --brand-gold-light: #fef08a;
             --brand-red: #d8232a;
@@ -33,9 +35,8 @@
             
             --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.25);
             --shadow-glow: 0 4px 16px rgba(14, 117, 74, 0.35);
-            --shadow-glow-gold: 0 4px 16px rgba(197, 160, 89, 0.25);
+            --shadow-glow-wa: 0 6px 20px rgba(37, 211, 102, 0.4);
             
-            /* Spring Physics Easing (from NameThatUI) */
             --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -66,7 +67,7 @@
             background-attachment: fixed;
         }
 
-        /* Marquee Component (NameThatUI) */
+        /* Marquee Component */
         .marquee-container {
             background: linear-gradient(90deg, #075233, #0e754a, #075233);
             border-bottom: 1px solid rgba(197, 160, 89, 0.3);
@@ -103,7 +104,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Unified Sticky Header: Logo + Search + Filter Chips */
+        /* Unified Sticky Header */
         .sticky-header-container {
             position: sticky;
             top: 0;
@@ -157,7 +158,7 @@
             white-space: nowrap;
         }
 
-        /* Search Field with Clear Button (NameThatUI: Search Field Pattern) */
+        /* Search Field with Clear Button */
         .search-box-wrapper {
             position: relative;
             width: 100%;
@@ -215,7 +216,7 @@
             display: flex;
         }
 
-        /* Quick Macro Goals Row (NameThatUI: Token Field / Filter Chips) */
+        /* Quick Macro Goals */
         .quick-goals-bar {
             display: flex;
             gap: 0.4rem;
@@ -249,7 +250,7 @@
             transform: scale(1.03);
         }
 
-        /* Category Scroll Bar (NameThatUI: Segmented Control / Pill Bar) */
+        /* Category Scroll Bar */
         .category-scroll {
             display: flex;
             gap: 0.45rem;
@@ -299,7 +300,7 @@
             margin: 0 auto;
         }
 
-        /* Diet Info Banner (NameThatUI: Callout / Inline Alert) */
+        /* Diet Info Banner */
         .cat-banner {
             background: linear-gradient(135deg, rgba(14, 117, 74, 0.25), rgba(22, 32, 50, 0.95));
             border: 1px solid rgba(21, 158, 101, 0.35);
@@ -329,7 +330,7 @@
             line-height: 1.25;
         }
 
-        /* Product Grid (2-column mobile with minmax protection) */
+        /* Product Grid (2-column mobile) */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -337,7 +338,7 @@
             width: 100%;
         }
 
-        /* Product Card (NameThatUI: Card Anatomy + Bento Aesthetics) */
+        /* Product Card */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--bg-card-border);
@@ -350,7 +351,7 @@
             box-shadow: var(--shadow-card);
             position: relative;
             min-width: 0;
-            transition: transform 0.2s var(--ease-spring), border-color 0.2s ease;
+            transition: transform 0.2s var(--ease-spring);
         }
 
         .product-card:active {
@@ -406,7 +407,7 @@
             word-wrap: break-word;
         }
 
-        /* Nutritional Facts Box per Portion */
+        /* Nutritional Facts Box */
         .nutri-box {
             background: rgba(10, 16, 28, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -481,7 +482,7 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* Steppers & Touch Buttons (NameThatUI: Stepper Pattern) */
+        /* Steppers & Buttons */
         .btn-add-touch {
             width: 100%;
             height: 38px;
@@ -625,7 +626,6 @@
             transform: scale(0.94);
         }
 
-        /* Dock Badge / Pulsing Spring Badge (NameThatUI) */
         .count-badge {
             background: #ffffff;
             color: var(--brand-green-dark);
@@ -652,7 +652,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Bottom Sheet (NameThatUI: Modal Sheet + Scrim) */
+        /* Bottom Sheet Modal */
         .sheet-overlay {
             position: fixed;
             inset: 0;
@@ -680,7 +680,7 @@
             border-top: 1px solid rgba(197, 160, 89, 0.4);
             border-radius: 24px 24px 0 0;
             z-index: 101;
-            max-height: 88vh;
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
             transform: translateY(100%);
@@ -692,7 +692,6 @@
             transform: translateY(0);
         }
 
-        /* Resize/Grab Handle */
         .sheet-handle {
             width: 40px;
             height: 4px;
@@ -732,7 +731,7 @@
             justify-content: center;
         }
 
-        /* Savings Progress Bar (NameThatUI: Progress Ring / Level Indicator) */
+        /* Savings Progress Bar */
         .savings-progress-box {
             background: rgba(14, 117, 74, 0.15);
             border: 1px solid rgba(21, 158, 101, 0.3);
@@ -851,6 +850,73 @@
             text-align: center;
         }
 
+        /* Optional Customer Delivery Details */
+        .customer-details-card {
+            background: rgba(14, 22, 38, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.75rem 0.85rem;
+            margin-top: 0.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .cust-field {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .cust-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .cust-input {
+            height: 34px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0 0.65rem;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .cust-input:focus {
+            border-color: var(--brand-whatsapp);
+        }
+
+        .payment-options-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.35rem;
+        }
+
+        .pay-chip {
+            padding: 0.35rem 0.2rem;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .pay-chip.active {
+            background: rgba(37, 211, 102, 0.18);
+            border-color: var(--brand-whatsapp);
+            color: #ffffff;
+            font-weight: 800;
+        }
+
         /* Summary / Footer of Sheet */
         .sheet-bottom {
             padding: 0.85rem 1.15rem env(safe-area-inset-bottom, 1.15rem);
@@ -889,27 +955,49 @@
             color: #34d399;
         }
 
-        .btn-copy-quote {
+        /* Premium WhatsApp Order Button */
+        .btn-whatsapp-order {
             width: 100%;
-            height: 46px;
-            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dark));
-            border: 1px solid var(--brand-green-light);
+            height: 48px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             color: #ffffff;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             cursor: pointer;
-            box-shadow: var(--shadow-glow);
-            margin-top: 0.4rem;
+            box-shadow: var(--shadow-glow-wa);
+            margin-top: 0.35rem;
             transition: transform 0.2s var(--ease-spring);
         }
 
-        .btn-copy-quote:active {
+        .btn-whatsapp-order:active {
             transform: scale(0.97);
+        }
+
+        .btn-copy-quote {
+            width: 100%;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-copy-quote:active {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-empty-cart {
@@ -923,7 +1011,7 @@
             padding: 0.2rem;
         }
 
-        /* Empty State Component (NameThatUI) */
+        /* Empty State */
         .empty-state {
             grid-column: 1/-1;
             text-align: center;
@@ -963,7 +1051,7 @@
             box-shadow: var(--shadow-glow);
         }
 
-        /* Toast / Snackbar Component (NameThatUI: Toast Pattern with Spring Animation) */
+        /* Toast */
         .toast {
             position: fixed;
             top: 1rem;
@@ -992,7 +1080,7 @@
 </head>
 <body>
 
-    <!-- Marquee Component (NameThatUI: Endless Ticker) -->
+    <!-- Marquee Component -->
     <div class="marquee-container">
         <div class="marquee-track">
             <span class="marquee-item">🌿 <b>COUNTRY HOUSE</b> • Calidad y frescura todos los días®</span>
@@ -1023,7 +1111,7 @@
                 </div>
             </div>
 
-            <!-- Search Field with Built-in Clear Button (NameThatUI) -->
+            <!-- Search Field with Clear Button -->
             <div class="search-box-wrapper">
                 <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
@@ -1034,7 +1122,7 @@
             </div>
         </header>
 
-        <!-- Quick Macro Target Filters (NameThatUI: Token Field / Filter Chips) -->
+        <!-- Quick Macro Goals Filters -->
         <div class="quick-goals-bar">
             <button class="goal-chip active" onclick="setMacroGoal('TODOS', this)">Todos los Macros</button>
             <button class="goal-chip" onclick="setMacroGoal('BAJO_CAL', this)">🔥 &lt; 50 kcal</button>
@@ -1043,7 +1131,7 @@
             <button class="goal-chip" onclick="setMacroGoal('CERO_GRASA', this)">🌿 0% Grasa</button>
         </div>
 
-        <!-- Horizontal Category Scroll (NameThatUI: Segmented Control) -->
+        <!-- Horizontal Category Scroll -->
         <div class="category-scroll">
             <button class="cat-chip active" onclick="filtrarCategoria('TODOS', this)">✨ Todos</button>
             <button class="cat-chip" onclick="filtrarCategoria('Verduras & Fibra', this)">🥦 Verduras & Fibra</button>
@@ -1059,7 +1147,7 @@
 
     <!-- Mobile Product Grid Feed -->
     <main class="mobile-feed">
-        <!-- Diet Guidance Banner (NameThatUI: Inline Alert / Callout) -->
+        <!-- Diet Guidance Banner -->
         <div class="cat-banner" id="catBanner">
             <div class="cat-banner-icon" id="catBannerIcon">🥗</div>
             <div class="cat-banner-text">
@@ -1073,7 +1161,7 @@
         </div>
     </main>
 
-    <!-- Floating Bottom Bar (NameThatUI: Floating Action Bar + Dock Badge) -->
+    <!-- Floating Bottom Bar -->
     <div class="floating-cart-bar">
         <div class="cart-bar-inner">
             <div class="cart-text-area">
@@ -1091,10 +1179,9 @@
         </div>
     </div>
 
-    <!-- Bottom Sheet Modal (NameThatUI: Modal Sheet + Scrim) -->
+    <!-- Bottom Sheet Modal -->
     <div class="sheet-overlay" id="sheetOverlay" onclick="cerrarPedido(event)">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
-            <!-- Grab Handle (NameThatUI: Resize Grip / Sheet Handle) -->
             <div class="sheet-handle"></div>
             
             <div class="sheet-head">
@@ -1105,7 +1192,7 @@
                 <button class="btn-sheet-close" onclick="cerrarPedido()">✕</button>
             </div>
 
-            <!-- Savings Progress Level Indicator (NameThatUI) -->
+            <!-- Savings Progress Level Indicator -->
             <div class="savings-progress-box">
                 <div class="savings-top-text">
                     <span>🎉 10% Descuento Especial Aplicado</span>
@@ -1117,7 +1204,29 @@
             </div>
 
             <div class="sheet-content" id="sheetContent">
-                <!-- Injected via JS -->
+                <!-- Products injected via JS -->
+            </div>
+
+            <!-- Customer Optional Delivery Form -->
+            <div style="padding: 0 1.15rem 0.5rem;">
+                <div class="customer-details-card">
+                    <div class="cust-field">
+                        <label class="cust-label">👤 Tu Nombre (Opcional)</label>
+                        <input type="text" id="custNameInput" class="cust-input" placeholder="Ej: María González">
+                    </div>
+                    <div class="cust-field">
+                        <label class="cust-label">📍 Dirección de Entrega (Opcional)</label>
+                        <input type="text" id="custAddressInput" class="cust-input" placeholder="Ej: Heredia Centro, 200m norte...">
+                    </div>
+                    <div class="cust-field">
+                        <label class="cust-label">💳 Forma de Pago</label>
+                        <div class="payment-options-row">
+                            <button class="pay-chip active" onclick="setPaymentMethod('Sinpe Móvil', this)">Sinpe Móvil</button>
+                            <button class="pay-chip" onclick="setPaymentMethod('Efectivo', this)">Efectivo</button>
+                            <button class="pay-chip" onclick="setPaymentMethod('Tarjeta', this)">Tarjeta</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="sheet-bottom">
@@ -1130,9 +1239,17 @@
                     <span id="sheetDiscount">-₡0.00</span>
                 </div>
                 <div class="summary-total">
-                    <span>Total Final</span>
+                    <span>Total a Pagar</span>
                     <span id="sheetTotal">₡0.00</span>
                 </div>
+
+                <!-- Premium WhatsApp Checkout CTA -->
+                <button class="btn-whatsapp-order" onclick="enviarPorWhatsApp()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                    <span>Enviar Pedido por WhatsApp</span>
+                </button>
 
                 <button class="btn-copy-quote" onclick="copiarResumen()">
                     📋 Copiar Lista de Pedido
@@ -1144,7 +1261,7 @@
         </div>
     </div>
 
-    <!-- Toast Notification (NameThatUI: Toast / Snackbar with Spring Animation) -->
+    <!-- Toast Notification -->
     <div class="toast" id="toast">
         <span>✨</span>
         <span id="toastText">¡Agregado al pedido!</span>
@@ -1170,7 +1287,7 @@
   },
   {
     "id": "683",
-    "nombre": "AGUACATE HASS (SUPER EXTRA)",
+    "nombre": "Aguacate Hass Super Extra",
     "precio": 790.0,
     "cat": "Grasas Buenas",
     "emoji": "🥑",
@@ -1186,7 +1303,7 @@
   },
   {
     "id": "684P",
-    "nombre": "AGUACATE HASS MEDIANO  MALLA",
+    "nombre": "Aguacates Hass (Malla Especial)",
     "precio": 2100.0,
     "cat": "Grasas Buenas",
     "emoji": "🥑",
@@ -1202,7 +1319,7 @@
   },
   {
     "id": "699K",
-    "nombre": "AGUACATE NACIONAL KILO",
+    "nombre": "Aguacate Nacional por Kilo",
     "precio": 2350.0,
     "cat": "Grasas Buenas",
     "emoji": "🥑",
@@ -1218,7 +1335,7 @@
   },
   {
     "id": "775",
-    "nombre": "AJO 3 CABEZAS MALLA UND",
+    "nombre": "Ajo Blanco (Malla 3 Cabezas)",
     "precio": 260.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1234,7 +1351,7 @@
   },
   {
     "id": "751",
-    "nombre": "AJO CRIOLLO KILO",
+    "nombre": "Ajo Criollo por Kilo",
     "precio": 12250.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1250,7 +1367,7 @@
   },
   {
     "id": "773",
-    "nombre": "AJO EMPACADO 500 GRS",
+    "nombre": "Ajo Blanco Empacado (500g)",
     "precio": 1150.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1266,7 +1383,7 @@
   },
   {
     "id": "779",
-    "nombre": "AJO EN TRENZA 1 KILO",
+    "nombre": "Ajo en Trenza Tradicional (1kg)",
     "precio": 2500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1282,7 +1399,7 @@
   },
   {
     "id": "700",
-    "nombre": "AJO PELADO PAQUETE 500 GRAMOS",
+    "nombre": "Dientes de Ajo Pelados (500g)",
     "precio": 1900.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1298,7 +1415,7 @@
   },
   {
     "id": "771",
-    "nombre": "AJO PURO BLANCO MALLA 5 UND",
+    "nombre": "Ajo Blanco Premium (Malla 5 Unid)",
     "precio": 1000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1314,7 +1431,7 @@
   },
   {
     "id": "11554X",
-    "nombre": "ALBAHACA BOLSA GRANDE 250 GR",
+    "nombre": "Albahaca Fresca Grande (250g)",
     "precio": 1350.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1330,7 +1447,7 @@
   },
   {
     "id": "11554",
-    "nombre": "ALBAHACA ROLLO PEQ 30 GR",
+    "nombre": "Albahaca Fresca en Rollo (30g)",
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1346,7 +1463,7 @@
   },
   {
     "id": "11556",
-    "nombre": "ALFALFA 100 GRAMOS",
+    "nombre": "Brotes de Alfalfa Fresca (100g)",
     "precio": 1300.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -1362,7 +1479,7 @@
   },
   {
     "id": "15511",
-    "nombre": "ANONA KILO",
+    "nombre": "Anona Fresca por Kilo",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1378,7 +1495,7 @@
   },
   {
     "id": "11511",
-    "nombre": "APIO VERDE KILO",
+    "nombre": "Apio Verde Fresco por Kilo",
     "precio": 1490.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -1394,7 +1511,7 @@
   },
   {
     "id": "5125",
-    "nombre": "ARANDANO BANDEJA 125 GR",
+    "nombre": "Arándanos Frescos (Bandeja 125g)",
     "precio": 1750.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1410,7 +1527,7 @@
   },
   {
     "id": "5125B",
-    "nombre": "ARANDANOS BAND 500 GR",
+    "nombre": "Arándanos Frescos (Bandeja 500g)",
     "precio": 4950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1426,7 +1543,7 @@
   },
   {
     "id": "16579",
-    "nombre": "ARRACACHE PICADO BOLSA 1 KILO",
+    "nombre": "Arracache Picado Fresco (1kg)",
     "precio": 3900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1442,7 +1559,7 @@
   },
   {
     "id": "175542",
-    "nombre": "ARROZ 95% BOLSA 2 KILO",
+    "nombre": "Arroz de Grano Entero 95% (2kg)",
     "precio": 1850.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1458,7 +1575,7 @@
   },
   {
     "id": "175539",
-    "nombre": "ARROZ 95/5 SAQUITA 6 KILOS",
+    "nombre": "Arroz Calidad Superior 95/5 (6kg)",
     "precio": 4900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1474,7 +1591,7 @@
   },
   {
     "id": "175534",
-    "nombre": "ARROZ GRANEL 95% KILO",
+    "nombre": "Arroz de Grano Entero 95% (1kg)",
     "precio": 900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1490,7 +1607,7 @@
   },
   {
     "id": "175533",
-    "nombre": "ARROZ PRECOCIDO KILO GRANEL",
+    "nombre": "Arroz Precocido de Primera (1kg)",
     "precio": 990.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1506,7 +1623,7 @@
   },
   {
     "id": "12597",
-    "nombre": "AYOTE MANTEQUILLA KILO",
+    "nombre": "Ayote Mantequilla por Kilo",
     "precio": 1400.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1522,7 +1639,7 @@
   },
   {
     "id": "12511",
-    "nombre": "AYOTE SAZON KILO",
+    "nombre": "Ayote Sazón por Kilo",
     "precio": 650.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1538,7 +1655,7 @@
   },
   {
     "id": "12512",
-    "nombre": "AYOTE TIERNO UNIDAD",
+    "nombre": "Ayote Tierno Fresco",
     "precio": 900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1554,7 +1671,7 @@
   },
   {
     "id": "1053C",
-    "nombre": "BANANO COCINA UNIDAD  C / 70",
+    "nombre": "Banano Verde para Cocinar",
     "precio": 60.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1570,7 +1687,7 @@
   },
   {
     "id": "1054",
-    "nombre": "BANANO CRIOLLO UND",
+    "nombre": "Banano Criollo Dulce",
     "precio": 70.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1586,7 +1703,7 @@
   },
   {
     "id": "1064",
-    "nombre": "BANANO DATIL BANDEJA  KG",
+    "nombre": "Banano Dátil Dulce (Bandeja 1kg)",
     "precio": 1290.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1602,7 +1719,7 @@
   },
   {
     "id": "1052",
-    "nombre": "BANANO SUELTO UNIDAD",
+    "nombre": "Banano Maduro Suelto",
     "precio": 70.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1618,7 +1735,7 @@
   },
   {
     "id": "1053",
-    "nombre": "BANANO SUPER UNIDAD",
+    "nombre": "Banano Maduro Premium",
     "precio": 110.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1634,7 +1751,7 @@
   },
   {
     "id": "12521",
-    "nombre": "BERENJENA UNIDAD",
+    "nombre": "Berenjena Fresca Grande",
     "precio": 750.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -1650,7 +1767,7 @@
   },
   {
     "id": "37080",
-    "nombre": "BOLSA REUTILIZABLE GRANDE UD",
+    "nombre": "Bolsa Ecológica Reutilizable",
     "precio": 500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -1666,7 +1783,7 @@
   },
   {
     "id": "12531",
-    "nombre": "BROCOLI KILO",
+    "nombre": "Brócoli Fresco por Kilo",
     "precio": 2690.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -1682,7 +1799,7 @@
   },
   {
     "id": "D30090",
-    "nombre": "CAJETA COMBO SURTIDO BAND 250",
+    "nombre": "Cajetas Tradicionales Surtidas (250g)",
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -1698,7 +1815,7 @@
   },
   {
     "id": "D30096",
-    "nombre": "CAJETA DE PLATO YOGUI 290 GR",
+    "nombre": "Cajeta de Plato Yogui (290g)",
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -1714,7 +1831,7 @@
   },
   {
     "id": "D30097",
-    "nombre": "CAJETA DE TAPON YOGUI  70 GR",
+    "nombre": "Cajeta de Tapón Yogui (70g)",
     "precio": 550.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -1730,7 +1847,7 @@
   },
   {
     "id": "D30098",
-    "nombre": "CAJETA PINITO YOGUI 90 GR",
+    "nombre": "Cajeta de Leche Pinito Yogui (90g)",
     "precio": 750.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -1746,7 +1863,7 @@
   },
   {
     "id": "1351",
-    "nombre": "CAMOTE GRANEL",
+    "nombre": "Camote Fresco por Kilo",
     "precio": 1890.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1762,7 +1879,7 @@
   },
   {
     "id": "1353",
-    "nombre": "CAMOTE MANTEQUILLA KILO",
+    "nombre": "Camote Mantequilla por Kilo",
     "precio": 2200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -1778,7 +1895,7 @@
   },
   {
     "id": "14511",
-    "nombre": "CARAMBOLA BAND. 500 GRS",
+    "nombre": "Carambola Fresca (Bandeja 500g)",
     "precio": 940.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1794,7 +1911,7 @@
   },
   {
     "id": "29550",
-    "nombre": "CARBON EN BOLSA UNIDAD",
+    "nombre": "Carbón para Parrilla en Bolsa",
     "precio": 2100.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -1810,7 +1927,7 @@
   },
   {
     "id": "14514",
-    "nombre": "CAS BANDEJA 500 GRS",
+    "nombre": "Cas Fresco Seleccionado (500g)",
     "precio": 1200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1826,7 +1943,7 @@
   },
   {
     "id": "14565",
-    "nombre": "CAS GRANEL",
+    "nombre": "Cas Fresco por Kilo",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1842,7 +1959,7 @@
   },
   {
     "id": "125581",
-    "nombre": "CEBOLLA EN TRENZA KILOS",
+    "nombre": "Cebolla en Trenza Tradicional (1kg)",
     "precio": 1990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1858,7 +1975,7 @@
   },
   {
     "id": "12554",
-    "nombre": "CEBOLLA GRANEL KILO",
+    "nombre": "Cebolla Amarilla Fresca por Kilo",
     "precio": 1990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1874,7 +1991,7 @@
   },
   {
     "id": "125542",
-    "nombre": "CEBOLLA INDUSTRIAL KILO",
+    "nombre": "Cebolla Amarilla por Kilo",
     "precio": 1990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1890,7 +2007,7 @@
   },
   {
     "id": "12554P",
-    "nombre": "CEBOLLA MEDIANA MALLA 1K",
+    "nombre": "Cebolla Amarilla (Malla 1kg)",
     "precio": 1290.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1906,7 +2023,7 @@
   },
   {
     "id": "12547G",
-    "nombre": "CEBOLLA MORADA GRANEL",
+    "nombre": "Cebolla Morada Fresca por Kilo",
     "precio": 1990.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1922,7 +2039,7 @@
   },
   {
     "id": "12552",
-    "nombre": "CEBOLLINO ROLLO 5 UND.",
+    "nombre": "Cebollino Fresco (Rollo 5 Unid)",
     "precio": 600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -1938,7 +2055,7 @@
   },
   {
     "id": "5324",
-    "nombre": "CEREZA BAND 250 GR",
+    "nombre": "Cerezas Frescas (Bandeja 250g)",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -1954,7 +2071,7 @@
   },
   {
     "id": "421P",
-    "nombre": "CHAN 100 GRAMOS",
+    "nombre": "Semillas de Chan (100g)",
     "precio": 2000.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -1970,7 +2087,7 @@
   },
   {
     "id": "12561",
-    "nombre": "CHAYOTE BLANCO SAZON",
+    "nombre": "Chayote Blanco Sazón",
     "precio": 800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -1986,7 +2103,7 @@
   },
   {
     "id": "12562",
-    "nombre": "CHAYOTE COCORO MALLA 800 GRS",
+    "nombre": "Chayote Cócoro (Malla 800g)",
     "precio": 950.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -2002,7 +2119,7 @@
   },
   {
     "id": "12563",
-    "nombre": "CHAYOTE QUELITE PAQ 3 UND",
+    "nombre": "Chayote Quelite (Paquete 3 Unid)",
     "precio": 750.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -2018,7 +2135,7 @@
   },
   {
     "id": "12613",
-    "nombre": "CHAYOTE TIERNO NEGRO UND",
+    "nombre": "Chayote Negro Tierno",
     "precio": 800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -2034,7 +2151,7 @@
   },
   {
     "id": "420P",
-    "nombre": "CHIA 100 GRAMOS",
+    "nombre": "Semillas de Chía Pura (100g)",
     "precio": 1600.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -2050,7 +2167,7 @@
   },
   {
     "id": "13617",
-    "nombre": "CHILE AJI PERUANO BAND 200 GR",
+    "nombre": "Chile Ají Peruano Fresco (200g)",
     "precio": 2200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2066,7 +2183,7 @@
   },
   {
     "id": "12570P",
-    "nombre": "CHILE DULCE PAQ 5",
+    "nombre": "Chile Dulce Seleccionado (Pack 5 Unid)",
     "precio": 2590.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2082,7 +2199,7 @@
   },
   {
     "id": "12603",
-    "nombre": "CHILE DULCE SELECTO UND",
+    "nombre": "Chile Dulce Grande Seleccionado",
     "precio": 890.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2098,7 +2215,7 @@
   },
   {
     "id": "12575",
-    "nombre": "CHILE JALAPENO BAND  500GR",
+    "nombre": "Chile Jalapeño Fresco (500g)",
     "precio": 1750.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2114,7 +2231,7 @@
   },
   {
     "id": "12573",
-    "nombre": "CHILE MUNDIAL UNIDAD AMARILLO",
+    "nombre": "Chile Pimiento Amarillo Mundial",
     "precio": 1100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2130,7 +2247,7 @@
   },
   {
     "id": "12584",
-    "nombre": "CHILE PANAMEÑO KILOS GRANEL",
+    "nombre": "Chile Panameño Aromático por Kilo",
     "precio": 3990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2146,7 +2263,7 @@
   },
   {
     "id": "12588",
-    "nombre": "CHILOTE BAND. 500 GRAMOS",
+    "nombre": "Chilotes Tiernos (Bandeja 500g)",
     "precio": 1500.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -2162,7 +2279,7 @@
   },
   {
     "id": "4341",
-    "nombre": "CIRUELA IMPORTADO KILO",
+    "nombre": "Ciruelas Rojas Importadas por Kilo",
     "precio": 3900.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2178,7 +2295,7 @@
   },
   {
     "id": "D30095",
-    "nombre": "COCANAS YOGUI 160 GR",
+    "nombre": "Cocadas Artesanales Yogui (160g)",
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -2194,7 +2311,7 @@
   },
   {
     "id": "14522",
-    "nombre": "COCO",
+    "nombre": "Coco Fresco con Agua",
     "precio": 850.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2210,7 +2327,7 @@
   },
   {
     "id": "913",
-    "nombre": "COCTEL MIXTO DE FRUTAS 1/4",
+    "nombre": "Coctel Mixto de Frutas Frescas",
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2226,7 +2343,7 @@
   },
   {
     "id": "13222CO",
-    "nombre": "COCULMECA RAIZ KILO",
+    "nombre": "Raíz de Cuculmeca Natural (1kg)",
     "precio": 3500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2242,7 +2359,7 @@
   },
   {
     "id": "12591",
-    "nombre": "COLIFLOR UNIDAD",
+    "nombre": "Coliflor Blanca Fresca",
     "precio": 1290.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -2258,7 +2375,7 @@
   },
   {
     "id": "424",
-    "nombre": "CONDIMENTO BOMBA 200 GRAMOS",
+    "nombre": "Condimento Bomba Especial (200g)",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2274,7 +2391,7 @@
   },
   {
     "id": "104",
-    "nombre": "CONGELADO  DE PIÑA  PAQ 1",
+    "nombre": "Piña Congelada 100% Natural (1kg)",
     "precio": 2600.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2290,7 +2407,7 @@
   },
   {
     "id": "106",
-    "nombre": "CONGELADO CARAMBOLA PAQ 1 KG",
+    "nombre": "Carambola Congelada Natural (1kg)",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2306,7 +2423,7 @@
   },
   {
     "id": "213",
-    "nombre": "CONGELADO DE CAS  1 KILO",
+    "nombre": "Cas Congelado 100% Natural (1kg)",
     "precio": 2500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2322,7 +2439,7 @@
   },
   {
     "id": "103",
-    "nombre": "CONGELADO DE MANGA  PAQ 1",
+    "nombre": "Mango Congelado 100% Natural (1kg)",
     "precio": 3200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2338,7 +2455,7 @@
   },
   {
     "id": "102",
-    "nombre": "CONGELADO DE PAPAYA  PAQ 1",
+    "nombre": "Papaya Congelada Natural (1kg)",
     "precio": 2200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -2354,7 +2471,7 @@
   },
   {
     "id": "101",
-    "nombre": "CONGELADO DE SANDIA PAQ 1",
+    "nombre": "Sandía Congelada Natural (1kg)",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2370,7 +2487,7 @@
   },
   {
     "id": "210",
-    "nombre": "CONGELADO DETOX AMARILLO",
+    "nombre": "Mix Detox Amarillo Congelado (1kg)",
     "precio": 2900.0,
     "cat": "Batidos & Detox",
     "emoji": "🧊",
@@ -2386,7 +2503,7 @@
   },
   {
     "id": "206",
-    "nombre": "CONGELADO FRESA PAQ 1 KG",
+    "nombre": "Fresas Congeladas 100% Natural (1kg)",
     "precio": 2500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2402,7 +2519,7 @@
   },
   {
     "id": "215",
-    "nombre": "CONGELADO GUANABANA  1  KILO",
+    "nombre": "Guanábana Congelada Natural (1kg)",
     "precio": 3150.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2418,7 +2535,7 @@
   },
   {
     "id": "16653C",
-    "nombre": "CONGELADO MARACUYA PAQ 1 KG",
+    "nombre": "Maracuyá Congelado Natural (1kg)",
     "precio": 3400.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2434,7 +2551,7 @@
   },
   {
     "id": "214",
-    "nombre": "CONGELADO MELON EMP 1 KILO",
+    "nombre": "Melón Congelado Natural (1kg)",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2450,7 +2567,7 @@
   },
   {
     "id": "212",
-    "nombre": "CONGELADO MORA 1 KILO",
+    "nombre": "Moras Congeladas 100% Natural (1kg)",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2466,7 +2583,7 @@
   },
   {
     "id": "430",
-    "nombre": "CONSUME DE POLLO",
+    "nombre": "Consomé de Pollo Casero",
     "precio": 750.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2482,7 +2599,7 @@
   },
   {
     "id": "112036",
-    "nombre": "CUAJADA QUESO UND 500GR",
+    "nombre": "Cuajada Artesanal Fresca (500g)",
     "precio": 1850.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -2498,7 +2615,7 @@
   },
   {
     "id": "11522N",
-    "nombre": "CULANTRO CASTILLA ROLLO 3",
+    "nombre": "Culantro Castilla Fresco (3 Rollos)",
     "precio": 650.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2514,7 +2631,7 @@
   },
   {
     "id": "11523",
-    "nombre": "CULANTRO CASTILLA UNIDAD",
+    "nombre": "Culantro Castilla Fresco (1 Rollo)",
     "precio": 250.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -2530,7 +2647,7 @@
   },
   {
     "id": "11524",
-    "nombre": "CULANTRO COYOTE 3 R.",
+    "nombre": "Culantro Coyote Fresco (3 Rollos)",
     "precio": 590.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2546,7 +2663,7 @@
   },
   {
     "id": "13111CU",
-    "nombre": "CURCUMA KILOS",
+    "nombre": "Raíz de Cúrcuma Fresca por Kilo",
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2562,7 +2679,7 @@
   },
   {
     "id": "396",
-    "nombre": "CURCUMA POLVO 100 GRAMOS",
+    "nombre": "Cúrcuma Pura en Polvo (100g)",
     "precio": 1900.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2578,7 +2695,7 @@
   },
   {
     "id": "442",
-    "nombre": "DT ACHIOTE EN POLVO 100 GR",
+    "nombre": "Achiote Puro en Polvo (100g)",
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2594,7 +2711,7 @@
   },
   {
     "id": "452",
-    "nombre": "DT AJO GRANULADO 100 GR",
+    "nombre": "Ajo Granulado Gourmet (100g)",
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2610,7 +2727,7 @@
   },
   {
     "id": "454",
-    "nombre": "DT ALBAHACA QUEBRADA 40 GR",
+    "nombre": "Albahaca Deshidratada (40g)",
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2626,7 +2743,7 @@
   },
   {
     "id": "443",
-    "nombre": "DT CANELA  ASTILLA ROLLO 50 GR",
+    "nombre": "Canela en Astilla (50g)",
     "precio": 2000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2642,7 +2759,7 @@
   },
   {
     "id": "465",
-    "nombre": "DT CANELA EN POLVO 100 GR",
+    "nombre": "Canela en Polvo (100g)",
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2658,7 +2775,7 @@
   },
   {
     "id": "432",
-    "nombre": "DT CEBOLLA EN ESCAMAS 80 GR",
+    "nombre": "Cebolla en Escamas (80g)",
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2674,7 +2791,7 @@
   },
   {
     "id": "444",
-    "nombre": "DT CLAVO DE OLOR ENTERO 25 GR",
+    "nombre": "Clavo de Olor Entero (25g)",
     "precio": 2400.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2690,7 +2807,7 @@
   },
   {
     "id": "459",
-    "nombre": "DT COMINO MOLIDO 75 GR",
+    "nombre": "Comino Molido Puro (75g)",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2706,7 +2823,7 @@
   },
   {
     "id": "464",
-    "nombre": "DT CONDIMENTO MIXTO BOMBA 150",
+    "nombre": "Condimento Mixto Gourmet (150g)",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2722,7 +2839,7 @@
   },
   {
     "id": "438",
-    "nombre": "DT CONSOME DE POLLO 200 GR",
+    "nombre": "Consomé de Pollo Casero (200g)",
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2738,7 +2855,7 @@
   },
   {
     "id": "439",
-    "nombre": "DT CONSOME DE RES 200 GR",
+    "nombre": "Consomé de Res Gourmet (200g)",
     "precio": 1700.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2754,7 +2871,7 @@
   },
   {
     "id": "447",
-    "nombre": "DT CURCUMA EN POLVO 125 GR",
+    "nombre": "Cúrcuma Pura en Polvo (125g)",
     "precio": 1900.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2770,7 +2887,7 @@
   },
   {
     "id": "455",
-    "nombre": "DT HOJA DE LAUREL 20 GR",
+    "nombre": "Hojas de Laurel Seleccionadas (20g)",
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2786,7 +2903,7 @@
   },
   {
     "id": "458",
-    "nombre": "DT JENIBRE MOLIDO 75 GR",
+    "nombre": "Jengibre Molido Puro (75g)",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2802,7 +2919,7 @@
   },
   {
     "id": "462",
-    "nombre": "DT NUEZ MOSCADA EN POLVO 75 GR",
+    "nombre": "Nuez Moscada en Polvo (75g)",
     "precio": 2050.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2818,7 +2935,7 @@
   },
   {
     "id": "449",
-    "nombre": "DT OREGANO QUEBRADO 40 GR",
+    "nombre": "Orégano Seleccionado (40g)",
     "precio": 1100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2834,7 +2951,7 @@
   },
   {
     "id": "457",
-    "nombre": "DT PAPRIKA AUMADA 75 GR",
+    "nombre": "Páprika Ahumada Gourmet (75g)",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2850,7 +2967,7 @@
   },
   {
     "id": "434",
-    "nombre": "DT PIMIENTA CAYENNA 75 GR",
+    "nombre": "Pimienta Cayena (75g)",
     "precio": 2000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2866,7 +2983,7 @@
   },
   {
     "id": "467",
-    "nombre": "DT PIMIENTA NEGRA  POLVO100 GR",
+    "nombre": "Pimienta Negra Molida (100g)",
     "precio": 0.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2882,7 +2999,7 @@
   },
   {
     "id": "448",
-    "nombre": "DT PIMIENTA NEGRA QUEBRADA 100",
+    "nombre": "Pimienta Negra Quebrada (100g)",
     "precio": 2500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2898,7 +3015,7 @@
   },
   {
     "id": "453",
-    "nombre": "DT ROMERO QUEBRADO 50 GR",
+    "nombre": "Romero Deshidratado (50g)",
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2914,7 +3031,7 @@
   },
   {
     "id": "468",
-    "nombre": "DT ROSA DE JAMAICA 100 GR",
+    "nombre": "Flor de Jamaica Seleccionada (100g)",
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2930,7 +3047,7 @@
   },
   {
     "id": "446",
-    "nombre": "DT SABOR A HUMO 100 GR",
+    "nombre": "Sabor a Humo Gourmet (100g)",
     "precio": 1200.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -2946,7 +3063,7 @@
   },
   {
     "id": "433",
-    "nombre": "DT SAL PARRILLERA 320 GR",
+    "nombre": "Sal Parrillera Gruesa (320g)",
     "precio": 1000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2962,7 +3079,7 @@
   },
   {
     "id": "441",
-    "nombre": "DT SAL ROSADA HIMALAYA 280 GR",
+    "nombre": "Sal Rosada del Himalaya (280g)",
     "precio": 2100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2978,7 +3095,7 @@
   },
   {
     "id": "440",
-    "nombre": "DT SAZONADOR COMPLETO 200 GR",
+    "nombre": "Sazonador Completo Especial (200g)",
     "precio": 2100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -2994,7 +3111,7 @@
   },
   {
     "id": "461",
-    "nombre": "DT TAPA DULCE MOLIDA",
+    "nombre": "Tapa de Dulce Molida Natural",
     "precio": 1200.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -3010,7 +3127,7 @@
   },
   {
     "id": "450",
-    "nombre": "DT TOMILLO EN HOJA 40 GR",
+    "nombre": "Tomillo en Hojas (40g)",
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -3026,7 +3143,7 @@
   },
   {
     "id": "16592",
-    "nombre": "ELOTE BLANCO 2 UND",
+    "nombre": "Elotes Blancos Dulces (2 Unid)",
     "precio": 600.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3042,7 +3159,7 @@
   },
   {
     "id": "125111",
-    "nombre": "ESPARRAGO ROLLO 450 GRS",
+    "nombre": "Espárragos Verdes Frescos (450g)",
     "precio": 3850.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3058,7 +3175,7 @@
   },
   {
     "id": "11531",
-    "nombre": "ESPINACA POR ROLLO",
+    "nombre": "Espinaca Fresca Seleccionada (Rollo)",
     "precio": 650.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3074,7 +3191,7 @@
   },
   {
     "id": "419",
-    "nombre": "FLOR DE JAMAICA 100 GRAMOS",
+    "nombre": "Flor de Jamaica Seca (100g)",
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -3090,7 +3207,7 @@
   },
   {
     "id": "15523",
-    "nombre": "FRESA BANDEJA 1 KILO",
+    "nombre": "Fresas Frescas de Altura (Bandeja 1kg)",
     "precio": 3400.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3106,7 +3223,7 @@
   },
   {
     "id": "15524A",
-    "nombre": "FRESA BANDEJA ESPECIAL 500 GR",
+    "nombre": "Fresas Especiales (Bandeja 500g)",
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3122,7 +3239,7 @@
   },
   {
     "id": "15521",
-    "nombre": "FRESA BANDEJA PERSONAL",
+    "nombre": "Fresas Frescas (Bandeja Personal)",
     "precio": 1100.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3138,7 +3255,7 @@
   },
   {
     "id": "17551EMP",
-    "nombre": "FRIJOL BLANCO 400 G",
+    "nombre": "Frijol Blanco Seleccionado (400g)",
     "precio": 1350.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3154,7 +3271,7 @@
   },
   {
     "id": "17565EMP",
-    "nombre": "FRIJOL CUBACES 400 GRS",
+    "nombre": "Frijoles Cubaces Tradicionales (400g)",
     "precio": 1750.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3170,7 +3287,7 @@
   },
   {
     "id": "17568EMP",
-    "nombre": "FRIJOL KALIMA 400 GRS",
+    "nombre": "Frijol Kalima Gourmet (400g)",
     "precio": 1400.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3186,7 +3303,7 @@
   },
   {
     "id": "17558",
-    "nombre": "FRIJOL NACIDO 500 GRAMOS",
+    "nombre": "Frijol Nacido Fresco (500g)",
     "precio": 1500.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3202,7 +3319,7 @@
   },
   {
     "id": "17553",
-    "nombre": "FRIJOL NEGRO EN KILOS",
+    "nombre": "Frijol Negro de Primera por Kilo",
     "precio": 1350.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3218,7 +3335,7 @@
   },
   {
     "id": "17555",
-    "nombre": "FRIJOL ROJO EN KILOS",
+    "nombre": "Frijol Rojo de Primera por Kilo",
     "precio": 1500.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3234,7 +3351,7 @@
   },
   {
     "id": "17555P6",
-    "nombre": "FRIJOL ROJO PAQUETE 6 KILOS",
+    "nombre": "Frijol Rojo de Primera (Paquete 6kg)",
     "precio": 8250.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3250,7 +3367,7 @@
   },
   {
     "id": "17557",
-    "nombre": "FRIJOL TIERNO MALLA 500 GRAMOS",
+    "nombre": "Frijol Tierno Fresco (Malla 500g)",
     "precio": 1600.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3266,7 +3383,7 @@
   },
   {
     "id": "17561EMP",
-    "nombre": "GARBANZO 400 G",
+    "nombre": "Garbanzos Seleccionados (400g)",
     "precio": 1000.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3282,7 +3399,7 @@
   },
   {
     "id": "14551",
-    "nombre": "GUANABANA KILO",
+    "nombre": "Guanábana Fresca por Kilo",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3298,7 +3415,7 @@
   },
   {
     "id": "14561",
-    "nombre": "GUAYABA TAIWANESA X KILO",
+    "nombre": "Guayaba Taiwanesa Dulce por Kilo",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3314,7 +3431,7 @@
   },
   {
     "id": "14515",
-    "nombre": "GUINEO VERDE UNIDAD",
+    "nombre": "Guineo Verde para Cocinar",
     "precio": 78.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3330,7 +3447,7 @@
   },
   {
     "id": "16624X",
-    "nombre": "HIERBA BUENA BOLSA GRANDE 250G",
+    "nombre": "Hierbabuena Fresca Grande (250g)",
     "precio": 1350.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -3346,7 +3463,7 @@
   },
   {
     "id": "16624",
-    "nombre": "HIERBA BUENA ROLLO PEQ",
+    "nombre": "Hierbabuena Fresca en Rollo",
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -3362,7 +3479,7 @@
   },
   {
     "id": "D30091",
-    "nombre": "HIGOS BANDEJA 6 UDS ( 250 GRS)",
+    "nombre": "Higos Frescos Dulces (Bandeja 6 Unid)",
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -3378,7 +3495,7 @@
   },
   {
     "id": "5536",
-    "nombre": "HONGO CRIMINI",
+    "nombre": "Hongos Crimini Frescos (Bandeja)",
     "precio": 2400.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3394,7 +3511,7 @@
   },
   {
     "id": "5533",
-    "nombre": "HONGO ENTERO BAND",
+    "nombre": "Hongos Blancos Enteros (Bandeja)",
     "precio": 2200.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3410,7 +3527,7 @@
   },
   {
     "id": "5535",
-    "nombre": "HONGO PORTO BELLO",
+    "nombre": "Hongos Portobello Frescos (Bandeja)",
     "precio": 2600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3426,7 +3543,7 @@
   },
   {
     "id": "5538",
-    "nombre": "HONGO REBANADO",
+    "nombre": "Hongos Blancos Rebanados (Bandeja)",
     "precio": 2500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3442,7 +3559,7 @@
   },
   {
     "id": "C2180BL",
-    "nombre": "HUEVO BLANCO GALLINA KILO",
+    "nombre": "Huevos de Gallina Blancos por Kilo",
     "precio": 2990.0,
     "cat": "Proteínas",
     "emoji": "🥚",
@@ -3458,7 +3575,7 @@
   },
   {
     "id": "C218010M",
-    "nombre": "HUEVO GALLINA KILOS CH C /30",
+    "nombre": "Huevos de Gallina Frescos (Cartón 30 Unid)",
     "precio": 1300.0,
     "cat": "Proteínas",
     "emoji": "🥚",
@@ -3474,7 +3591,7 @@
   },
   {
     "id": "395",
-    "nombre": "JENGIBRE POLVO 100 GRAMOS",
+    "nombre": "Jengibre en Polvo Puro (100g)",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -3490,7 +3607,7 @@
   },
   {
     "id": "13513",
-    "nombre": "JENJIBRE GRANEL KILO",
+    "nombre": "Raíz de Jengibre Fresca por Kilo",
     "precio": 1950.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -3506,7 +3623,7 @@
   },
   {
     "id": "16524",
-    "nombre": "JOCOTE KILO",
+    "nombre": "Jocotes Frescos por Kilo",
     "precio": 2500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3522,7 +3639,7 @@
   },
   {
     "id": "101021",
-    "nombre": "JUGO DE NARANJA VASO  22 ONZ U",
+    "nombre": "Jugo de Naranja 100% Natural (22oz)",
     "precio": 1600.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3538,7 +3655,7 @@
   },
   {
     "id": "125972",
-    "nombre": "KALE",
+    "nombre": "Kale Rizado Fresco (Bolsa)",
     "precio": 600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3554,7 +3671,7 @@
   },
   {
     "id": "112039",
-    "nombre": "LECHE AGRIA 1 LITRO",
+    "nombre": "Leche Agria Artesanal (1 Litro)",
     "precio": 1500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -3570,7 +3687,7 @@
   },
   {
     "id": "115412",
-    "nombre": "LECHUGA AMERICANA TWO PACK",
+    "nombre": "Lechuga Americana (Pack 2 Unid)",
     "precio": 950.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3586,7 +3703,7 @@
   },
   {
     "id": "16580X",
-    "nombre": "LECHUGA ARUGULA UNIDAD",
+    "nombre": "Rúcula / Arúgula Fresca Hidropónica",
     "precio": 1200.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3602,7 +3719,7 @@
   },
   {
     "id": "11590",
-    "nombre": "LECHUGA ICEBERG",
+    "nombre": "Lechuga Iceberg Crujiente",
     "precio": 600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3618,7 +3735,7 @@
   },
   {
     "id": "11548",
-    "nombre": "LECHUGA LOLOROSA",
+    "nombre": "Lechuga Lollo Rossa Morada",
     "precio": 550.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3634,7 +3751,7 @@
   },
   {
     "id": "11547",
-    "nombre": "LECHUGA ROMANA",
+    "nombre": "Lechuga Romana Fresca",
     "precio": 550.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -3650,7 +3767,7 @@
   },
   {
     "id": "17581EMP",
-    "nombre": "LENTEJAS 400 G",
+    "nombre": "Lentejas Seleccionadas (400g)",
     "precio": 900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -3666,7 +3783,7 @@
   },
   {
     "id": "14585",
-    "nombre": "LIMON MANDARINA UNIDAD",
+    "nombre": "Limón Mandarina Jugoso",
     "precio": 150.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3682,7 +3799,7 @@
   },
   {
     "id": "14585P",
-    "nombre": "LIMON MANDARINO PAQ 10 U",
+    "nombre": "Limón Mandarina (Bolsa 10 Unid)",
     "precio": 1290.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3698,7 +3815,7 @@
   },
   {
     "id": "14575P",
-    "nombre": "LIMON MESINA PAQ 10 UNDS",
+    "nombre": "Limón Mesina Sin Semilla (10 Unid)",
     "precio": 1490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3714,7 +3831,7 @@
   },
   {
     "id": "14575",
-    "nombre": "LIMON MESINA UND",
+    "nombre": "Limón Mesina Sin Semilla",
     "precio": 180.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3730,7 +3847,7 @@
   },
   {
     "id": "145715P",
-    "nombre": "LIMON PERSA IMPORTADO BAND 1/2",
+    "nombre": "Limón Persa Seleccionado (1/2 Kilo)",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3746,7 +3863,7 @@
   },
   {
     "id": "145715",
-    "nombre": "LIMON PERSA MPORTADO KILO",
+    "nombre": "Limón Persa Seleccionado por Kilo",
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3762,7 +3879,7 @@
   },
   {
     "id": "17591EMP",
-    "nombre": "LINAZA 400 G",
+    "nombre": "Semillas de Linaza Enteras (400g)",
     "precio": 850.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -3778,7 +3895,7 @@
   },
   {
     "id": "394",
-    "nombre": "LINAZA CON MORINGA POLVO  250G",
+    "nombre": "Linaza con Moringa en Polvo (250g)",
     "precio": 2500.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -3794,7 +3911,7 @@
   },
   {
     "id": "422",
-    "nombre": "LINAZA MOLIDA PURA 250 GRAMOS",
+    "nombre": "Linaza Molida Pura (250g)",
     "precio": 1850.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -3810,7 +3927,7 @@
   },
   {
     "id": "423",
-    "nombre": "LINAZA MOLIDA TE VERDE TE ROJO",
+    "nombre": "Linaza Molida con Té Verde y Rojo (250g)",
     "precio": 1800.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -3826,7 +3943,7 @@
   },
   {
     "id": "12593",
-    "nombre": "MAIZ DULCE BAND. 500 GRAMOS",
+    "nombre": "Maíz Dulce Desgranado (500g)",
     "precio": 1890.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -3842,7 +3959,7 @@
   },
   {
     "id": "175103EMP",
-    "nombre": "MAIZ PALOMITA 400 G",
+    "nombre": "Maíz para Palomitas (400g)",
     "precio": 600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -3858,7 +3975,7 @@
   },
   {
     "id": "14590",
-    "nombre": "MANDARINA IMPORTADA KILO",
+    "nombre": "Mandarinas Dulces Importadas por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3874,7 +3991,7 @@
   },
   {
     "id": "14582P",
-    "nombre": "MANDARINA NACIONAL MALLA 5  UD",
+    "nombre": "Mandarinas Nacionales (Malla 5 Unid)",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3890,7 +4007,7 @@
   },
   {
     "id": "14607",
-    "nombre": "MANGA KILOS",
+    "nombre": "Manga Seleccionada por Kilo",
     "precio": 1290.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3906,7 +4023,7 @@
   },
   {
     "id": "14609",
-    "nombre": "MANGOSTAN KILO",
+    "nombre": "Mangostán Exótico por Kilo",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -3922,7 +4039,7 @@
   },
   {
     "id": "415",
-    "nombre": "MANI  CASCARA PAQ 225",
+    "nombre": "Maní Tostado en Cáscara (225g)",
     "precio": 1150.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -3938,12 +4055,12 @@
   },
   {
     "id": "406",
-    "nombre": "MANI CARAMELO 150GR DON JUAN",
+    "nombre": "Maní Acaramelado Don Juan (150g)",
     "precio": 1000.0,
-    "cat": "Consumo Moderado",
-    "emoji": "🍯",
-    "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas.",
+    "cat": "Grasas Buenas",
+    "emoji": "🥜",
+    "tag": "Fruto Seco",
+    "desc": "Proteína vegetal y minerales.",
     "nutri": {
       "porcion": "30g",
       "cal": 160,
@@ -3954,12 +4071,12 @@
   },
   {
     "id": "402",
-    "nombre": "MANI CARAMELO 500GR DON JUAN",
+    "nombre": "Maní Acaramelado Don Juan (500g)",
     "precio": 2150.0,
-    "cat": "Consumo Moderado",
-    "emoji": "🍯",
-    "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas.",
+    "cat": "Grasas Buenas",
+    "emoji": "🥜",
+    "tag": "Fruto Seco",
+    "desc": "Proteína vegetal y minerales.",
     "nutri": {
       "porcion": "30g",
       "cal": 160,
@@ -3970,12 +4087,12 @@
   },
   {
     "id": "403",
-    "nombre": "MANI GARAPIÑADO 500GR DON JUAN",
+    "nombre": "Maní Garapiñado Don Juan (500g)",
     "precio": 2150.0,
-    "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra.",
+    "cat": "Grasas Buenas",
+    "emoji": "🥜",
+    "tag": "Fruto Seco",
+    "desc": "Proteína vegetal y minerales.",
     "nutri": {
       "porcion": "100g",
       "cal": 50,
@@ -3986,7 +4103,7 @@
   },
   {
     "id": "404",
-    "nombre": "MANI MIXTO 150GR DON JUAN",
+    "nombre": "Maní Mixto Tostado Don Juan (150g)",
     "precio": 1000.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
@@ -4002,7 +4119,7 @@
   },
   {
     "id": "400",
-    "nombre": "MANI MIXTO 500 GR DON JUAN",
+    "nombre": "Maní Mixto Tostado Don Juan (500g)",
     "precio": 2200.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
@@ -4018,7 +4135,7 @@
   },
   {
     "id": "405",
-    "nombre": "MANI SALADO 150 GR DON JUAN",
+    "nombre": "Maní Salado Tostado Don Juan (150g)",
     "precio": 1000.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
@@ -4034,7 +4151,7 @@
   },
   {
     "id": "401",
-    "nombre": "MANI SALADO 500 GR DON JUAN",
+    "nombre": "Maní Salado Tostado Don Juan (500g)",
     "precio": 2150.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
@@ -4050,7 +4167,7 @@
   },
   {
     "id": "399",
-    "nombre": "MANI SIMPLE BOLSA 500GR DON JU",
+    "nombre": "Maní Simple sin Sal Don Juan (500g)",
     "precio": 2200.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -4066,7 +4183,7 @@
   },
   {
     "id": "11080F",
-    "nombre": "MANZANA FUJI UNIDAD",
+    "nombre": "Manzana Fuji Importada",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4082,7 +4199,7 @@
   },
   {
     "id": "13150B",
-    "nombre": "MANZANA GALA BOLSA 10",
+    "nombre": "Manzanas Gala (Bolsa 10 Unid)",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4098,7 +4215,7 @@
   },
   {
     "id": "11080G",
-    "nombre": "MANZANA GALA GRANDE UND",
+    "nombre": "Manzana Gala Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4114,7 +4231,7 @@
   },
   {
     "id": "13150GPR",
-    "nombre": "MANZANA GALA PEQUEÑA PAQ 6",
+    "nombre": "Manzanas Gala (Bolsa 6 Unid)",
     "precio": 1250.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4130,7 +4247,7 @@
   },
   {
     "id": "11080A",
-    "nombre": "MANZANA GOLDEN GDE UND",
+    "nombre": "Manzana Golden Amarilla Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4146,7 +4263,7 @@
   },
   {
     "id": "11080S",
-    "nombre": "MANZANA GRANNY GDE UND",
+    "nombre": "Manzana Verde Granny Smith Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4162,7 +4279,7 @@
   },
   {
     "id": "13150SPR",
-    "nombre": "MANZANA GRANNY PAQ 6 UND",
+    "nombre": "Manzanas Verdes Granny Smith (6 Unid)",
     "precio": 1290.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4178,7 +4295,7 @@
   },
   {
     "id": "13150MPR",
-    "nombre": "MANZANA PEQ.  MIXTA PAQ 6 UND",
+    "nombre": "Manzanas Mixtas (Bolsa 6 Unid)",
     "precio": 1250.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4194,7 +4311,7 @@
   },
   {
     "id": "11080",
-    "nombre": "MANZANA ROJA GRANDE UNIDAD",
+    "nombre": "Manzana Roja Red Delicious Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4210,7 +4327,7 @@
   },
   {
     "id": "13150PR",
-    "nombre": "MANZANA ROJA PEQUEÑA BOLSA 6 U",
+    "nombre": "Manzanas Rojas (Bolsa 6 Unid)",
     "precio": 1200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4226,7 +4343,7 @@
   },
   {
     "id": "145102",
-    "nombre": "MARACULLA GRANEL",
+    "nombre": "Maracuyá Fresco por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4242,7 +4359,7 @@
   },
   {
     "id": "105",
-    "nombre": "MARACUYA VASO  UNIDAD",
+    "nombre": "Pulpa de Maracuyá en Vaso",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4258,7 +4375,7 @@
   },
   {
     "id": "4321",
-    "nombre": "MELOCOTON KILO",
+    "nombre": "Melocotones Frescos por Kilo",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4274,7 +4391,7 @@
   },
   {
     "id": "145128",
-    "nombre": "MELON CARIBEAN KILO",
+    "nombre": "Melón Cantaloupe Caribbean por Kilo",
     "precio": 1400.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4290,7 +4407,7 @@
   },
   {
     "id": "16535",
-    "nombre": "MENTA EN ROLLOS 30GR",
+    "nombre": "Menta Fresca Aromática (30g)",
     "precio": 450.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -4306,7 +4423,7 @@
   },
   {
     "id": "16691",
-    "nombre": "MIEL CARAO SIN AZUCAR 350 ML",
+    "nombre": "Miel de Carao Sin Azúcar (350ml)",
     "precio": 4500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4322,7 +4439,7 @@
   },
   {
     "id": "16689",
-    "nombre": "MIEL DE ABEJA PURA 1000 GRS",
+    "nombre": "Miel de Abeja 100% Pura (1kg)",
     "precio": 5600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4338,7 +4455,7 @@
   },
   {
     "id": "16690",
-    "nombre": "MIEL DE ABEJA PURA 500 GRAMOS",
+    "nombre": "Miel de Abeja 100% Pura (500g)",
     "precio": 2800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4354,7 +4471,7 @@
   },
   {
     "id": "16686",
-    "nombre": "MIEL DE CARAO  750  ML",
+    "nombre": "Miel de Carao Tradicional (750ml)",
     "precio": 5800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4370,7 +4487,7 @@
   },
   {
     "id": "16687",
-    "nombre": "MIEL DE CARAO 350  ML",
+    "nombre": "Miel de Carao Tradicional (350ml)",
     "precio": 3650.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4386,7 +4503,7 @@
   },
   {
     "id": "12581B",
-    "nombre": "MIEL DE CHIVERRE BOLSA 500GR",
+    "nombre": "Miel de Chiverre Artesanal (500g)",
     "precio": 1200.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4402,7 +4519,7 @@
   },
   {
     "id": "16692",
-    "nombre": "MIELDE CARAO / COCULMECA350 ML",
+    "nombre": "Miel de Carao con Cuculmeca (350ml)",
     "precio": 4200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -4418,7 +4535,7 @@
   },
   {
     "id": "125121",
-    "nombre": "MINIVEGETALES MIX. BAND. 500",
+    "nombre": "Mix de Minivegetales Gourmet (500g)",
     "precio": 2100.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -4434,7 +4551,7 @@
   },
   {
     "id": "431U",
-    "nombre": "MORINGA 100 GRAMOS",
+    "nombre": "Moringa Pura en Hojas/Polvo (100g)",
     "precio": 3490.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -4450,7 +4567,7 @@
   },
   {
     "id": "11551",
-    "nombre": "MOSTAZA CHINA UNIDAD",
+    "nombre": "Mostaza China Fresca",
     "precio": 800.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -4466,7 +4583,7 @@
   },
   {
     "id": "13521",
-    "nombre": "NAMPI KILOS",
+    "nombre": "Ñampí Fresco por Kilo",
     "precio": 1890.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4482,7 +4599,7 @@
   },
   {
     "id": "145142",
-    "nombre": "NARANJA IMPORTADA KILO",
+    "nombre": "Naranjas Dulces Importadas por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4498,7 +4615,7 @@
   },
   {
     "id": "145143",
-    "nombre": "NARANJA NACIONAL CR UND",
+    "nombre": "Naranja Nacional para Jugo",
     "precio": 220.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4514,7 +4631,7 @@
   },
   {
     "id": "145143P15",
-    "nombre": "NARANJA PAQUETE 12 UD",
+    "nombre": "Naranjas Nacionales (Paquete 12 Unid)",
     "precio": 2480.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4530,7 +4647,7 @@
   },
   {
     "id": "112004",
-    "nombre": "NATILLA PEQUEÑA 250",
+    "nombre": "Natilla Tradicional Cremosa (250g)",
     "precio": 650.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -4546,7 +4663,7 @@
   },
   {
     "id": "4131",
-    "nombre": "NECTARINA KILOS",
+    "nombre": "Nectarinas Frescas por Kilo",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4562,7 +4679,7 @@
   },
   {
     "id": "16540",
-    "nombre": "OREGANO BAND",
+    "nombre": "Orégano Fresco (Bandeja)",
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -4578,7 +4695,7 @@
   },
   {
     "id": "16553",
-    "nombre": "PALMITO PAQUETE 500 GRS",
+    "nombre": "Palmito Fresco Picado (500g)",
     "precio": 1600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -4594,7 +4711,7 @@
   },
   {
     "id": "967",
-    "nombre": "PAN CASERO PAQ 400 GR",
+    "nombre": "Pan Casero Artesanal (400g)",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4610,7 +4727,7 @@
   },
   {
     "id": "966",
-    "nombre": "PAN DULCE CANELA C DULCE LECHE",
+    "nombre": "Pan Dulce de Canela con Dulce de Leche",
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -4626,7 +4743,7 @@
   },
   {
     "id": "13556",
-    "nombre": "PAPA GRANEL",
+    "nombre": "Papa Blanca Especial por Kilo",
     "precio": 1290.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4642,7 +4759,7 @@
   },
   {
     "id": "13556R",
-    "nombre": "PAPA ROJA",
+    "nombre": "Papa Roja Especial por Kilo",
     "precio": 1250.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4658,7 +4775,7 @@
   },
   {
     "id": "13557",
-    "nombre": "PAPA SEMILLON GRANEL KILO",
+    "nombre": "Papa Semillón por Kilo",
     "precio": 800.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4674,7 +4791,7 @@
   },
   {
     "id": "1451633",
-    "nombre": "PAPAYA SUPREMA KILO",
+    "nombre": "Papaya Suprema Dulce por Kilo",
     "precio": 950.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4690,7 +4807,7 @@
   },
   {
     "id": "16510",
-    "nombre": "PEJIBAYE COCINADO KILO",
+    "nombre": "Pejibayes Cocinados Listos por Kilo",
     "precio": 3200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4706,7 +4823,7 @@
   },
   {
     "id": "125131",
-    "nombre": "PEPINO GRANEL",
+    "nombre": "Pepino Fresco por Kilo",
     "precio": 850.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -4722,7 +4839,7 @@
   },
   {
     "id": "3741",
-    "nombre": "PERA ASIATICA UNIDAD",
+    "nombre": "Pera Asiática Crujiente",
     "precio": 650.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4738,7 +4855,7 @@
   },
   {
     "id": "31090",
-    "nombre": "PERA D´ ANJOU GDE UND",
+    "nombre": "Pera D'Anjou Verde Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4754,7 +4871,7 @@
   },
   {
     "id": "3344",
-    "nombre": "PERA FORELLE PAQUETE",
+    "nombre": "Peras Forelle Dulces (Paquete)",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4770,7 +4887,7 @@
   },
   {
     "id": "3181R",
-    "nombre": "PERA ROJA GRANDE",
+    "nombre": "Pera Roja Grande Importada",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4786,7 +4903,7 @@
   },
   {
     "id": "11561",
-    "nombre": "PEREJIL ROLLO",
+    "nombre": "Perejil Fresco Seleccionado (Rollo)",
     "precio": 390.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -4802,7 +4919,7 @@
   },
   {
     "id": "145168IN",
-    "nombre": "PIPA PELADA UNIDAD",
+    "nombre": "Pipa Fría Pelada con Agua Dulce",
     "precio": 600.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4818,7 +4935,7 @@
   },
   {
     "id": "145169",
-    "nombre": "PITAHAYA KILOS",
+    "nombre": "Pitahaya Roja / Dragón por Kilo",
     "precio": 3500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4834,7 +4951,7 @@
   },
   {
     "id": "13569",
-    "nombre": "PIÑA DE TAMAL UNIDAD",
+    "nombre": "Piña de Tamal Tradicional",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4850,7 +4967,7 @@
   },
   {
     "id": "1451647",
-    "nombre": "PIÑA DORADA CALIBRE # 7 UNIDAD",
+    "nombre": "Piña Dorada Dulce Grande",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4866,7 +4983,7 @@
   },
   {
     "id": "145174M",
-    "nombre": "PLATANO  MADURO UNIDAD",
+    "nombre": "Plátano Maduro Dulce",
     "precio": 1230.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4882,7 +4999,7 @@
   },
   {
     "id": "37075",
-    "nombre": "PLATANO TOSTADO  BOLSA VERDE U",
+    "nombre": "Plátanos Tostados con Sal (Bolsa)",
     "precio": 1050.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4898,7 +5015,7 @@
   },
   {
     "id": "37074",
-    "nombre": "PLATANO TOSTADO BOLSA MADURO U",
+    "nombre": "Plátanos Maduros Tostados (Bolsa)",
     "precio": 1050.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4914,7 +5031,7 @@
   },
   {
     "id": "37077",
-    "nombre": "PLATANO TOSTADO LIMON Y SAL UD",
+    "nombre": "Plátanos Tostados Limón y Sal (Bolsa)",
     "precio": 1050.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4930,7 +5047,7 @@
   },
   {
     "id": "145174",
-    "nombre": "PLATANO UNIDAD",
+    "nombre": "Plátano Verde Grande",
     "precio": 250.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -4946,7 +5063,7 @@
   },
   {
     "id": "16688",
-    "nombre": "POLEN  DE ABEJA BOTELLA 90 GR",
+    "nombre": "Polen de Abeja 100% Natural (90g)",
     "precio": 2850.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -4962,7 +5079,7 @@
   },
   {
     "id": "14547",
-    "nombre": "POMELO IMPORTADO KILO",
+    "nombre": "Toronja / Pomelo Rosado por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4978,7 +5095,7 @@
   },
   {
     "id": "16653L",
-    "nombre": "PULPA DE CAS LITRO",
+    "nombre": "Pulpa Natural de Cas (1 Litro)",
     "precio": 3500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -4994,7 +5111,7 @@
   },
   {
     "id": "16672",
-    "nombre": "PULPA DE FRESA GALON",
+    "nombre": "Pulpa Natural de Fresa (1 Galón)",
     "precio": 7000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5010,7 +5127,7 @@
   },
   {
     "id": "16672L",
-    "nombre": "PULPA DE FRESA LITRO",
+    "nombre": "Pulpa Natural de Fresa (1 Litro)",
     "precio": 3100.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5026,7 +5143,7 @@
   },
   {
     "id": "16655L",
-    "nombre": "PULPA DE FRUTAS MIXTAS LITRO",
+    "nombre": "Pulpa Natural de Frutas Mixtas (1 Litro)",
     "precio": 3450.0,
     "cat": "Batidos & Detox",
     "emoji": "🧊",
@@ -5042,7 +5159,7 @@
   },
   {
     "id": "16651L",
-    "nombre": "PULPA DE GUANABANA LITRO",
+    "nombre": "Pulpa Natural de Guanábana (1 Litro)",
     "precio": 3450.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5058,7 +5175,7 @@
   },
   {
     "id": "16654L",
-    "nombre": "PULPA DE MANGO LITRO",
+    "nombre": "Pulpa Natural de Mango (1 Litro)",
     "precio": 3450.0,
     "cat": "Batidos & Detox",
     "emoji": "🧊",
@@ -5074,7 +5191,7 @@
   },
   {
     "id": "16658L",
-    "nombre": "PULPA DE MARACUYA LITRO",
+    "nombre": "Pulpa Natural de Maracuyá (1 Litro)",
     "precio": 3100.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5090,7 +5207,7 @@
   },
   {
     "id": "16652L",
-    "nombre": "PULPA DE MORA LITRO",
+    "nombre": "Pulpa Natural de Mora (1 Litro)",
     "precio": 3500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5106,7 +5223,7 @@
   },
   {
     "id": "16657",
-    "nombre": "PULPA DE PIÑA GALON",
+    "nombre": "Pulpa Natural de Piña (1 Galón)",
     "precio": 6500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5122,7 +5239,7 @@
   },
   {
     "id": "112035",
-    "nombre": "QUESO AHUMADO SECO",
+    "nombre": "Queso Ahumado Seco Artesanal (1kg)",
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5138,7 +5255,7 @@
   },
   {
     "id": "112026",
-    "nombre": "QUESO PALMITO/UNIDAD/ARTESANAL",
+    "nombre": "Queso Palmito Tradicional Artesanal",
     "precio": 3500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5154,7 +5271,7 @@
   },
   {
     "id": "112025",
-    "nombre": "QUESO POROSO  KILO",
+    "nombre": "Queso Poroso Fresco por Kilo",
     "precio": 5600.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5170,7 +5287,7 @@
   },
   {
     "id": "112034",
-    "nombre": "QUESO SEMIDURO C ESPECIES KILO",
+    "nombre": "Queso Semiduro con Especias por Kilo",
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5186,7 +5303,7 @@
   },
   {
     "id": "112002",
-    "nombre": "QUESO SEMIDURO KILO",
+    "nombre": "Queso Semiduro Tradicional por Kilo",
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5202,7 +5319,7 @@
   },
   {
     "id": "112001",
-    "nombre": "QUESO TIERNO KILO",
+    "nombre": "Queso Tierno Fresco por Kilo",
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5218,7 +5335,7 @@
   },
   {
     "id": "13543",
-    "nombre": "RABANO ROLLO",
+    "nombre": "Rábanos Rojos Frescos (Rollo)",
     "precio": 500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5234,7 +5351,7 @@
   },
   {
     "id": "13553",
-    "nombre": "REMOLACHA UNIDAD",
+    "nombre": "Remolacha Fresca",
     "precio": 390.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5250,7 +5367,7 @@
   },
   {
     "id": "125142",
-    "nombre": "REPOLLO KILO",
+    "nombre": "Repollo Blanco Fresco por Kilo",
     "precio": 1450.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5266,7 +5383,7 @@
   },
   {
     "id": "125143",
-    "nombre": "REPOLLO MORADO",
+    "nombre": "Repollo Morado Fresco por Kilo",
     "precio": 1900.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5282,7 +5399,7 @@
   },
   {
     "id": "13560",
-    "nombre": "ROMERO ROLLO PEQ 30 GR",
+    "nombre": "Romero Fresco Aromático (30g)",
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -5298,7 +5415,7 @@
   },
   {
     "id": "971",
-    "nombre": "ROSQUILLA SANTACRUZ  PAQ 13",
+    "nombre": "Rosquillas Santacruceñas (Paq 13 Unid)",
     "precio": 1600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5314,7 +5431,7 @@
   },
   {
     "id": "13580H",
-    "nombre": "SABILA HOJA UNIDAD",
+    "nombre": "Hoja de Sábila / Aloe Vera Grande",
     "precio": 1250.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -5330,7 +5447,7 @@
   },
   {
     "id": "145182IN",
-    "nombre": "SANDIA MEDIANA KILO",
+    "nombre": "Sandía Dulce Mediana por Kilo",
     "precio": 550.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5346,7 +5463,7 @@
   },
   {
     "id": "125130",
-    "nombre": "SCALLOPINI AMARILLO",
+    "nombre": "Scallopini Amarillo Fresco",
     "precio": 1900.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5362,7 +5479,7 @@
   },
   {
     "id": "413",
-    "nombre": "SEMILLA MARAÑON 100 GR",
+    "nombre": "Semillas de Marañón Tostadas (100g)",
     "precio": 2300.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
@@ -5378,7 +5495,7 @@
   },
   {
     "id": "398",
-    "nombre": "SEMILLAS MIXTA ACARAMELADA 100",
+    "nombre": "Mix de Semillas Acarameladas (100g)",
     "precio": 2300.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5394,7 +5511,7 @@
   },
   {
     "id": "13568",
-    "nombre": "TACACO KILO",
+    "nombre": "Tacacos Frescos Tradicionales por Kilo",
     "precio": 3000.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -5410,7 +5527,7 @@
   },
   {
     "id": "145191",
-    "nombre": "TAMARINDO PAQ. 500 GRS",
+    "nombre": "Tamarindo Natural en Vaina (500g)",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5426,7 +5543,7 @@
   },
   {
     "id": "970",
-    "nombre": "TANELAS CRIOLLAS PAQ",
+    "nombre": "Tanelas Criollas Tradicionales (Paquete)",
     "precio": 2500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5442,7 +5559,7 @@
   },
   {
     "id": "411",
-    "nombre": "TAPA DULCE 600 GRS NEGRO",
+    "nombre": "Tapa de Dulce Tradicional Pura (600g)",
     "precio": 1100.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5458,7 +5575,7 @@
   },
   {
     "id": "D30065",
-    "nombre": "TARTARAS BAND UNIDAD",
+    "nombre": "Tártaras Dulces Tradicionales (Bandeja)",
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5474,7 +5591,7 @@
   },
   {
     "id": "13561",
-    "nombre": "TIQUISQUE KILOS",
+    "nombre": "Tiquisque Fresco por Kilo",
     "precio": 3490.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -5490,7 +5607,7 @@
   },
   {
     "id": "125183",
-    "nombre": "TOMATE ARBOL KILO",
+    "nombre": "Tomate de Árbol Fresco por Kilo",
     "precio": 1390.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5506,7 +5623,7 @@
   },
   {
     "id": "125152N",
-    "nombre": "TOMATE CHERRY (UVA) VASO 300 G",
+    "nombre": "Tomates Cherry / Uva Dulces (300g)",
     "precio": 1250.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5522,7 +5639,7 @@
   },
   {
     "id": "125150",
-    "nombre": "TOMATE KILO ( Promocion )",
+    "nombre": "Tomate Manzano Fresco por Kilo",
     "precio": 1195.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5538,7 +5655,7 @@
   },
   {
     "id": "125160",
-    "nombre": "TOMATE MEXICANO KILOS",
+    "nombre": "Tomate Tipo Mexicano por Kilo",
     "precio": 2000.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5554,7 +5671,7 @@
   },
   {
     "id": "125180P",
-    "nombre": "TOMATE SALADET BANDEJA 1KILO",
+    "nombre": "Tomate Saladet Seleccionado (1kg)",
     "precio": 1900.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5570,7 +5687,7 @@
   },
   {
     "id": "125180",
-    "nombre": "TOMATE SALADET KILO",
+    "nombre": "Tomate Saladet Fresco por Kilo",
     "precio": 2450.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5586,7 +5703,7 @@
   },
   {
     "id": "125153",
-    "nombre": "TOMATE SELECTO KG",
+    "nombre": "Tomate de Primera Selección por Kilo",
     "precio": 2490.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5602,7 +5719,7 @@
   },
   {
     "id": "13573",
-    "nombre": "TOMILLO ROLLO 30 GR",
+    "nombre": "Tomillo Fresco Aromático (30g)",
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -5618,7 +5735,7 @@
   },
   {
     "id": "2",
-    "nombre": "TORTILLA CASERA PAQ 3 UND",
+    "nombre": "Tortillas Caseras de Maíz (3 Unid)",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5634,7 +5751,7 @@
   },
   {
     "id": "719",
-    "nombre": "TORTILLA GINA CREMA CEBOLLA250",
+    "nombre": "Tortillas Tostadas Crema & Cebolla Gina",
     "precio": 2500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -5650,7 +5767,7 @@
   },
   {
     "id": "727",
-    "nombre": "TORTILLA ORIGINAL GINA 380  GR",
+    "nombre": "Tortillas de Maíz Original Gina (380g)",
     "precio": 2800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5666,7 +5783,7 @@
   },
   {
     "id": "724",
-    "nombre": "TORTILLA PARA CHALUPAS 250gr",
+    "nombre": "Tortillas Crujientes para Chalupas",
     "precio": 1695.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5682,7 +5799,7 @@
   },
   {
     "id": "726",
-    "nombre": "TORTILLA REDO ORIG JALAPEÑ250g",
+    "nombre": "Tortillas Redondas con Jalapeño Gina",
     "precio": 1495.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5698,7 +5815,7 @@
   },
   {
     "id": "1",
-    "nombre": "TORTILLAS",
+    "nombre": "Tortillas de Maíz Tradicionales",
     "precio": 800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5714,7 +5831,7 @@
   },
   {
     "id": "15551",
-    "nombre": "UCHUVA CANASTILLA",
+    "nombre": "Uchuvas Dulces (Canastilla)",
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5730,7 +5847,7 @@
   },
   {
     "id": "2324",
-    "nombre": "UVA GLOBO BANDEJA 500 GRS",
+    "nombre": "Uvas Globo Rojas Dulces (500g)",
     "precio": 1790.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5746,7 +5863,7 @@
   },
   {
     "id": "21021",
-    "nombre": "UVA GLOBO KILO",
+    "nombre": "Uvas Globo Rojas por Kilo",
     "precio": 3390.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5762,7 +5879,7 @@
   },
   {
     "id": "2125",
-    "nombre": "UVA MIXTA BANDEJA 500 GRAMOS",
+    "nombre": "Uvas Mixtas Sin Semilla (500g)",
     "precio": 2590.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5778,7 +5895,7 @@
   },
   {
     "id": "2424",
-    "nombre": "UVA VERDE BANDEJA 1 KILO",
+    "nombre": "Uvas Verdes Sin Semilla (Bandeja 1kg)",
     "precio": 4900.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5794,7 +5911,7 @@
   },
   {
     "id": "2331",
-    "nombre": "UVA VERDE BANDEJA 500 KG",
+    "nombre": "Uvas Verdes Sin Semilla (500g)",
     "precio": 2590.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5810,7 +5927,7 @@
   },
   {
     "id": "2131",
-    "nombre": "UVA VERDE KILO",
+    "nombre": "Uvas Verdes Dulces por Kilo",
     "precio": 4570.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5826,7 +5943,7 @@
   },
   {
     "id": "125170",
-    "nombre": "VAINICA FINA",
+    "nombre": "Vainicas Tiernas Finas por Kilo",
     "precio": 1800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5842,7 +5959,7 @@
   },
   {
     "id": "125162",
-    "nombre": "VAINICA MALLA 500 GRS",
+    "nombre": "Vainicas Tiernas (Malla 500g)",
     "precio": 1600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5858,7 +5975,7 @@
   },
   {
     "id": "924",
-    "nombre": "VINAGRE CLARO GALON 3500 ML",
+    "nombre": "Vinagre Claro Natural (1 Galón)",
     "precio": 1450.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
@@ -5874,7 +5991,7 @@
   },
   {
     "id": "100040",
-    "nombre": "YOGURT PEQUEÑO 200 GMS",
+    "nombre": "Yogurt Natural Artesanal (200g)",
     "precio": 850.0,
     "cat": "Proteínas",
     "emoji": "🧀",
@@ -5890,7 +6007,7 @@
   },
   {
     "id": "13571",
-    "nombre": "YUCA PARAFINADA KILO",
+    "nombre": "Yuca Blanca Parafinada por Kilo",
     "precio": 750.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -5906,7 +6023,7 @@
   },
   {
     "id": "13590",
-    "nombre": "YUPLON UNIDAD",
+    "nombre": "Yuplón Fresco",
     "precio": 300.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -5922,7 +6039,7 @@
   },
   {
     "id": "13581",
-    "nombre": "ZANAHORIA BABY BANDEJA 500 GRS",
+    "nombre": "Zanahorias Baby Dulces (500g)",
     "precio": 1800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5938,7 +6055,7 @@
   },
   {
     "id": "13588",
-    "nombre": "ZANAHORIA BOLSA 1 KILO",
+    "nombre": "Zanahorias Frescas (Bolsa 1kg)",
     "precio": 670.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5954,7 +6071,7 @@
   },
   {
     "id": "13582",
-    "nombre": "ZANAHORIA GRANEL",
+    "nombre": "Zanahoria Fresca por Kilo",
     "precio": 670.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
@@ -5970,7 +6087,7 @@
   },
   {
     "id": "16875",
-    "nombre": "ZAPALLO ESMERALDA BAND 4 UDS",
+    "nombre": "Zapallo Esmeralda Fresco (4 Unid)",
     "precio": 1800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -5986,7 +6103,7 @@
   },
   {
     "id": "1801",
-    "nombre": "ZAPOTE COLOMBIANO UNIDAD",
+    "nombre": "Zapote Colombiano Dulce",
     "precio": 1200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -6002,7 +6119,7 @@
   },
   {
     "id": "1800",
-    "nombre": "ZAPOTE KILO",
+    "nombre": "Zapote Fresco por Kilo",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
@@ -6018,7 +6135,7 @@
   },
   {
     "id": "209",
-    "nombre": "ZARCE ENSALADA MIXTA LECH 300",
+    "nombre": "Mix de Ensalada Fresca Lista (300g)",
     "precio": 1500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -6034,7 +6151,7 @@
   },
   {
     "id": "191",
-    "nombre": "ZARCE ENSALADA PAQ  4 X 500G",
+    "nombre": "Pack Ensalada Fresca Lista (4x500g)",
     "precio": 1500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -6050,7 +6167,7 @@
   },
   {
     "id": "187",
-    "nombre": "ZARCE OLLA DE CARNE 1000  GR",
+    "nombre": "Verduras Listas para Olla de Carne (1kg)",
     "precio": 2200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -6066,7 +6183,7 @@
   },
   {
     "id": "193",
-    "nombre": "ZARCE PICADILLO VAI-ZAN 500 GR",
+    "nombre": "Picadillo Vainica & Zanahoria Listo (500g)",
     "precio": 1750.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -6082,7 +6199,7 @@
   },
   {
     "id": "189",
-    "nombre": "ZARCE PICADILLO VAIN-ZANA 500",
+    "nombre": "Picadillo Vainica & Zanahoria (500g)",
     "precio": 1950.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -6098,7 +6215,7 @@
   },
   {
     "id": "188",
-    "nombre": "ZARCE-ESCABECHE 500GR",
+    "nombre": "Verduras Listas para Escabeche (500g)",
     "precio": 1950.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
@@ -6114,7 +6231,7 @@
   },
   {
     "id": "125191",
-    "nombre": "ZUCHINNI UNIDAD",
+    "nombre": "Zucchini Verde Fresco",
     "precio": 750.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
@@ -6133,6 +6250,7 @@
         let categoriaActual = 'TODOS';
         let macroGoalActual = 'TODOS';
         let terminoBusqueda = '';
+        let metodoPagoSeleccionado = 'Sinpe Móvil';
 
         const descripcionesDiet = {
             'TODOS': {
@@ -6206,6 +6324,12 @@
             renderizarGrid();
         }
 
+        function setPaymentMethod(method, btn) {
+            metodoPagoSeleccionado = method;
+            document.querySelectorAll('.pay-chip').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        }
+
         function onSearch() {
             const input = document.getElementById('searchInput');
             const clearBtn = document.getElementById('searchClearBtn');
@@ -6246,16 +6370,13 @@
             grid.innerHTML = '';
 
             const filtrados = productos.filter(p => {
-                // Category filter
                 const matchCat = categoriaActual === 'TODOS' || p.cat === categoriaActual;
                 
-                // Search filter
                 const matchSearch = terminoBusqueda === '' || 
                     p.nombre.toLowerCase().includes(terminoBusqueda) || 
                     p.id.toLowerCase().includes(terminoBusqueda) ||
                     p.tag.toLowerCase().includes(terminoBusqueda);
                 
-                // Macro Goal filter (NameThatUI: Token multi-filter)
                 let matchGoal = true;
                 if (macroGoalActual === 'BAJO_CAL') {
                     matchGoal = p.nutri.cal < 50;
@@ -6310,7 +6431,7 @@
                         </div>
                         <h3 class="card-name">${prod.nombre}</h3>
                         
-                        <!-- Nutritional Facts Box (NameThatUI: Bento Macro Indicator) -->
+                        <!-- Nutritional Facts Box -->
                         <div class="nutri-box">
                             <div class="nutri-header-row">
                                 <span>Porción:</span>
@@ -6361,7 +6482,7 @@
         function animarDockBadge() {
             const badge = document.getElementById('barCountBadge');
             badge.classList.remove('bump');
-            void badge.offsetWidth; // Trigger reflow for spring animation
+            void badge.offsetWidth;
             badge.classList.add('bump');
         }
 
@@ -6449,36 +6570,71 @@
             }
         }
 
-        function copiarResumen() {
+        function construirMensajeWhatsApp() {
             const items = Object.keys(carrito);
-            if (items.length === 0) return;
+            if (items.length === 0) return null;
 
-            let texto = "🥗 *LISTA DE COMPRAS FIT - COUNTRY HOUSE*\n";
-            texto += "_Calidad y frescura todos los días®_\n\n";
+            const nombre = document.getElementById('custNameInput').value.trim();
+            const direccion = document.getElementById('custAddressInput').value.trim();
+            const pago = metodoPagoSeleccionado;
+
+            let texto = "🌿 *NUEVO PEDIDO - COUNTRY HOUSE*\n";
+            texto += "_Calidad y frescura todos los días®_\n";
+            texto += "━━━━━━━━━━━━━━━━━━━━━\n";
+            
+            if (nombre) {
+                texto += `👤 *Cliente:* ${nombre}\n`;
+            }
+            if (direccion) {
+                texto += `📍 *Dirección:* ${direccion}\n`;
+            }
+            texto += `💳 *Pago:* ${pago}\n`;
+            texto += "━━━━━━━━━━━━━━━━━━━━━\n";
+            texto += "📦 *DETALLE DE PRODUCTOS:*\n\n";
+
             let subtotal = 0;
-
             items.forEach(id => {
                 const prod = productos.find(p => p.id === id);
                 if (prod) {
                     const qty = carrito[id];
                     const itemTotal = qty * prod.precio;
                     subtotal += itemTotal;
-                    texto += `• ${qty}x ${prod.nombre} (${prod.nutri.cal} kcal/porción) -> ${formatearDinero(itemTotal)}\n`;
+                    texto += `• *${qty}x* ${prod.nombre} -> *${formatearDinero(itemTotal)}*\n`;
                 }
             });
 
             const disc = subtotal * 0.10;
             const total = subtotal - disc;
 
-            texto += `\n*Subtotal:* ${formatearDinero(subtotal)}`;
-            texto += `\n*Descuento (10%):* -${formatearDinero(disc)}`;
-            texto += `\n*TOTAL ESTIMADO:* *${formatearDinero(total)}*`;
+            texto += "\n━━━━━━━━━━━━━━━━━━━━━\n";
+            texto += `💰 *Subtotal:* ${formatearDinero(subtotal)}\n`;
+            texto += `✨ *Descuento Especial (10%):* -${formatearDinero(disc)}\n`;
+            texto += `🔥 *TOTAL A PAGAR:* *${formatearDinero(total)}*\n`;
+            texto += "━━━━━━━━━━━━━━━━━━━━━\n";
+            texto += "¡Muchas gracias por su preferencia! 🥑🥦";
 
-            navigator.clipboard.writeText(texto).then(() => {
+            return texto;
+        }
+
+        function enviarPorWhatsApp() {
+            const mensaje = construirMensajeWhatsApp();
+            if (!mensaje) {
+                mostrarToast('Tu lista está vacía');
+                return;
+            }
+
+            const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(mensaje);
+            window.open(url, '_blank');
+        }
+
+        function copiarResumen() {
+            const mensaje = construirMensajeWhatsApp();
+            if (!mensaje) return;
+
+            navigator.clipboard.writeText(mensaje).then(() => {
                 mostrarToast('📋 ¡Lista copiada al portapapeles!');
-                setTimeout(() => cerrarPedido(), 700);
             }).catch(() => {
-                alert(texto);
+                alert(mensaje);
             });
         }
 

@@ -13,6 +13,8 @@
     <!-- Leaflet CSS & JS for Admin Fleet Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SheetJS CDN for Excel parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
@@ -424,23 +426,53 @@
         </section>
 
         <!-- ============================================================
-             TAB 3: PRODUCTS CATALOG
+             TAB 3: PRODUCTS CATALOG & INVENTORY
              ============================================================ -->
         <section class="admin-card" id="adminTabProductos" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                <h2 style="font-size: 1.05rem; font-weight: 900;">🥗 Catálogo Oficial en Supabase (311 ítems)</h2>
-                <input type="text" placeholder="Buscar producto por nombre o categoría..." id="adminSearchProd" oninput="filtrarProductosAdmin()" style="background:var(--bg-input); border:1px solid var(--border-subtle); color:#fff; padding:6px 14px; border-radius:9999px; font-size:0.8rem; outline:none; min-width: 260px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+                <div>
+                    <h2 style="font-size: 1.05rem; font-weight: 900;">🥗 Catálogo &amp; Precios en Supabase</h2>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">
+                        Control de inventario. Solo los productos con saldo aparecen en la tienda del cliente (Huevos siempre visibles).
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                    <input type="text" placeholder="Buscar producto o código..." id="adminSearchProd" oninput="filtrarProductosAdmin()" style="background:var(--bg-input); border:1px solid var(--border-subtle); color:#fff; padding:6px 14px; border-radius:9999px; font-size:0.8rem; outline:none; min-width: 200px;">
+                    <button onclick="abrirModalImportarExcel()" style="background: linear-gradient(135deg, #059669, #10b981); color: #fff; font-weight: 800; font-size: 0.78rem; padding: 7px 16px; border-radius: 9999px; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(16,185,129,0.3);">
+                        <span>📥 Cargar Precios y Saldos (Excel)</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+            <!-- Resumen Rápido de Inventario -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
+                <div style="background: var(--bg-surface); padding: 0.75rem; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 0.72rem; color: var(--text-muted);">Total Productos Catálogo</div>
+                    <div id="kpiProdTotal" style="font-size: 1.25rem; font-weight: 900; color: #fff;">311</div>
+                </div>
+                <div style="background: var(--bg-surface); padding: 0.75rem; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 0.72rem; color: #34d399;">🟢 Visibles al Cliente (Con Saldo)</div>
+                    <div id="kpiProdConSaldo" style="font-size: 1.25rem; font-weight: 900; color: #34d399;">—</div>
+                </div>
+                <div style="background: var(--bg-surface); padding: 0.75rem; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 0.72rem; color: #f87171;">⚪ Ocultos (Sin Saldo)</div>
+                    <div id="kpiProdSinSaldo" style="font-size: 1.25rem; font-weight: 900; color: #f87171;">—</div>
+                </div>
+                <div style="background: var(--bg-surface); padding: 0.75rem; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 0.72rem; color: #facc15;">🥚 Huevos (Siempre Disponibles)</div>
+                    <div id="kpiProdHuevos" style="font-size: 1.25rem; font-weight: 900; color: #facc15;">Activos</div>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="max-height: 520px; overflow-y: auto;">
                 <table>
                     <thead>
                         <tr>
                             <th>Código</th>
                             <th>Producto</th>
                             <th>Categoría</th>
-                            <th>Calorías</th>
-                            <th>Proteínas</th>
+                            <th>Saldo / Stock</th>
+                            <th>Estado en Tienda</th>
                             <th>Precio Oficial</th>
                         </tr>
                     </thead>
@@ -462,6 +494,78 @@
             <div id="modalOrderBody" style="font-size: 0.84rem; display: flex; flex-direction: column; gap: 0.6rem;"></div>
             <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;">
                 <button onclick="cerrarModalPedido()" style="background: var(--bg-input); border: 1px solid var(--border-subtle); color: #fff; padding: 6px 14px; border-radius: 9999px; font-weight: 800; cursor: pointer;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Excel Upload (Precios y Saldos) -->
+    <div class="modal-overlay" id="modalImportarExcel" style="display: none;">
+        <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 1.3rem;">📊</span>
+                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #fff;">Cargar Precios y Saldos desde Excel</h3>
+                </div>
+                <button onclick="cerrarModalImportarExcel()" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.85rem;">
+                <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); border-radius: 10px; padding: 0.75rem; font-size: 0.78rem; color: #d1fae5;">
+                    💡 <b>Formato automático de Descargas:</b> Reconoce columnas <code>ARTICULO</code>, <code>DESCRIPCION</code>, <code>SALDO</code>, <code>PRECIO</code> de tus archivos como <code>Libro1.xlsx</code>.
+                    <br>🥚 <b>Regla Huevos:</b> Los huevos siempre se mantienen activos y visibles para el cliente aunque en el Excel aparezcan con saldo vacío.
+                    <br>👁️ <b>Privacidad del Cliente:</b> Los clientes nunca ven el saldo numérico, solo los productos disponibles para comprar.
+                </div>
+
+                <!-- Dropzone -->
+                <div id="dropZoneExcel" onclick="document.getElementById('excelFileInput').click()" style="border: 2px dashed #10b981; border-radius: 12px; padding: 1.75rem 1rem; text-align: center; cursor: pointer; background: rgba(16,185,129,0.05); transition: background 0.2s;">
+                    <p style="font-size: 2.2rem; margin-bottom: 0.3rem;">📁</p>
+                    <p style="font-weight: 800; font-size: 0.92rem; color: #fff;">Haz clic o arrastra aquí tu archivo Excel (.xlsx)</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Ejemplo: <code>Libro1.xlsx</code> o <code>Libro1 (1).xlsx</code></p>
+                    <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" style="display: none;" onchange="procesarArchivoExcelSeleccionado(event)">
+                </div>
+
+                <!-- Preview Box (Hidden until file selected) -->
+                <div id="excelPreviewContainer" style="display: none; flex-direction: column; gap: 0.75rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span id="excelFileNameLabel" style="font-weight: 800; color: #60a5fa; font-size: 0.82rem;"></span>
+                        <span id="excelRowsCountBadge" style="background: rgba(59,130,246,0.2); color: #93c5fd; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 9999px;"></span>
+                    </div>
+
+                    <!-- Mini KPI Preview -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center;">
+                        <div style="background: var(--bg-surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                            <div style="font-size: 0.68rem; color: var(--text-muted);">Coincidentes</div>
+                            <div id="previewCoincidentes" style="font-weight: 900; color: #fff; font-size: 1rem;">0</div>
+                        </div>
+                        <div style="background: var(--bg-surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                            <div style="font-size: 0.68rem; color: #34d399;">Con Saldo Activo</div>
+                            <div id="previewConSaldo" style="font-weight: 900; color: #34d399; font-size: 1rem;">0</div>
+                        </div>
+                        <div style="background: var(--bg-surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                            <div style="font-size: 0.68rem; color: #facc15;">Huevos Protegidos</div>
+                            <div id="previewHuevos" style="font-weight: 900; color: #facc15; font-size: 1rem;">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar (hidden by default) -->
+                    <div id="importProgressBarBox" style="display: none; flex-direction: column; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted);">
+                            <span id="importProgressStatusText">Sincronizando con Supabase...</span>
+                            <span id="importProgressPercentText">0%</span>
+                        </div>
+                        <div style="height: 6px; background: var(--bg-input); border-radius: 9999px; overflow: hidden;">
+                            <div id="importProgressBarFill" style="height: 100%; width: 0%; background: #10b981; transition: width 0.2s;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons inside Modal -->
+                    <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.4rem;">
+                        <button onclick="cerrarModalImportarExcel()" style="background: var(--bg-input); border: 1px solid var(--border-subtle); color: #fff; padding: 7px 14px; border-radius: 9999px; font-weight: 700; cursor: pointer; font-size: 0.78rem;">Cancelar</button>
+                        <button id="btnEjecutarSincronizacion" onclick="ejecutarSincronizacionDesdeNavegador()" style="background: #10b981; border: none; color: #fff; padding: 7px 18px; border-radius: 9999px; font-weight: 800; cursor: pointer; font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+                            <span>⚡ Sincronizar en Supabase Ahora</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -848,6 +952,195 @@
             });
         }
 
+        let excelParsedRows = [];
+
+        function abrirModalImportarExcel() {
+            document.getElementById('modalImportarExcel').style.display = 'flex';
+            document.getElementById('excelPreviewContainer').style.display = 'none';
+            document.getElementById('excelFileInput').value = '';
+            excelParsedRows = [];
+        }
+
+        function cerrarModalImportarExcel() {
+            document.getElementById('modalImportarExcel').style.display = 'none';
+        }
+
+        function procesarArchivoExcelSeleccionado(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: '' });
+
+                    excelParsedRows = rows;
+
+                    let coincidentes = 0;
+                    let conSaldo = 0;
+                    let huevosCount = 0;
+
+                    const dbMap = new Map();
+                    productosData.forEach(p => dbMap.set(p.id, p));
+
+                    rows.forEach(r => {
+                        const art = String(r.ARTICULO || r.Articulo || r.articulo || r.CODIGO || r.Codigo || '').trim();
+                        const desc = String(r.DESCRIPCION || r.Descripcion || r.descripcion || r.NOMBRE || '').trim();
+                        const saldo = r.SALDO !== undefined ? r.SALDO : (r.Saldo !== undefined ? r.Saldo : r.saldo);
+
+                        const esHuevo = desc.toUpperCase().includes('HUEVO') || art.startsWith('H') || art.startsWith('C2180');
+                        if (esHuevo) huevosCount++;
+
+                        if (dbMap.has(art)) {
+                            coincidentes++;
+                            if ((saldo !== '' && saldo !== null && Number(saldo) > 0) || esHuevo) {
+                                conSaldo++;
+                            }
+                        }
+                    });
+
+                    document.getElementById('excelFileNameLabel').innerText = `📄 ${file.name}`;
+                    document.getElementById('excelRowsCountBadge').innerText = `${rows.length} filas leídas`;
+                    document.getElementById('previewCoincidentes').innerText = coincidentes;
+                    document.getElementById('previewConSaldo').innerText = conSaldo;
+                    document.getElementById('previewHuevos').innerText = huevosCount;
+
+                    document.getElementById('excelPreviewContainer').style.display = 'flex';
+                } catch(err) {
+                    alert('Error al leer el archivo Excel: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        async function ejecutarSincronizacionDesdeNavegador() {
+            if (!excelParsedRows || excelParsedRows.length === 0) {
+                return alert('Por favor selecciona un archivo Excel primero.');
+            }
+
+            const btn = document.getElementById('btnEjecutarSincronizacion');
+            const progressBox = document.getElementById('importProgressBarBox');
+            const progressFill = document.getElementById('importProgressBarFill');
+            const progressStatus = document.getElementById('importProgressStatusText');
+            const progressPercent = document.getElementById('importProgressPercentText');
+
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            progressBox.style.display = 'flex';
+
+            try {
+                const excelMap = new Map();
+                for (const row of excelParsedRows) {
+                    const art = String(row.ARTICULO || row.Articulo || row.articulo || row.CODIGO || row.Codigo || '').trim();
+                    const desc = String(row.DESCRIPCION || row.Descripcion || row.descripcion || row.NOMBRE || '').trim();
+                    const saldoRaw = row.SALDO !== undefined ? row.SALDO : (row.Saldo !== undefined ? row.Saldo : row.saldo);
+                    const precioRaw = row.PRECIO !== undefined ? row.PRECIO : (row.Precio !== undefined ? row.Precio : row.precio);
+
+                    if (art) {
+                        excelMap.set(art, {
+                            art,
+                            desc,
+                            saldo: (saldoRaw !== '' && saldoRaw !== null && !isNaN(Number(saldoRaw))) ? Number(saldoRaw) : null,
+                            precio: (precioRaw !== '' && precioRaw !== null && !isNaN(Number(precioRaw))) ? Number(precioRaw) : null
+                        });
+                    }
+                }
+
+                const updates = [];
+                let conSaldoCount = 0;
+                let sinSaldoCount = 0;
+                let huevosCount = 0;
+
+                for (const prod of productosData) {
+                    const itemExcel = excelMap.get(prod.id) || excelMap.get(prod.codigo_bodega);
+
+                    const esHuevo = (prod.nombre && prod.nombre.toUpperCase().includes('HUEVO')) ||
+                                    (prod.id && (prod.id.startsWith('H') || prod.id.startsWith('C2180'))) ||
+                                    (itemExcel && itemExcel.desc.toUpperCase().includes('HUEVO'));
+
+                    let nuevoPrecio = Math.round(Number(prod.precio || 0));
+                    let nuevoStock = 0;
+                    let nuevoActivo = false;
+
+                    if (esHuevo) {
+                        huevosCount++;
+                        nuevoActivo = true;
+                        if (itemExcel && itemExcel.saldo !== null && itemExcel.saldo > 0) {
+                            nuevoStock = Math.max(1, Math.round(Number(itemExcel.saldo)));
+                        } else {
+                            nuevoStock = 999;
+                        }
+                        if (itemExcel && itemExcel.precio !== null && Number(itemExcel.precio) > 0) {
+                            nuevoPrecio = Math.round(Number(itemExcel.precio));
+                        }
+                        conSaldoCount++;
+                    } else if (itemExcel) {
+                        if (itemExcel.precio !== null && Number(itemExcel.precio) > 0) {
+                            nuevoPrecio = Math.round(Number(itemExcel.precio));
+                        }
+                        if (itemExcel.saldo !== null && Number(itemExcel.saldo) > 0) {
+                            nuevoStock = Math.max(1, Math.round(Number(itemExcel.saldo)));
+                            nuevoActivo = true;
+                            conSaldoCount++;
+                        } else {
+                            nuevoStock = 0;
+                            nuevoActivo = false;
+                            sinSaldoCount++;
+                        }
+                    } else {
+                        nuevoStock = 0;
+                        nuevoActivo = false;
+                        sinSaldoCount++;
+                    }
+
+                    updates.push({
+                        id: prod.id,
+                        patch: {
+                            precio: nuevoPrecio,
+                            stock_disponible: nuevoStock,
+                            activo: nuevoActivo
+                        }
+                    });
+                }
+
+                const chunkSize = 25;
+                let completed = 0;
+                for (let i = 0; i < updates.length; i += chunkSize) {
+                    const chunk = updates.slice(i, i + chunkSize);
+                    await Promise.all(chunk.map(async u => {
+                        await fetch(`${SUPABASE_URL}/rest/v1/productos?id=eq.${encodeURIComponent(u.id)}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'apikey': SUPABASE_KEY,
+                                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(u.patch)
+                        });
+                        completed++;
+                    }));
+
+                    const pct = Math.round((completed / updates.length) * 100);
+                    progressFill.style.width = `${pct}%`;
+                    progressPercent.innerText = `${pct}%`;
+                    progressStatus.innerText = `Sincronizando ${completed} de ${updates.length}...`;
+                }
+
+                await cargarProductosAdmin();
+                alert(`🎉 ¡Sincronización Exitosa!\n\n• ${updates.length} productos actualizados en Supabase.\n• ${conSaldoCount} activos con saldo visible.\n• ${sinSaldoCount} sin saldo (ocultos al cliente).\n• ${huevosCount} huevos protegidos (siempre disponibles).`);
+                cerrarModalImportarExcel();
+            } catch(e) {
+                alert('Error durante la sincronización: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                progressBox.style.display = 'none';
+            }
+        }
+
         async function cargarProductosAdmin() {
             if (!supabaseClient) return;
             const { data } = await supabaseClient.from('productos').select('*').order('categoria');
@@ -859,16 +1152,44 @@
 
         function renderProductosAdmin(lista) {
             const tbody = document.getElementById('adminProductsTableBody');
-            tbody.innerHTML = lista.map(p => `
-                <tr>
-                    <td><code>${p.id}</code></td>
-                    <td>${p.emoji} <b>${p.nombre}</b></td>
-                    <td><span style="color:var(--text-muted);">${p.categoria}</span></td>
-                    <td><span style="color:#d97706; font-weight:700;">${p.calorias} kcal</span></td>
-                    <td><span style="color:#059669; font-weight:700;">${p.proteinas}g</span></td>
-                    <td><b style="color:#34d399;">₡${Number(p.precio).toLocaleString('es-CR')}</b></td>
-                </tr>
-            `).join('');
+            if (!tbody) return;
+
+            const total = productosData.length;
+            const conSaldo = productosData.filter(p => {
+                const esHuevo = (p.nombre && p.nombre.toLowerCase().includes('huevo')) || (p.id && (p.id.startsWith('H') || p.id.startsWith('C2180')));
+                return (p.stock_disponible > 0 || esHuevo) && p.activo !== false;
+            }).length;
+            const sinSaldo = total - conSaldo;
+
+            const elTotal = document.getElementById('kpiProdTotal');
+            const elCon = document.getElementById('kpiProdConSaldo');
+            const elSin = document.getElementById('kpiProdSinSaldo');
+            if (elTotal) elTotal.innerText = total;
+            if (elCon) elCon.innerText = conSaldo;
+            if (elSin) elSin.innerText = sinSaldo;
+
+            tbody.innerHTML = lista.map(p => {
+                const esHuevo = (p.nombre && p.nombre.toLowerCase().includes('huevo')) || (p.id && (p.id.startsWith('H') || p.id.startsWith('C2180')));
+                let estadoBadge = '';
+                if (esHuevo) {
+                    estadoBadge = `<span style="background:rgba(234,179,8,0.2); color:#facc15; font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:9999px;">🥚 Huevos (Siempre Visible)</span>`;
+                } else if (p.stock_disponible > 0 && p.activo !== false) {
+                    estadoBadge = `<span style="background:rgba(16,185,129,0.2); color:#34d399; font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:9999px;">🟢 Visible en Tienda</span>`;
+                } else {
+                    estadoBadge = `<span style="background:rgba(239,68,68,0.2); color:#f87171; font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:9999px;">⚪ Oculto (Sin Saldo)</span>`;
+                }
+
+                return `
+                    <tr>
+                        <td><code>${p.id}</code></td>
+                        <td>${p.emoji || '📦'} <b>${p.nombre}</b></td>
+                        <td><span style="color:var(--text-muted);">${p.categoria}</span></td>
+                        <td><b style="color:${p.stock_disponible > 0 ? '#34d399' : 'var(--text-dim)'};">${p.stock_disponible !== undefined && p.stock_disponible !== null ? p.stock_disponible : 0}</b></td>
+                        <td>${estadoBadge}</td>
+                        <td><b style="color:#34d399;">₡${Number(p.precio).toLocaleString('es-CR')}</b></td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function filtrarProductosAdmin() {

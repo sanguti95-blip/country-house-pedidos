@@ -6750,6 +6750,15 @@
             grid.innerHTML = '';
 
             const filtrados = productos.filter(p => {
+                // Regla de saldo: solo aparecen productos con saldo > 0, EXCEPTO huevos que siempre aparecen
+                const esHuevo = (p.nombre && p.nombre.toLowerCase().includes('huevo')) || 
+                                (p.cat && p.cat.toLowerCase().includes('huevo')) || 
+                                (p.tag && p.tag.toLowerCase().includes('huevo')) ||
+                                (p.id && (p.id.startsWith('H') || p.id.startsWith('C2180')));
+
+                const tieneSaldo = (p.stock_disponible === undefined || p.stock_disponible > 0 || esHuevo) && (p.activo !== false);
+                if (!tieneSaldo) return false;
+
                 const matchCat = (categoriaActual === 'FAVORITOS') ? favoritos.has(p.id) : (categoriaActual === 'TODOS' || p.cat === categoriaActual);
                 const matchMeta = (metaDietActual === 'ALL' || p.goal === metaDietActual);
                 const matchSearch = (terminoBusqueda === '' || p.nombre.toLowerCase().includes(terminoBusqueda));
@@ -7534,6 +7543,9 @@
                             }
                         }
                     })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'productos' }, payload => {
+                        sincronizarPreciosYSaldosDesdeSupabase();
+                    })
                     .subscribe();
             } catch(e) {
                 console.warn('Realtime subscription note:', e);
@@ -7658,11 +7670,39 @@
         }
 
 
+        async function sincronizarPreciosYSaldosDesdeSupabase() {
+            if (!supabaseClient) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('productos')
+                    .select('id, precio, stock_disponible, activo, nombre');
+                if (data && data.length > 0) {
+                    const dbMap = new Map();
+                    data.forEach(p => dbMap.set(p.id, p));
+
+                    productos.forEach(p => {
+                        const dbItem = dbMap.get(p.id);
+                        if (dbItem) {
+                            if (dbItem.precio && Number(dbItem.precio) > 0) {
+                                p.precio = Number(dbItem.precio);
+                            }
+                            p.stock_disponible = (dbItem.stock_disponible !== undefined && dbItem.stock_disponible !== null) ? Number(dbItem.stock_disponible) : 100;
+                            p.activo = dbItem.activo;
+                        }
+                    });
+                    renderizarGrid();
+                }
+            } catch(e) {
+                console.warn('Error sincronizando productos con Supabase:', e);
+            }
+        }
+
         // Robust Cross-Browser Startup
-        function iniciarAplicacion() {
+        async function iniciarAplicacion() {
             try {
                 renderizarGrid();
                 actualizarTotales();
+                sincronizarPreciosYSaldosDesdeSupabase();
                 setTimeout(iniciarRealtimePedidos, 600);
             } catch(err) {
                 console.error('Init error:', err);

@@ -1221,9 +1221,29 @@
                     </button>
                 </div>
 
-                <div id="sectionDomicilio">
-                    <input type="text" id="custAddressInput" class="cust-input" style="margin-top: 0.4rem;" placeholder="📍 Dirección Exacta de Entrega" oninput="guardarDatosCliente()">
-                    <div class="time-slots-grid" style="margin-top: 0.4rem;">
+                <div id="sectionDomicilio" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.4rem;">
+                    <input type="text" id="custAddressInput" class="cust-input" placeholder="📍 Dirección Exacta / Señas / Barrio" oninput="guardarDatosCliente()">
+                    
+                    <!-- Location Tools: GPS, Waze & Maps -->
+                    <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.76rem; font-weight: 800; color: var(--text-white);">📍 Compartir Ubicación para Repartidor:</span>
+                            <span id="gpsDetectedBadge" style="font-size: 0.68rem; color: #34d399; font-weight: 800; display: none;">✓ Ubicación GPS Fijada</span>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem;">
+                            <button type="button" onclick="detectarUbicacionClienteGPS()" style="height: 40px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; border-radius: 9999px; font-weight: 800; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.3rem;">
+                                📍 Usar mi GPS Actual
+                            </button>
+                            <button type="button" onclick="abrirAyudaMapas()" style="height: 40px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: #60a5fa; border-radius: 9999px; font-weight: 800; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.3rem;">
+                                🚗 Waze / 🗺️ Maps
+                            </button>
+                        </div>
+
+                        <input type="text" id="custMapLinkInput" class="cust-input" style="height: 38px; font-size: 0.76rem;" placeholder="🔗 Enlace o coordenadas de Waze / Google Maps (opcional)" oninput="guardarDatosCliente()">
+                    </div>
+
+                    <div class="time-slots-grid">
                         <button type="button" class="time-chip active" onclick="setHorario('⚡ Lo antes posible (10am - 4pm)', this)">⚡ Lo antes posible (10am-4pm)</button>
                         <button type="button" class="time-chip" onclick="setHorario('🌅 Mañana (10:00 AM - 1:00 PM)', this)">🌅 Mañana (10am - 1pm)</button>
                         <button type="button" class="time-chip" onclick="setHorario('☀️ Tarde (1:00 PM - 4:00 PM)', this)">☀️ Tarde (1pm - 4pm)</button>
@@ -1261,9 +1281,13 @@
                     <div class="summary-total"><span>Total a Pagar</span><span id="sheetTotal" style="color: #34d399;">₡0.00</span></div>
                 </div>
 
-                <button class="btn-whatsapp-order" onclick="enviarPorWhatsApp()">
-                    <span>💬 Enviar Pedido por WhatsApp</span>
+                <!-- Primary Direct Order Confirmation Button -->
+                <button class="btn-whatsapp-order" onclick="confirmarPedidoEnLinea()" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45); cursor: pointer; border: none;">
+                    <span>🚀 Confirmar y Enviar Pedido</span>
                 </button>
+                <div style="font-size: 0.72rem; text-align: center; color: var(--text-dim); margin-top: 4px;">
+                    ✓ Tu pedido entra directo al sistema de bodega y repartidores
+                </div>
             </section>
         </div>
     </div>
@@ -6815,6 +6839,52 @@
         
         let ultimoPedidoCreado = null;
 
+        async 
+        let coordenadasCliente = null;
+
+        function detectarUbicacionClienteGPS() {
+            if (!navigator.geolocation) {
+                alert('Tu dispositivo o navegador no soporta GPS.');
+                return;
+            }
+            const badge = document.getElementById('gpsDetectedBadge');
+            const mapLinkInput = document.getElementById('custMapLinkInput');
+            
+            badge.style.display = 'inline';
+            badge.innerText = '⏳ Obteniendo GPS...';
+            badge.style.color = '#f59e0b';
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    coordenadasCliente = { lat, lng };
+                    const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+                    mapLinkInput.value = googleMapsUrl;
+                    badge.innerText = `✓ GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                    badge.style.color = '#34d399';
+                    mostrarToast('📍 ¡Ubicación GPS capturada con éxito!');
+                },
+                (err) => {
+                    badge.style.display = 'none';
+                    alert('No se pudo obtener el GPS. Por favor permite el acceso a tu ubicación o pega tu enlace de Waze / Google Maps.');
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+
+        function abrirAyudaMapas() {
+            const enlace = prompt("Pega aquí el enlace de tu ubicación de Waze o Google Maps:");
+            if (enlace && enlace.trim()) {
+                document.getElementById('custMapLinkInput').value = enlace.trim();
+                const badge = document.getElementById('gpsDetectedBadge');
+                badge.style.display = 'inline';
+                badge.innerText = '✓ Enlace de Mapa Guardado';
+                badge.style.color = '#60a5fa';
+                mostrarToast('🔗 Enlace de mapa guardado');
+            }
+        }
+
         async function confirmarPedidoEnLinea() {
             const name = document.getElementById('custNameInput').value.trim();
             const addr = document.getElementById('custAddressInput').value.trim();
@@ -6855,6 +6925,10 @@
             const tot = sub - disc + envio;
 
             const orderId = 'CH-' + Math.floor(100000 + Math.random() * 900000);
+            const mapLink = document.getElementById('custMapLinkInput') ? document.getElementById('custMapLinkInput').value.trim() : '';
+            const direccionCompleta = modalidadEntregaActual === 'DOMICILIO' 
+                ? (addr + (mapLink ? ` [Mapa: ${mapLink}]` : ''))
+                : 'Retiro en Tienda Country House (Punto de Venta)';
 
             ultimoPedidoCreado = {
                 id: orderId,
@@ -6862,7 +6936,7 @@
                 telefono_contacto: TELEFONO_WHATSAPP,
                 modalidad: modalidadEntregaActual,
                 horario_rango: horarioSeleccionado,
-                direccion_entrega: modalidadEntregaActual === 'DOMICILIO' ? addr : 'Retiro en Tienda Country House (Punto de Venta)',
+                direccion_entrega: direccionCompleta,
                 notas_cliente: notes,
                 forma_pago: metodoPagoSeleccionado,
                 subtotal: sub,

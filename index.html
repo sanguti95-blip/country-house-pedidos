@@ -11,6 +11,8 @@
     <!-- Leaflet CSS for Live GPS Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         :root, html[data-theme="dark"], body[data-theme="dark"] {
@@ -1234,6 +1236,19 @@
     <div class="toast" id="toast">✨ ¡Agregado al pedido!</div>
 
     <script>
+        // Supabase Live Client Configuration
+        const SUPABASE_URL = 'https://brjralkrguufpkzwnlhl.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_p61DQUM4Bg7ktnxLOo76DA_m5dzz5M1';
+        let supabaseClient = null;
+        try {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log('✅ Supabase conectado exitosamente con Country House DB');
+            }
+        } catch(e) {
+            console.warn('Supabase SDK fallback:', e);
+        }
+
         const productos = [
   {
     "id": "1000",
@@ -6786,6 +6801,29 @@
             msg += `\n💰 *Subtotal:* ${formatearDinero(sub)}\n✨ *Descuento (10%):* -${formatearDinero(disc)}\n🚚 *Envío:* ${formatearDinero(envio)}\n🔥 *TOTAL:* *${formatearDinero(tot)}*`;
 
             const url = "https://api.whatsapp.com/send?phone=" + TELEFONO_WHATSAPP + "&text=" + encodeURIComponent(msg);
+            
+            // Sync Order to Supabase Cloud Database in background
+            if (supabaseClient) {
+                const orderId = 'PED-' + Date.now().toString().slice(-6);
+                supabaseClient.from('pedidos').insert([{
+                    id: orderId,
+                    nombre_contacto: name,
+                    telefono_contacto: TELEFONO_WHATSAPP,
+                    modalidad: modalidadEntregaActual,
+                    horario_rango: horarioSeleccionado,
+                    direccion_entrega: addr,
+                    forma_pago: metodoPagoSeleccionado,
+                    subtotal: sub,
+                    descuento_especial: disc,
+                    costo_envio: envio,
+                    total_a_pagar: tot,
+                    estado: 'PENDIENTE'
+                }]).then(({ data, error }) => {
+                    if (error) console.warn('Supabase order sync note:', error.message);
+                    else console.log('✅ Pedido registrado en Supabase Cloud con ID:', orderId);
+                }).catch(console.warn);
+            }
+
             window.open(url, '_blank');
         }
 
@@ -6905,6 +6943,20 @@
                 const avgPerItem = Math.round(totalSec / 3);
                 document.getElementById('kpiAvgSec').innerText = avgPerItem + 's';
                 document.getElementById('broadcastEtaText').innerText = `${Math.max(10, Math.round(totalSec / 60 * 2))} - 20 min`;
+
+                // Record picking metrics in Supabase
+                if (supabaseClient) {
+                    supabaseClient.from('metricas_picking').insert([{
+                        pedido_id: 'PED-1048',
+                        duracion_segundos: totalSec,
+                        cantidad_items: 3,
+                        segundos_por_item: avgPerItem
+                    }]).then(({ error }) => {
+                        if (error) console.warn('Picking metrics note:', error.message);
+                        else console.log('✅ Métricas de picking guardadas en Supabase');
+                    }).catch(console.warn);
+                }
+
                 alert(`📦 ¡Pedido empacado en ${totalSec} segundos! Promedio: ${avgPerItem}s por ítem.`);
             }
         }

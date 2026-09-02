@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>COUNTRY HOUSE | Pedidos Saludables</title>
+    <title>COUNTRY HOUSE | Pedidos & Tabla Nutricional</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,7 +54,7 @@
             background-attachment: fixed;
         }
 
-        /* Unified Header: 100% Solid & Sticky, zero overlap */
+        /* Unified Sticky Header: Logo + Search + Categories */
         .sticky-header-container {
             position: sticky;
             top: 0;
@@ -76,7 +76,7 @@
             gap: 0.5rem;
         }
 
-        /* Seamless Oval Logo (Clips white corners!) */
+        /* Seamless Oval Logo */
         .logo-box {
             display: flex;
             align-items: center;
@@ -141,7 +141,7 @@
             pointer-events: none;
         }
 
-        /* Category Scroll Bar inside unified sticky header */
+        /* Category Scroll Bar */
         .category-scroll {
             display: flex;
             gap: 0.5rem;
@@ -180,7 +180,7 @@
             box-shadow: var(--shadow-glow);
         }
 
-        /* Main Feed & Margins */
+        /* Main Feed */
         .mobile-feed {
             padding: 0.85rem 0.85rem 120px;
             max-width: 600px;
@@ -224,7 +224,7 @@
             gap: 0.65rem;
         }
 
-        /* Product Card with Clean Unclipped Tags */
+        /* Product Card */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--bg-card-border);
@@ -261,7 +261,6 @@
             font-size: 1.25rem;
         }
 
-        /* Clean visible tag, no clipping */
         .diet-tag {
             font-size: 0.65rem;
             font-weight: 800;
@@ -287,16 +286,67 @@
             margin-top: 0.35rem;
         }
 
-        .card-desc {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            line-height: 1.25;
-            margin-top: 2px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        /* Nutritional Facts Box per Portion */
+        .nutri-box {
+            background: rgba(10, 16, 28, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.45rem 0.55rem;
+            margin-top: 0.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
+
+        .nutri-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-bottom: 2px;
+        }
+
+        .nutri-portion-text {
+            color: #cbd5e1;
+            font-weight: 700;
+        }
+
+        .macro-chips-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            text-align: center;
+        }
+
+        .macro-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px;
+            padding: 2px 1px;
+        }
+
+        .macro-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .macro-val {
+            font-size: 0.72rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .macro-val.cal { color: #fbbf24; }
+        .macro-val.carb { color: #60a5fa; }
+        .macro-val.prot { color: #34d399; }
+        .macro-val.fat { color: #f87171; }
 
         .card-price {
             font-size: 1.15rem;
@@ -711,7 +761,7 @@
 </head>
 <body>
 
-    <!-- Unified Sticky Header: Logo + Search + Categories in one solid block -->
+    <!-- Unified Sticky Header -->
     <div class="sticky-header-container">
         <header class="app-header">
             <div class="header-top-row">
@@ -728,7 +778,7 @@
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input type="text" id="searchInput" placeholder="Buscar por producto, beneficio o código..." oninput="onSearch()">
+                <input type="text" id="searchInput" placeholder="Buscar por producto, nutriente o código..." oninput="onSearch()">
             </div>
         </header>
 
@@ -752,8 +802,8 @@
         <div class="cat-banner" id="catBanner">
             <div class="cat-banner-icon" id="catBannerIcon">🥗</div>
             <div class="cat-banner-text">
-                <h2 id="catBannerTitle">Guía Nutricional Country House</h2>
-                <p id="catBannerDesc">Catálogo organizado para facilitar tu plan alimenticio, control calórico y comida real.</p>
+                <h2 id="catBannerTitle">Información Nutricional por Porción</h2>
+                <p id="catBannerDesc">Consulta calorías, carbohidratos, proteínas y grasas de cada alimento para tu control diario.</p>
             </div>
         </div>
 
@@ -833,7 +883,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "683",
@@ -842,7 +899,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥑",
     "tag": "Keto / Grasa",
-    "desc": "Saciedad y grasas saludables monoinsaturadas."
+    "desc": "Saciedad y grasas saludables monoinsaturadas.",
+    "nutri": {
+      "porcion": "1/2 und (100g)",
+      "cal": 160,
+      "carb": 8.5,
+      "prot": 2.0,
+      "fat": 14.7
+    }
   },
   {
     "id": "684P",
@@ -851,7 +915,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥑",
     "tag": "Keto / Grasa",
-    "desc": "Saciedad y grasas saludables monoinsaturadas."
+    "desc": "Saciedad y grasas saludables monoinsaturadas.",
+    "nutri": {
+      "porcion": "1/2 und (100g)",
+      "cal": 160,
+      "carb": 8.5,
+      "prot": 2.0,
+      "fat": 14.7
+    }
   },
   {
     "id": "699K",
@@ -860,7 +931,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥑",
     "tag": "Keto / Grasa",
-    "desc": "Saciedad y grasas saludables monoinsaturadas."
+    "desc": "Saciedad y grasas saludables monoinsaturadas.",
+    "nutri": {
+      "porcion": "1/2 und (100g)",
+      "cal": 160,
+      "carb": 8.5,
+      "prot": 2.0,
+      "fat": 14.7
+    }
   },
   {
     "id": "775",
@@ -869,7 +947,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "751",
@@ -878,7 +963,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "773",
@@ -887,7 +979,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "779",
@@ -896,7 +995,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "700",
@@ -905,7 +1011,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "771",
@@ -914,7 +1027,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "11554X",
@@ -923,7 +1043,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11554",
@@ -932,7 +1059,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11556",
@@ -941,7 +1075,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "15511",
@@ -950,7 +1091,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11511",
@@ -959,7 +1107,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "5125",
@@ -968,7 +1123,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "5125B",
@@ -977,7 +1139,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "16579",
@@ -986,7 +1155,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "175542",
@@ -995,7 +1171,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 130,
+      "carb": 28.0,
+      "prot": 2.7,
+      "fat": 0.3
+    }
   },
   {
     "id": "175539",
@@ -1004,7 +1187,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 130,
+      "carb": 28.0,
+      "prot": 2.7,
+      "fat": 0.3
+    }
   },
   {
     "id": "175534",
@@ -1013,7 +1203,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 130,
+      "carb": 28.0,
+      "prot": 2.7,
+      "fat": 0.3
+    }
   },
   {
     "id": "175533",
@@ -1022,7 +1219,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 130,
+      "carb": 28.0,
+      "prot": 2.7,
+      "fat": 0.3
+    }
   },
   {
     "id": "12597",
@@ -1031,7 +1235,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12511",
@@ -1040,7 +1251,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12512",
@@ -1049,7 +1267,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "1053C",
@@ -1058,7 +1283,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "1054",
@@ -1067,7 +1299,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "1064",
@@ -1076,7 +1315,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "1052",
@@ -1085,7 +1331,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "1053",
@@ -1094,7 +1347,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "12521",
@@ -1103,7 +1363,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "37080",
@@ -1112,7 +1379,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12531",
@@ -1121,7 +1395,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 34,
+      "carb": 6.0,
+      "prot": 2.8,
+      "fat": 0.4
+    }
   },
   {
     "id": "D30090",
@@ -1130,7 +1411,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "D30096",
@@ -1139,7 +1427,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "D30097",
@@ -1148,7 +1443,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "D30098",
@@ -1157,7 +1459,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "1351",
@@ -1166,7 +1475,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "1353",
@@ -1175,7 +1491,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "14511",
@@ -1184,7 +1507,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "29550",
@@ -1193,7 +1523,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14514",
@@ -1202,7 +1539,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14565",
@@ -1211,7 +1555,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125581",
@@ -1220,7 +1571,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12554",
@@ -1229,7 +1587,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "125542",
@@ -1238,7 +1603,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12554P",
@@ -1247,7 +1619,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12547G",
@@ -1256,7 +1635,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "12552",
@@ -1265,7 +1651,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "5324",
@@ -1274,7 +1667,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "421P",
@@ -1283,7 +1683,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 cda (15g)",
+      "cal": 70,
+      "carb": 6.0,
+      "prot": 2.5,
+      "fat": 4.5
+    }
   },
   {
     "id": "12561",
@@ -1292,7 +1699,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12562",
@@ -1301,7 +1715,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12563",
@@ -1310,7 +1731,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12613",
@@ -1319,7 +1747,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "420P",
@@ -1328,7 +1763,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 cda (15g)",
+      "cal": 70,
+      "carb": 6.0,
+      "prot": 2.5,
+      "fat": 4.5
+    }
   },
   {
     "id": "13617",
@@ -1337,7 +1779,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12570P",
@@ -1346,7 +1795,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12603",
@@ -1355,7 +1811,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12575",
@@ -1364,7 +1827,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12573",
@@ -1373,7 +1843,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12584",
@@ -1382,7 +1859,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "12588",
@@ -1391,7 +1875,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "4341",
@@ -1400,7 +1891,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "D30095",
@@ -1409,7 +1907,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14522",
@@ -1418,7 +1923,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "913",
@@ -1427,7 +1939,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13222CO",
@@ -1436,7 +1955,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "12591",
@@ -1445,7 +1971,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 34,
+      "carb": 6.0,
+      "prot": 2.8,
+      "fat": 0.4
+    }
   },
   {
     "id": "424",
@@ -1454,7 +1987,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "104",
@@ -1463,7 +2003,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "106",
@@ -1472,7 +2019,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "213",
@@ -1481,7 +2035,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "103",
@@ -1490,7 +2051,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "102",
@@ -1499,7 +2067,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "101",
@@ -1508,7 +2083,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "210",
@@ -1517,7 +2099,14 @@
     "cat": "Batidos & Detox",
     "emoji": "🧊",
     "tag": "100% Natural",
-    "desc": "Fruta congelada para batidos y smoothies."
+    "desc": "Fruta congelada para batidos y smoothies.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "206",
@@ -1526,7 +2115,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "215",
@@ -1535,7 +2131,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16653C",
@@ -1544,7 +2147,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "214",
@@ -1553,7 +2163,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "212",
@@ -1562,7 +2179,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "430",
@@ -1571,7 +2195,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "112036",
@@ -1580,7 +2211,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "11522N",
@@ -1589,7 +2227,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11523",
@@ -1598,7 +2243,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11524",
@@ -1607,7 +2259,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13111CU",
@@ -1616,7 +2275,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "396",
@@ -1625,7 +2291,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "442",
@@ -1634,7 +2307,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "452",
@@ -1643,7 +2323,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "454",
@@ -1652,7 +2339,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "443",
@@ -1661,7 +2355,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "465",
@@ -1670,7 +2371,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "432",
@@ -1679,7 +2387,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "444",
@@ -1688,7 +2403,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "459",
@@ -1697,7 +2419,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "464",
@@ -1706,7 +2435,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "438",
@@ -1715,7 +2451,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "439",
@@ -1724,7 +2467,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "447",
@@ -1733,7 +2483,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "455",
@@ -1742,7 +2499,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "458",
@@ -1751,7 +2515,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "462",
@@ -1760,7 +2531,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "449",
@@ -1769,7 +2547,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "457",
@@ -1778,7 +2563,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "434",
@@ -1787,7 +2579,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "467",
@@ -1796,7 +2595,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "448",
@@ -1805,7 +2611,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "453",
@@ -1814,7 +2627,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "468",
@@ -1823,7 +2643,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "446",
@@ -1832,7 +2659,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "433",
@@ -1841,7 +2675,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "441",
@@ -1850,7 +2691,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "440",
@@ -1859,7 +2707,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "461",
@@ -1868,7 +2723,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "450",
@@ -1877,7 +2739,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16592",
@@ -1886,7 +2755,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125111",
@@ -1895,7 +2771,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 34,
+      "carb": 6.0,
+      "prot": 2.8,
+      "fat": 0.4
+    }
   },
   {
     "id": "11531",
@@ -1904,7 +2787,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 23,
+      "carb": 3.6,
+      "prot": 2.9,
+      "fat": 0.4
+    }
   },
   {
     "id": "419",
@@ -1913,7 +2803,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "15523",
@@ -1922,7 +2819,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "15524A",
@@ -1931,7 +2835,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "15521",
@@ -1940,7 +2851,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "17551EMP",
@@ -1949,7 +2867,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17565EMP",
@@ -1958,7 +2883,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17568EMP",
@@ -1967,7 +2899,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17558",
@@ -1976,7 +2915,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17553",
@@ -1985,7 +2931,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17555",
@@ -1994,7 +2947,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17555P6",
@@ -2003,7 +2963,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17557",
@@ -2012,7 +2979,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "17561EMP",
@@ -2021,7 +2995,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "14551",
@@ -2030,7 +3011,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14561",
@@ -2039,7 +3027,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14515",
@@ -2048,7 +3043,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16624X",
@@ -2057,7 +3059,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16624",
@@ -2066,7 +3075,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "D30091",
@@ -2075,7 +3091,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "5536",
@@ -2084,7 +3107,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 22,
+      "carb": 3.3,
+      "prot": 3.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "5533",
@@ -2093,7 +3123,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 22,
+      "carb": 3.3,
+      "prot": 3.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "5535",
@@ -2102,7 +3139,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 22,
+      "carb": 3.3,
+      "prot": 3.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "5538",
@@ -2111,7 +3155,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 22,
+      "carb": 3.3,
+      "prot": 3.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "C2180BL",
@@ -2120,7 +3171,14 @@
     "cat": "Proteínas",
     "emoji": "🥚",
     "tag": "Proteína Pura",
-    "desc": "Proteína de alto valor biológico."
+    "desc": "Proteína de alto valor biológico.",
+    "nutri": {
+      "porcion": "1 und (50g)",
+      "cal": 72,
+      "carb": 0.4,
+      "prot": 6.3,
+      "fat": 4.8
+    }
   },
   {
     "id": "C218010M",
@@ -2129,7 +3187,14 @@
     "cat": "Proteínas",
     "emoji": "🥚",
     "tag": "Proteína Pura",
-    "desc": "Proteína de alto valor biológico."
+    "desc": "Proteína de alto valor biológico.",
+    "nutri": {
+      "porcion": "1 und (50g)",
+      "cal": 72,
+      "carb": 0.4,
+      "prot": 6.3,
+      "fat": 4.8
+    }
   },
   {
     "id": "395",
@@ -2138,7 +3203,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "13513",
@@ -2147,7 +3219,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16524",
@@ -2156,7 +3235,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "101021",
@@ -2165,7 +3251,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "125972",
@@ -2174,7 +3267,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 23,
+      "carb": 3.6,
+      "prot": 2.9,
+      "fat": 0.4
+    }
   },
   {
     "id": "112039",
@@ -2183,7 +3283,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "1 vaso (200ml)",
+      "cal": 120,
+      "carb": 10.0,
+      "prot": 7.0,
+      "fat": 6.0
+    }
   },
   {
     "id": "115412",
@@ -2192,7 +3299,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16580X",
@@ -2201,7 +3315,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11590",
@@ -2210,7 +3331,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11548",
@@ -2219,7 +3347,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11547",
@@ -2228,7 +3363,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "17581EMP",
@@ -2237,7 +3379,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1/2 taza (100g)",
+      "cal": 125,
+      "carb": 22.0,
+      "prot": 8.5,
+      "fat": 0.5
+    }
   },
   {
     "id": "14585",
@@ -2246,7 +3395,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "14585P",
@@ -2255,7 +3411,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14575P",
@@ -2264,7 +3427,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14575",
@@ -2273,7 +3443,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145715P",
@@ -2282,7 +3459,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145715",
@@ -2291,7 +3475,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "17591EMP",
@@ -2300,7 +3491,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 cda (15g)",
+      "cal": 70,
+      "carb": 6.0,
+      "prot": 2.5,
+      "fat": 4.5
+    }
   },
   {
     "id": "394",
@@ -2309,7 +3507,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 cda (15g)",
+      "cal": 70,
+      "carb": 6.0,
+      "prot": 2.5,
+      "fat": 4.5
+    }
   },
   {
     "id": "422",
@@ -2318,7 +3523,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 cda (15g)",
+      "cal": 70,
+      "carb": 6.0,
+      "prot": 2.5,
+      "fat": 4.5
+    }
   },
   {
     "id": "423",
@@ -2327,7 +3539,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 cda (15g)",
+      "cal": 70,
+      "carb": 6.0,
+      "prot": 2.5,
+      "fat": 4.5
+    }
   },
   {
     "id": "12593",
@@ -2336,7 +3555,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "175103EMP",
@@ -2345,7 +3571,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14590",
@@ -2354,7 +3587,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "14582P",
@@ -2363,7 +3603,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "14607",
@@ -2372,7 +3619,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "14609",
@@ -2381,7 +3635,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "415",
@@ -2390,7 +3651,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "406",
@@ -2399,7 +3667,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "402",
@@ -2408,7 +3683,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "403",
@@ -2417,7 +3699,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "404",
@@ -2426,7 +3715,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥜",
     "tag": "Fruto Seco",
-    "desc": "Proteína vegetal y minerales."
+    "desc": "Proteína vegetal y minerales.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "400",
@@ -2435,7 +3731,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥜",
     "tag": "Fruto Seco",
-    "desc": "Proteína vegetal y minerales."
+    "desc": "Proteína vegetal y minerales.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "405",
@@ -2444,7 +3747,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥜",
     "tag": "Fruto Seco",
-    "desc": "Proteína vegetal y minerales."
+    "desc": "Proteína vegetal y minerales.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "401",
@@ -2453,7 +3763,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🥜",
     "tag": "Fruto Seco",
-    "desc": "Proteína vegetal y minerales."
+    "desc": "Proteína vegetal y minerales.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "399",
@@ -2462,7 +3779,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "1 puñado (30g)",
+      "cal": 170,
+      "carb": 5.0,
+      "prot": 7.5,
+      "fat": 14.0
+    }
   },
   {
     "id": "11080F",
@@ -2471,7 +3795,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "13150B",
@@ -2480,7 +3811,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "11080G",
@@ -2489,7 +3827,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "13150GPR",
@@ -2498,7 +3843,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "11080A",
@@ -2507,7 +3859,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "11080S",
@@ -2516,7 +3875,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "13150SPR",
@@ -2525,7 +3891,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "13150MPR",
@@ -2534,7 +3907,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "11080",
@@ -2543,7 +3923,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "13150PR",
@@ -2552,7 +3939,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "145102",
@@ -2561,7 +3955,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "105",
@@ -2570,7 +3971,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "4321",
@@ -2579,7 +3987,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "145128",
@@ -2588,7 +4003,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "16535",
@@ -2597,7 +4019,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16691",
@@ -2606,7 +4035,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16689",
@@ -2615,7 +4051,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16690",
@@ -2624,7 +4067,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16686",
@@ -2633,7 +4083,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16687",
@@ -2642,7 +4099,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "12581B",
@@ -2651,7 +4115,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16692",
@@ -2660,7 +4131,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda (20g)",
+      "cal": 64,
+      "carb": 17.0,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "125121",
@@ -2669,7 +4147,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "431U",
@@ -2678,7 +4163,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "11551",
@@ -2687,7 +4179,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13521",
@@ -2696,7 +4195,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145142",
@@ -2705,7 +4211,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "145143",
@@ -2714,7 +4227,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "145143P15",
@@ -2723,7 +4243,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "112004",
@@ -2732,7 +4259,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "2 cdas (30g)",
+      "cal": 60,
+      "carb": 1.2,
+      "prot": 0.9,
+      "fat": 5.8
+    }
   },
   {
     "id": "4131",
@@ -2741,7 +4275,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "16540",
@@ -2750,7 +4291,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "16553",
@@ -2759,7 +4307,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "967",
@@ -2768,7 +4323,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (40g)",
+      "cal": 95,
+      "carb": 19.0,
+      "prot": 2.5,
+      "fat": 1.2
+    }
   },
   {
     "id": "966",
@@ -2777,7 +4339,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "13556",
@@ -2786,7 +4355,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "13556R",
@@ -2795,7 +4371,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "13557",
@@ -2804,7 +4387,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "1451633",
@@ -2813,7 +4403,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16510",
@@ -2822,7 +4419,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125131",
@@ -2831,7 +4435,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "3741",
@@ -2840,7 +4451,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "31090",
@@ -2849,7 +4467,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "3344",
@@ -2858,7 +4483,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "3181R",
@@ -2867,7 +4499,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (150g)",
+      "cal": 78,
+      "carb": 20.0,
+      "prot": 0.4,
+      "fat": 0.3
+    }
   },
   {
     "id": "11561",
@@ -2876,7 +4515,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145168IN",
@@ -2885,7 +4531,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145169",
@@ -2894,7 +4547,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13569",
@@ -2903,7 +4563,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "1451647",
@@ -2912,7 +4579,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "145174M",
@@ -2921,7 +4595,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "37075",
@@ -2930,7 +4611,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "37074",
@@ -2939,7 +4627,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "37077",
@@ -2948,7 +4643,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "145174",
@@ -2957,7 +4659,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 90,
+      "carb": 23.0,
+      "prot": 1.1,
+      "fat": 0.3
+    }
   },
   {
     "id": "16688",
@@ -2966,7 +4675,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "14547",
@@ -2975,7 +4691,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16653L",
@@ -2984,7 +4707,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16672",
@@ -2993,7 +4723,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "16672L",
@@ -3002,7 +4739,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "16655L",
@@ -3011,7 +4755,14 @@
     "cat": "Batidos & Detox",
     "emoji": "🧊",
     "tag": "100% Natural",
-    "desc": "Fruta congelada para batidos y smoothies."
+    "desc": "Fruta congelada para batidos y smoothies.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16651L",
@@ -3020,7 +4771,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16654L",
@@ -3029,7 +4787,14 @@
     "cat": "Batidos & Detox",
     "emoji": "🧊",
     "tag": "100% Natural",
-    "desc": "Fruta congelada para batidos y smoothies."
+    "desc": "Fruta congelada para batidos y smoothies.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16658L",
@@ -3038,7 +4803,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.5,
+      "prot": 0.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "16652L",
@@ -3047,7 +4819,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "16657",
@@ -3056,7 +4835,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "112035",
@@ -3065,7 +4851,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "112026",
@@ -3074,7 +4867,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "112025",
@@ -3083,7 +4883,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "112034",
@@ -3092,7 +4899,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "112002",
@@ -3101,7 +4915,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "112001",
@@ -3110,7 +4931,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 85,
+      "carb": 0.8,
+      "prot": 6.5,
+      "fat": 6.2
+    }
   },
   {
     "id": "13543",
@@ -3119,7 +4947,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 15,
+      "carb": 3.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13553",
@@ -3128,7 +4963,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125142",
@@ -3137,7 +4979,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125143",
@@ -3146,7 +4995,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 taza (100g)",
+      "cal": 35,
+      "carb": 8.0,
+      "prot": 0.8,
+      "fat": 0.3
+    }
   },
   {
     "id": "13560",
@@ -3155,7 +5011,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "971",
@@ -3164,7 +5027,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13580H",
@@ -3173,7 +5043,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145182IN",
@@ -3182,7 +5059,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 taza (120g)",
+      "cal": 48,
+      "carb": 12.0,
+      "prot": 0.8,
+      "fat": 0.2
+    }
   },
   {
     "id": "125130",
@@ -3191,7 +5075,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "413",
@@ -3200,7 +5091,14 @@
     "cat": "Grasas Buenas",
     "emoji": "🌱",
     "tag": "Superfood",
-    "desc": "Fibra soluble y omega-3 vegetal."
+    "desc": "Fibra soluble y omega-3 vegetal.",
+    "nutri": {
+      "porcion": "30g",
+      "cal": 165,
+      "carb": 9.0,
+      "prot": 5.0,
+      "fat": 13.0
+    }
   },
   {
     "id": "398",
@@ -3209,7 +5107,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13568",
@@ -3218,7 +5123,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "145191",
@@ -3227,7 +5139,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "970",
@@ -3236,7 +5155,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "411",
@@ -3245,7 +5171,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "D30065",
@@ -3254,7 +5187,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13561",
@@ -3263,7 +5203,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125183",
@@ -3272,7 +5219,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "125152N",
@@ -3281,7 +5235,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "125150",
@@ -3290,7 +5251,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "125160",
@@ -3299,7 +5267,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "125180P",
@@ -3308,7 +5283,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "125180",
@@ -3317,7 +5299,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "125153",
@@ -3326,7 +5315,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "1 und (100g)",
+      "cal": 18,
+      "carb": 3.9,
+      "prot": 0.9,
+      "fat": 0.2
+    }
   },
   {
     "id": "13573",
@@ -3335,7 +5331,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cdta (3g)",
+      "cal": 3,
+      "carb": 0.6,
+      "prot": 0.1,
+      "fat": 0.0
+    }
   },
   {
     "id": "2",
@@ -3344,7 +5347,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "1 und (40g)",
+      "cal": 95,
+      "carb": 19.0,
+      "prot": 2.5,
+      "fat": 1.2
+    }
   },
   {
     "id": "719",
@@ -3353,7 +5363,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "1 cda / 30g",
+      "cal": 12,
+      "carb": 2.5,
+      "prot": 0.4,
+      "fat": 0.1
+    }
   },
   {
     "id": "727",
@@ -3362,7 +5379,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 und (40g)",
+      "cal": 95,
+      "carb": 19.0,
+      "prot": 2.5,
+      "fat": 1.2
+    }
   },
   {
     "id": "724",
@@ -3371,7 +5395,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 und (40g)",
+      "cal": 95,
+      "carb": 19.0,
+      "prot": 2.5,
+      "fat": 1.2
+    }
   },
   {
     "id": "726",
@@ -3380,7 +5411,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 und (40g)",
+      "cal": 95,
+      "carb": 19.0,
+      "prot": 2.5,
+      "fat": 1.2
+    }
   },
   {
     "id": "1",
@@ -3389,7 +5427,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "1 und (40g)",
+      "cal": 95,
+      "carb": 19.0,
+      "prot": 2.5,
+      "fat": 1.2
+    }
   },
   {
     "id": "15551",
@@ -3398,7 +5443,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "2324",
@@ -3407,7 +5459,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "21021",
@@ -3416,7 +5475,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "2125",
@@ -3425,7 +5491,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "2424",
@@ -3434,7 +5507,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "2331",
@@ -3443,7 +5523,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "2131",
@@ -3452,7 +5539,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125170",
@@ -3461,7 +5555,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125162",
@@ -3470,7 +5571,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "924",
@@ -3479,7 +5587,14 @@
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
     "tag": "Sabor 0 Cal",
-    "desc": "Sabor natural sin sumar calorías ni sodio."
+    "desc": "Sabor natural sin sumar calorías ni sodio.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "100040",
@@ -3488,7 +5603,14 @@
     "cat": "Proteínas",
     "emoji": "🧀",
     "tag": "Lácteo & Prot",
-    "desc": "Proteína y calcio para tus músculos."
+    "desc": "Proteína y calcio para tus músculos.",
+    "nutri": {
+      "porcion": "1 vaso (150g)",
+      "cal": 95,
+      "carb": 12.0,
+      "prot": 5.0,
+      "fat": 2.5
+    }
   },
   {
     "id": "13571",
@@ -3497,7 +5619,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 86,
+      "carb": 20.0,
+      "prot": 1.6,
+      "fat": 0.1
+    }
   },
   {
     "id": "13590",
@@ -3506,7 +5635,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13581",
@@ -3515,7 +5651,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13588",
@@ -3524,7 +5667,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "13582",
@@ -3533,7 +5683,14 @@
     "cat": "Consumo Moderado",
     "emoji": "🍯",
     "tag": "Moderado",
-    "desc": "Para recarga o porciones controladas."
+    "desc": "Para recarga o porciones controladas.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "16875",
@@ -3542,7 +5699,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "1801",
@@ -3551,7 +5715,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "1800",
@@ -3560,7 +5731,14 @@
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
     "tag": "Antioxidantes",
-    "desc": "Fruta fresca con vitaminas y fibra."
+    "desc": "Fruta fresca con vitaminas y fibra.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "209",
@@ -3569,7 +5747,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "191",
@@ -3578,7 +5763,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "187",
@@ -3587,7 +5779,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "193",
@@ -3596,7 +5795,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "189",
@@ -3605,7 +5811,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "188",
@@ -3614,7 +5827,14 @@
     "cat": "Carbos Complejos",
     "emoji": "🍠",
     "tag": "Carbo Complejo",
-    "desc": "Energía limpia de absorción lenta."
+    "desc": "Energía limpia de absorción lenta.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 45,
+      "carb": 10.0,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   },
   {
     "id": "125191",
@@ -3623,7 +5843,14 @@
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
     "tag": "Bajo en Cal",
-    "desc": "Fibra y agua. Ideal para déficit calórico."
+    "desc": "Fibra y agua. Ideal para déficit calórico.",
+    "nutri": {
+      "porcion": "100g",
+      "cal": 18,
+      "carb": 3.8,
+      "prot": 1.0,
+      "fat": 0.2
+    }
   }
 ];
         const carrito = {};
@@ -3633,8 +5860,8 @@
         const descripcionesDiet = {
             'TODOS': {
                 icon: '🥗',
-                title: 'Catálogo Saludable Country House',
-                desc: 'Todo organizado según su perfil nutricional para que elijas según tus metas de dieta.'
+                title: 'Información Nutricional por Porción',
+                desc: 'Valores promedio por porción estándar para ayudarte a calcular tus macros diarios.'
             },
             'Verduras & Fibra': {
                 icon: '🥦',
@@ -3726,6 +5953,7 @@
 
             filtrados.forEach(prod => {
                 const qty = carrito[prod.id] || 0;
+                const n = prod.nutri;
                 
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -3750,7 +5978,33 @@
                             <span class="diet-tag">${prod.tag}</span>
                         </div>
                         <h3 class="card-name">${prod.nombre}</h3>
-                        <p class="card-desc">${prod.desc}</p>
+                        
+                        <!-- Nutritional Facts Box -->
+                        <div class="nutri-box">
+                            <div class="nutri-header-row">
+                                <span>Porción:</span>
+                                <span class="nutri-portion-text">${n.porcion}</span>
+                            </div>
+                            <div class="macro-chips-row">
+                                <div class="macro-chip">
+                                    <span class="macro-label">Cal</span>
+                                    <span class="macro-val cal">${n.cal}</span>
+                                </div>
+                                <div class="macro-chip">
+                                    <span class="macro-label">Carb</span>
+                                    <span class="macro-val carb">${n.carb}g</span>
+                                </div>
+                                <div class="macro-chip">
+                                    <span class="macro-label">Prot</span>
+                                    <span class="macro-val prot">${n.prot}g</span>
+                                </div>
+                                <div class="macro-chip">
+                                    <span class="macro-label">Grasa</span>
+                                    <span class="macro-val fat">${n.fat}g</span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card-price">${formatearDinero(prod.precio)}</div>
                     </div>
                     ${btnHtml}
@@ -3764,7 +6018,7 @@
             carrito[id] += delta;
             if (carrito[id] <= 0) delete carrito[id];
 
-            if (delta > 0) mostrarToast('✨ Agregado a la lista');
+            if (delta > 0) mostrarToast('✨ Agregado al pedido');
             
             renderizarGrid();
             actualizarTotales();
@@ -3802,7 +6056,7 @@
                     row.innerHTML = `
                         <div class="item-info">
                             <div class="item-title">${prod.emoji} ${prod.nombre}</div>
-                            <div class="item-sub">${qty} × ${formatearDinero(prod.precio)} • <span style="color:#fde047;">${prod.tag}</span></div>
+                            <div class="item-sub">${qty} × ${formatearDinero(prod.precio)} • <span style="color:#fbbf24;">${prod.nutri.cal} kcal (${prod.nutri.porcion})</span></div>
                         </div>
                         <div class="item-total-col">
                             <div class="item-subtotal">${formatearDinero(itemTotal)}</div>
@@ -3867,7 +6121,7 @@
                     const qty = carrito[id];
                     const itemTotal = qty * prod.precio;
                     subtotal += itemTotal;
-                    texto += `• ${qty}x ${prod.nombre} (${prod.tag}) -> ${formatearDinero(itemTotal)}\n`;
+                    texto += `• ${qty}x ${prod.nombre} (${prod.nutri.cal} kcal/porción) -> ${formatearDinero(itemTotal)}\n`;
                 }
             });
 

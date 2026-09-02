@@ -230,7 +230,7 @@
         .category-scroll {
             display: flex;
             gap: 0.45rem;
-            padding: 0.45rem 0.9rem 0.65rem;
+            padding: 0.45rem 0.9rem 0.35rem;
             overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
@@ -241,13 +241,13 @@
         }
 
         .cat-chip {
-            padding: 0.45rem 0.95rem;
+            padding: 0.42rem 0.9rem;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.09);
             border-radius: var(--radius-capsule);
             box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.25);
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             font-weight: 700;
             white-space: nowrap;
             display: flex;
@@ -267,6 +267,46 @@
             font-weight: 800;
             border-color: rgba(255, 255, 255, 0.35);
             box-shadow: inset 0 1.2px 1px rgba(255, 255, 255, 0.5), var(--shadow-glow);
+            transform: scale(1.02);
+        }
+
+        /* Gym & Diet Subcategories Scroll */
+        .subcat-scroll {
+            display: flex;
+            gap: 0.35rem;
+            padding: 0 0.9rem 0.55rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .subcat-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .subcat-chip {
+            padding: 0.28rem 0.7rem;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-capsule);
+            color: var(--text-dim);
+            font-size: 0.67rem;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .subcat-chip:active {
+            transform: scale(0.94);
+        }
+
+        .subcat-chip.active {
+            background: rgba(30, 64, 175, 0.35);
+            border-color: #60a5fa;
+            color: #bfdbfe;
+            box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.25);
+            font-weight: 800;
             transform: scale(1.02);
         }
 
@@ -325,7 +365,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 0.65rem;
+            gap: 0.5rem;
             box-shadow: var(--shadow-card);
             position: relative;
             min-width: 0;
@@ -357,7 +397,7 @@
         }
 
         .diet-tag {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             font-weight: 800;
             color: #fde047;
             background: rgba(245, 158, 11, 0.16);
@@ -383,6 +423,23 @@
             min-height: 2.3em;
             margin-top: 0.35rem;
             word-wrap: break-word;
+        }
+
+        /* Gym & Diet Benefit Micro-Description */
+        .diet-benefit-pill {
+            font-size: 0.63rem;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.22);
+            border-radius: 7px;
+            padding: 3px 6px;
+            margin-top: 0.3rem;
+            line-height: 1.25;
+            font-weight: 600;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* Nutritional Facts Box */
@@ -1140,6 +1197,16 @@
             <button class="cat-chip" onclick="filtrarCategoria('Hierbas & Especias', this)">🌿 Hierbas & Especias</button>
             <button class="cat-chip" onclick="filtrarCategoria('Consumo Moderado', this)">🍯 Despensa & Dulces</button>
         </div>
+
+        <!-- Gym & Diet Subcategories Scroll -->
+        <div class="subcat-scroll">
+            <button class="subcat-chip active" onclick="filtrarMetaDiet('ALL', this)">🎯 Todas las Dietas</button>
+            <button class="subcat-chip" onclick="filtrarMetaDiet('PROTEIN', this)">💪 Proteína & Músculo</button>
+            <button class="subcat-chip" onclick="filtrarMetaDiet('DEFICIT', this)">🔥 Déficit & Volumen (&lt;50 kcal)</button>
+            <button class="subcat-chip" onclick="filtrarMetaDiet('KETO', this)">🥑 Keto &amp; Low Carb</button>
+            <button class="subcat-chip" onclick="filtrarMetaDiet('ENERGY', this)">⚡ Pre / Post Entreno</button>
+            <button class="subcat-chip" onclick="filtrarMetaDiet('FIBER', this)">🌾 Fibra &amp; Termogénicos</button>
+        </div>
     </div>
 
     <!-- Mobile Product Grid Feed -->
@@ -1272,8 +1339,9 @@
     "precio": 550.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "600ml",
       "cal": 0,
@@ -1288,8 +1356,9 @@
     "precio": 790.0,
     "cat": "Grasas Buenas",
     "emoji": "🥑",
-    "tag": "Saludable",
-    "desc": "Grasas buenas y frescura de primera calidad.",
+    "tag": "🥑 Keto & Grasas Buenas",
+    "benefit": "Grasas monoinsaturadas para saciedad y energía en Keto.",
+    "goal": "KETO",
     "nutri": {
       "porcion": "100g",
       "cal": 160,
@@ -1304,8 +1373,9 @@
     "precio": 2100.0,
     "cat": "Grasas Buenas",
     "emoji": "🥑",
-    "tag": "Saludable",
-    "desc": "Grasas buenas y frescura de primera calidad.",
+    "tag": "🥑 Keto & Grasas Buenas",
+    "benefit": "Grasas monoinsaturadas para saciedad y energía en Keto.",
+    "goal": "KETO",
     "nutri": {
       "porcion": "100g",
       "cal": 160,
@@ -1320,8 +1390,9 @@
     "precio": 2350.0,
     "cat": "Grasas Buenas",
     "emoji": "🥑",
-    "tag": "Saludable",
-    "desc": "Grasas buenas y frescura de primera calidad.",
+    "tag": "🥑 Keto & Grasas Buenas",
+    "benefit": "Grasas monoinsaturadas para saciedad y energía en Keto.",
+    "goal": "KETO",
     "nutri": {
       "porcion": "100g",
       "cal": 160,
@@ -1336,8 +1407,9 @@
     "precio": 260.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "10g (3 dientes)",
       "cal": 15,
@@ -1352,8 +1424,9 @@
     "precio": 12250.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "10g (3 dientes)",
       "cal": 15,
@@ -1368,8 +1441,9 @@
     "precio": 1150.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "10g (3 dientes)",
       "cal": 15,
@@ -1384,8 +1458,9 @@
     "precio": 2500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "10g (3 dientes)",
       "cal": 15,
@@ -1400,8 +1475,9 @@
     "precio": 1900.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "10g (3 dientes)",
       "cal": 15,
@@ -1416,8 +1492,9 @@
     "precio": 1000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "10g (3 dientes)",
       "cal": 15,
@@ -1432,8 +1509,9 @@
     "precio": 1350.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -1448,8 +1526,9 @@
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -1464,8 +1543,9 @@
     "precio": 1300.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -1479,9 +1559,10 @@
     "nombre": "Anona Fresca por Kilo",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -1496,8 +1577,9 @@
     "precio": 1490.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -1512,8 +1594,9 @@
     "precio": 1750.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 57,
@@ -1528,8 +1611,9 @@
     "precio": 4950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 57,
@@ -1544,8 +1628,9 @@
     "precio": 3900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 105,
@@ -1560,8 +1645,9 @@
     "precio": 1850.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 180,
@@ -1576,8 +1662,9 @@
     "precio": 4900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 180,
@@ -1592,8 +1679,9 @@
     "precio": 900.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 180,
@@ -1608,8 +1696,9 @@
     "precio": 990.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 180,
@@ -1622,10 +1711,11 @@
     "id": "12597",
     "nombre": "Ayote Mantequilla por Kilo",
     "precio": 1400.0,
-    "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "cat": "Consumo Moderado",
+    "emoji": "🍯",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 26,
@@ -1638,10 +1728,11 @@
     "id": "12511",
     "nombre": "Ayote Sazón por Kilo",
     "precio": 650.0,
-    "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "cat": "Consumo Moderado",
+    "emoji": "🍯",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 26,
@@ -1654,10 +1745,11 @@
     "id": "12512",
     "nombre": "Ayote Tierno Fresco",
     "precio": 900.0,
-    "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "cat": "Consumo Moderado",
+    "emoji": "🍯",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 26,
@@ -1672,8 +1764,9 @@
     "precio": 60.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 89,
@@ -1688,8 +1781,9 @@
     "precio": 70.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 89,
@@ -1704,8 +1798,9 @@
     "precio": 1290.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 89,
@@ -1720,8 +1815,9 @@
     "precio": 70.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 89,
@@ -1736,8 +1832,9 @@
     "precio": 110.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 89,
@@ -1752,8 +1849,9 @@
     "precio": 750.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 25,
@@ -1768,8 +1866,9 @@
     "precio": 500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -1784,8 +1883,9 @@
     "precio": 2690.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 30,
@@ -1800,8 +1900,9 @@
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 125,
@@ -1816,8 +1917,9 @@
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 125,
@@ -1832,8 +1934,9 @@
     "precio": 550.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 125,
@@ -1848,8 +1951,9 @@
     "precio": 750.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 125,
@@ -1864,8 +1968,9 @@
     "precio": 1890.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 86,
@@ -1880,8 +1985,9 @@
     "precio": 2200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 86,
@@ -1895,9 +2001,10 @@
     "nombre": "Carambola Fresca (Bandeja 500g)",
     "precio": 940.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 31,
@@ -1912,8 +2019,9 @@
     "precio": 2100.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -1927,9 +2035,10 @@
     "nombre": "Cas Fresco Seleccionado (500g)",
     "precio": 1200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 68,
@@ -1943,9 +2052,10 @@
     "nombre": "Cas Fresco por Kilo",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 68,
@@ -1960,8 +2070,9 @@
     "precio": 1990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -1976,8 +2087,9 @@
     "precio": 1990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -1992,8 +2104,9 @@
     "precio": 1990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -2008,8 +2121,9 @@
     "precio": 1290.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -2024,8 +2138,9 @@
     "precio": 1990.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 43,
@@ -2040,8 +2155,9 @@
     "precio": 600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -2056,8 +2172,9 @@
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2072,8 +2189,9 @@
     "precio": 2000.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15g (1 cda)",
       "cal": 70,
@@ -2088,8 +2206,9 @@
     "precio": 800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 19,
@@ -2104,8 +2223,9 @@
     "precio": 950.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 354,
@@ -2120,8 +2240,9 @@
     "precio": 750.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 19,
@@ -2136,8 +2257,9 @@
     "precio": 800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 19,
@@ -2152,8 +2274,9 @@
     "precio": 1600.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15g (1 cda)",
       "cal": 70,
@@ -2168,8 +2291,9 @@
     "precio": 2200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2184,8 +2308,9 @@
     "precio": 2590.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 20,
@@ -2200,8 +2325,9 @@
     "precio": 890.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 20,
@@ -2216,8 +2342,9 @@
     "precio": 1750.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 20,
@@ -2232,8 +2359,9 @@
     "precio": 1100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 20,
@@ -2248,8 +2376,9 @@
     "precio": 3990.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 20,
@@ -2264,8 +2393,9 @@
     "precio": 1500.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 86,
@@ -2279,9 +2409,10 @@
     "nombre": "Ciruelas Rojas Importadas por Kilo",
     "precio": 3900.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 46,
@@ -2296,8 +2427,9 @@
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 125,
@@ -2311,9 +2443,10 @@
     "nombre": "Coco Fresco con Agua",
     "precio": 850.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 354,
@@ -2327,9 +2460,10 @@
     "nombre": "Coctel Mixto de Frutas Frescas",
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2344,8 +2478,9 @@
     "precio": 3500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2360,8 +2495,9 @@
     "precio": 1290.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 30,
@@ -2376,8 +2512,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2391,9 +2528,10 @@
     "nombre": "Piña Congelada 100% Natural (1kg)",
     "precio": 2600.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 50,
@@ -2407,9 +2545,10 @@
     "nombre": "Carambola Congelada Natural (1kg)",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 31,
@@ -2423,9 +2562,10 @@
     "nombre": "Cas Congelado 100% Natural (1kg)",
     "precio": 2500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 68,
@@ -2439,9 +2579,10 @@
     "nombre": "Mango Congelado 100% Natural (1kg)",
     "precio": 3200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 60,
@@ -2456,8 +2597,9 @@
     "precio": 2200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 43,
@@ -2471,9 +2613,10 @@
     "nombre": "Sandía Congelada Natural (1kg)",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 30,
@@ -2488,8 +2631,9 @@
     "precio": 2900.0,
     "cat": "Batidos & Detox",
     "emoji": "🧊",
-    "tag": "100% Natural",
-    "desc": "Frutas listas para batidos y refrescos.",
+    "tag": "🧊 Smoothie Fitness & Detox",
+    "benefit": "Base perfecta para batidos de proteína y recuperación.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -2504,8 +2648,9 @@
     "precio": 2500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 32,
@@ -2519,9 +2664,10 @@
     "nombre": "Guanábana Congelada Natural (1kg)",
     "precio": 3150.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 66,
@@ -2535,9 +2681,10 @@
     "nombre": "Maracuyá Congelado Natural (1kg)",
     "precio": 3400.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 97,
@@ -2551,9 +2698,10 @@
     "nombre": "Melón Congelado Natural (1kg)",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 34,
@@ -2568,8 +2716,9 @@
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 43,
@@ -2584,8 +2733,9 @@
     "precio": 750.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2600,8 +2750,9 @@
     "precio": 1850.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 85,
@@ -2615,9 +2766,10 @@
     "nombre": "Culantro Castilla Fresco (3 Rollos)",
     "precio": 650.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2631,9 +2783,10 @@
     "nombre": "Culantro Castilla Fresco (1 Rollo)",
     "precio": 250.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2648,8 +2801,9 @@
     "precio": 590.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -2664,8 +2818,9 @@
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2680,8 +2835,9 @@
     "precio": 1900.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2696,8 +2852,9 @@
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2712,8 +2869,9 @@
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2728,8 +2886,9 @@
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2744,8 +2903,9 @@
     "precio": 2000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2760,8 +2920,9 @@
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2776,8 +2937,9 @@
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -2792,8 +2954,9 @@
     "precio": 2400.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2808,8 +2971,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2824,8 +2988,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2840,8 +3005,9 @@
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2856,8 +3022,9 @@
     "precio": 1700.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2872,8 +3039,9 @@
     "precio": 1900.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2888,8 +3056,9 @@
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2904,8 +3073,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2920,8 +3090,9 @@
     "precio": 2050.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2936,8 +3107,9 @@
     "precio": 1100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2952,8 +3124,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2968,8 +3141,9 @@
     "precio": 2000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -2984,8 +3158,9 @@
     "precio": 0.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3000,8 +3175,9 @@
     "precio": 2500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3016,8 +3192,9 @@
     "precio": 1200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3032,8 +3209,9 @@
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3048,8 +3226,9 @@
     "precio": 1200.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3064,8 +3243,9 @@
     "precio": 1000.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3080,8 +3260,9 @@
     "precio": 2100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3096,8 +3277,9 @@
     "precio": 2100.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3112,8 +3294,9 @@
     "precio": 1200.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 75,
@@ -3128,8 +3311,9 @@
     "precio": 1600.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3144,8 +3328,9 @@
     "precio": 600.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 86,
@@ -3160,8 +3345,9 @@
     "precio": 3850.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 20,
@@ -3176,8 +3362,9 @@
     "precio": 650.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3192,8 +3379,9 @@
     "precio": 1950.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3208,8 +3396,9 @@
     "precio": 3400.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 32,
@@ -3224,8 +3413,9 @@
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 32,
@@ -3240,8 +3430,9 @@
     "precio": 1100.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 32,
@@ -3255,9 +3446,10 @@
     "nombre": "Frijol Blanco Seleccionado (400g)",
     "precio": 1350.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3271,9 +3463,10 @@
     "nombre": "Frijoles Cubaces Tradicionales (400g)",
     "precio": 1750.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3287,9 +3480,10 @@
     "nombre": "Frijol Kalima Gourmet (400g)",
     "precio": 1400.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3303,9 +3497,10 @@
     "nombre": "Frijol Nacido Fresco (500g)",
     "precio": 1500.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "100g",
       "cal": 120,
@@ -3319,9 +3514,10 @@
     "nombre": "Frijol Negro de Primera por Kilo",
     "precio": 1350.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3335,9 +3531,10 @@
     "nombre": "Frijol Rojo de Primera por Kilo",
     "precio": 1500.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3351,9 +3548,10 @@
     "nombre": "Frijol Rojo de Primera (Paquete 6kg)",
     "precio": 8250.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3367,9 +3565,10 @@
     "nombre": "Frijol Tierno Fresco (Malla 500g)",
     "precio": 1600.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "100g",
       "cal": 120,
@@ -3383,9 +3582,10 @@
     "nombre": "Garbanzos Seleccionados (400g)",
     "precio": 1000.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3399,9 +3599,10 @@
     "nombre": "Guanábana Fresca por Kilo",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 66,
@@ -3415,9 +3616,10 @@
     "nombre": "Guayaba Taiwanesa Dulce por Kilo",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 68,
@@ -3432,8 +3634,9 @@
     "precio": 78.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3448,8 +3651,9 @@
     "precio": 1350.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3464,8 +3668,9 @@
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3480,8 +3685,9 @@
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3496,8 +3702,9 @@
     "precio": 2400.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 22,
@@ -3512,8 +3719,9 @@
     "precio": 2200.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 22,
@@ -3528,8 +3736,9 @@
     "precio": 2600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 22,
@@ -3544,8 +3753,9 @@
     "precio": 2500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 22,
@@ -3560,8 +3770,9 @@
     "precio": 2990.0,
     "cat": "Proteínas",
     "emoji": "🥚",
-    "tag": "Huevos Frescos",
-    "desc": "Huevos de gallina seleccionados.",
+    "tag": "💪 Proteína de Alto Valor",
+    "benefit": "Máximo valor biológico para síntesis muscular y fuerza.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (1 und)",
       "cal": 72,
@@ -3576,8 +3787,9 @@
     "precio": 1300.0,
     "cat": "Proteínas",
     "emoji": "🥚",
-    "tag": "Huevos Frescos",
-    "desc": "Huevos de gallina seleccionados.",
+    "tag": "💪 Proteína de Alto Valor",
+    "benefit": "Máximo valor biológico para síntesis muscular y fuerza.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (1 und)",
       "cal": 72,
@@ -3592,8 +3804,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -3608,8 +3821,9 @@
     "precio": 1950.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3623,9 +3837,10 @@
     "nombre": "Jocotes Frescos por Kilo",
     "precio": 2500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 46,
@@ -3639,9 +3854,10 @@
     "nombre": "Jugo de Naranja 100% Natural (22oz)",
     "precio": 1600.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 vaso (240ml)",
       "cal": 110,
@@ -3656,8 +3872,9 @@
     "precio": 600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3672,8 +3889,9 @@
     "precio": 1500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "200ml (1 vaso)",
       "cal": 120,
@@ -3688,8 +3906,9 @@
     "precio": 950.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3704,8 +3923,9 @@
     "precio": 1200.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3720,8 +3940,9 @@
     "precio": 600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3736,8 +3957,9 @@
     "precio": 550.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3752,8 +3974,9 @@
     "precio": 550.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -3767,9 +3990,10 @@
     "nombre": "Lentejas Seleccionadas (400g)",
     "precio": 900.0,
     "cat": "Carbos Complejos",
-    "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "emoji": "🫘",
+    "tag": "💪 Proteína Vegetal & Fibra",
+    "benefit": "Carbohidrato de bajo índice glucémico y aminoácidos.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "50g (crudo)",
       "cal": 175,
@@ -3784,8 +4008,9 @@
     "precio": 150.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 47,
@@ -3800,8 +4025,9 @@
     "precio": 1290.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 29,
@@ -3816,8 +4042,9 @@
     "precio": 1490.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 29,
@@ -3832,8 +4059,9 @@
     "precio": 180.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 29,
@@ -3848,8 +4076,9 @@
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 29,
@@ -3864,8 +4093,9 @@
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 29,
@@ -3880,8 +4110,9 @@
     "precio": 850.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15g (1 cda)",
       "cal": 70,
@@ -3896,8 +4127,9 @@
     "precio": 2500.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15g (1 cda)",
       "cal": 70,
@@ -3912,8 +4144,9 @@
     "precio": 1850.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15g (1 cda)",
       "cal": 70,
@@ -3928,8 +4161,9 @@
     "precio": 1800.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15g (1 cda)",
       "cal": 70,
@@ -3944,8 +4178,9 @@
     "precio": 1890.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 86,
@@ -3960,8 +4195,9 @@
     "precio": 600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -3975,9 +4211,10 @@
     "nombre": "Mandarinas Dulces Importadas por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 47,
@@ -3991,9 +4228,10 @@
     "nombre": "Mandarinas Nacionales (Malla 5 Unid)",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 47,
@@ -4007,9 +4245,10 @@
     "nombre": "Manga Seleccionada por Kilo",
     "precio": 1290.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 60,
@@ -4023,9 +4262,10 @@
     "nombre": "Mangostán Exótico por Kilo",
     "precio": 2900.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 60,
@@ -4039,9 +4279,10 @@
     "nombre": "Maní Tostado en Cáscara (225g)",
     "precio": 1150.0,
     "cat": "Grasas Buenas",
-    "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "emoji": "🥜",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 170,
@@ -4056,8 +4297,9 @@
     "precio": 1000.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 160,
@@ -4072,8 +4314,9 @@
     "precio": 2150.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 160,
@@ -4088,8 +4331,9 @@
     "precio": 2150.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "100g",
       "cal": 50,
@@ -4104,8 +4348,9 @@
     "precio": 1000.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 165,
@@ -4120,8 +4365,9 @@
     "precio": 2200.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 165,
@@ -4136,8 +4382,9 @@
     "precio": 1000.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 170,
@@ -4152,8 +4399,9 @@
     "precio": 2150.0,
     "cat": "Grasas Buenas",
     "emoji": "🥜",
-    "tag": "Frutos Secos",
-    "desc": "Snacks tostados y deliciosos.",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 170,
@@ -4167,9 +4415,10 @@
     "nombre": "Maní Simple sin Sal Don Juan (500g)",
     "precio": 2200.0,
     "cat": "Grasas Buenas",
-    "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "emoji": "🥜",
+    "tag": "🥜 Snack Proteico & Energía",
+    "benefit": "Snack denso en calorías limpias y proteína vegetal.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 170,
@@ -4183,9 +4432,10 @@
     "nombre": "Manzana Fuji Importada",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4199,9 +4449,10 @@
     "nombre": "Manzanas Gala (Bolsa 10 Unid)",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4215,9 +4466,10 @@
     "nombre": "Manzana Gala Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4231,9 +4483,10 @@
     "nombre": "Manzanas Gala (Bolsa 6 Unid)",
     "precio": 1250.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4247,9 +4500,10 @@
     "nombre": "Manzana Golden Amarilla Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4263,9 +4517,10 @@
     "nombre": "Manzana Verde Granny Smith Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4279,9 +4534,10 @@
     "nombre": "Manzanas Verdes Granny Smith (6 Unid)",
     "precio": 1290.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4295,9 +4551,10 @@
     "nombre": "Manzanas Mixtas (Bolsa 6 Unid)",
     "precio": 1250.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4311,9 +4568,10 @@
     "nombre": "Manzana Roja Red Delicious Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4327,9 +4585,10 @@
     "nombre": "Manzanas Rojas (Bolsa 6 Unid)",
     "precio": 1200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 52,
@@ -4343,9 +4602,10 @@
     "nombre": "Maracuyá Fresco por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 97,
@@ -4359,9 +4619,10 @@
     "nombre": "Pulpa de Maracuyá en Vaso",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 97,
@@ -4375,9 +4636,10 @@
     "nombre": "Melocotones Frescos por Kilo",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 39,
@@ -4391,9 +4653,10 @@
     "nombre": "Melón Cantaloupe Caribbean por Kilo",
     "precio": 1400.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 34,
@@ -4408,8 +4671,9 @@
     "precio": 450.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4424,8 +4688,9 @@
     "precio": 4500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 50,
@@ -4440,8 +4705,9 @@
     "precio": 5600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 64,
@@ -4456,8 +4722,9 @@
     "precio": 2800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 64,
@@ -4472,8 +4739,9 @@
     "precio": 5800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 50,
@@ -4488,8 +4756,9 @@
     "precio": 3650.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 50,
@@ -4504,8 +4773,9 @@
     "precio": 1200.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 64,
@@ -4520,8 +4790,9 @@
     "precio": 4200.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 50,
@@ -4536,8 +4807,9 @@
     "precio": 2100.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4552,8 +4824,9 @@
     "precio": 3490.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4568,8 +4841,9 @@
     "precio": 800.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4584,8 +4858,9 @@
     "precio": 1890.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 105,
@@ -4599,9 +4874,10 @@
     "nombre": "Naranjas Dulces Importadas por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 47,
@@ -4615,9 +4891,10 @@
     "nombre": "Naranja Nacional para Jugo",
     "precio": 220.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 47,
@@ -4631,9 +4908,10 @@
     "nombre": "Naranjas Nacionales (Paquete 12 Unid)",
     "precio": 2480.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 47,
@@ -4648,8 +4926,9 @@
     "precio": 650.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g (2 cdas)",
       "cal": 60,
@@ -4663,9 +4942,10 @@
     "nombre": "Nectarinas Frescas por Kilo",
     "precio": 2950.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 39,
@@ -4680,8 +4960,9 @@
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -4696,8 +4977,9 @@
     "precio": 1600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4711,9 +4993,10 @@
     "nombre": "Pan Casero Artesanal (400g)",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "40g",
       "cal": 130,
@@ -4728,8 +5011,9 @@
     "precio": 1500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "40g",
       "cal": 130,
@@ -4744,8 +5028,9 @@
     "precio": 1290.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 77,
@@ -4760,8 +5045,9 @@
     "precio": 1250.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 77,
@@ -4776,8 +5062,9 @@
     "precio": 800.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 77,
@@ -4792,8 +5079,9 @@
     "precio": 950.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 43,
@@ -4808,8 +5096,9 @@
     "precio": 3200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (cocido)",
       "cal": 196,
@@ -4824,8 +5113,9 @@
     "precio": 850.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -4839,9 +5129,10 @@
     "nombre": "Pera Asiática Crujiente",
     "precio": 650.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 57,
@@ -4855,9 +5146,10 @@
     "nombre": "Pera D'Anjou Verde Grande",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 57,
@@ -4871,9 +5163,10 @@
     "nombre": "Peras Forelle Dulces (Paquete)",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 57,
@@ -4887,9 +5180,10 @@
     "nombre": "Pera Roja Grande Importada",
     "precio": 490.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 57,
@@ -4904,8 +5198,9 @@
     "precio": 390.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4919,9 +5214,10 @@
     "nombre": "Pipa Fría Pelada con Agua Dulce",
     "precio": 600.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 vaso (240ml)",
       "cal": 45,
@@ -4935,9 +5231,10 @@
     "nombre": "Pitahaya Roja / Dragón por Kilo",
     "precio": 3500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 60,
@@ -4951,9 +5248,10 @@
     "nombre": "Piña de Tamal Tradicional",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -4967,9 +5265,10 @@
     "nombre": "Piña Dorada Dulce Grande",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 50,
@@ -4984,8 +5283,9 @@
     "precio": 1230.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 122,
@@ -5000,8 +5300,9 @@
     "precio": 1050.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 150,
@@ -5016,8 +5317,9 @@
     "precio": 1050.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 150,
@@ -5032,8 +5334,9 @@
     "precio": 1050.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 29,
@@ -5048,8 +5351,9 @@
     "precio": 250.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 122,
@@ -5064,8 +5368,9 @@
     "precio": 2850.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5079,9 +5384,10 @@
     "nombre": "Toronja / Pomelo Rosado por Kilo",
     "precio": 2000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5095,9 +5401,10 @@
     "nombre": "Pulpa Natural de Cas (1 Litro)",
     "precio": 3500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 68,
@@ -5112,8 +5419,9 @@
     "precio": 7000.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 32,
@@ -5128,8 +5436,9 @@
     "precio": 3100.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 32,
@@ -5144,8 +5453,9 @@
     "precio": 3450.0,
     "cat": "Batidos & Detox",
     "emoji": "🧊",
-    "tag": "100% Natural",
-    "desc": "Frutas listas para batidos y refrescos.",
+    "tag": "🧊 Smoothie Fitness & Detox",
+    "benefit": "Base perfecta para batidos de proteína y recuperación.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -5159,9 +5469,10 @@
     "nombre": "Pulpa Natural de Guanábana (1 Litro)",
     "precio": 3450.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 66,
@@ -5176,8 +5487,9 @@
     "precio": 3450.0,
     "cat": "Batidos & Detox",
     "emoji": "🧊",
-    "tag": "100% Natural",
-    "desc": "Frutas listas para batidos y refrescos.",
+    "tag": "🧊 Smoothie Fitness & Detox",
+    "benefit": "Base perfecta para batidos de proteína y recuperación.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 60,
@@ -5191,9 +5503,10 @@
     "nombre": "Pulpa Natural de Maracuyá (1 Litro)",
     "precio": 3100.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 97,
@@ -5208,8 +5521,9 @@
     "precio": 3500.0,
     "cat": "Frutas & Vitaminas",
     "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "tag": "🔥 Low Carb & Antioxidante",
+    "benefit": "Bajo en azúcar, rico en antioxidantes y antiinflamatorio.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 43,
@@ -5223,9 +5537,10 @@
     "nombre": "Pulpa Natural de Piña (1 Galón)",
     "precio": 6500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 50,
@@ -5240,8 +5555,9 @@
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 105,
@@ -5256,8 +5572,9 @@
     "precio": 3500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 85,
@@ -5272,8 +5589,9 @@
     "precio": 5600.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 105,
@@ -5288,8 +5606,9 @@
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 85,
@@ -5304,8 +5623,9 @@
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 85,
@@ -5320,8 +5640,9 @@
     "precio": 5500.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "30g",
       "cal": 85,
@@ -5336,8 +5657,9 @@
     "precio": 500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -5352,8 +5674,9 @@
     "precio": 390.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5368,8 +5691,9 @@
     "precio": 1450.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 25,
@@ -5384,8 +5708,9 @@
     "precio": 1900.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 43,
@@ -5400,8 +5725,9 @@
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -5416,8 +5742,9 @@
     "precio": 1600.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "40g",
       "cal": 130,
@@ -5432,8 +5759,9 @@
     "precio": 1250.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5447,9 +5775,10 @@
     "nombre": "Sandía Dulce Mediana por Kilo",
     "precio": 550.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 30,
@@ -5464,8 +5793,9 @@
     "precio": 1900.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5480,8 +5810,9 @@
     "precio": 2300.0,
     "cat": "Grasas Buenas",
     "emoji": "🌱",
-    "tag": "Semillas",
-    "desc": "Semillas naturales ricas en fibra.",
+    "tag": "🌾 Superalimento & Omega-3",
+    "benefit": "Fibra soluble, omega-3 y digestión óptima.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "30g",
       "cal": 165,
@@ -5496,8 +5827,9 @@
     "precio": 2300.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5512,8 +5844,9 @@
     "precio": 3000.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -5527,9 +5860,10 @@
     "nombre": "Tamarindo Natural en Vaina (500g)",
     "precio": 2200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 239,
@@ -5544,8 +5878,9 @@
     "precio": 2500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "40g",
       "cal": 130,
@@ -5560,8 +5895,9 @@
     "precio": 1100.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "20g (1 cda)",
       "cal": 75,
@@ -5576,8 +5912,9 @@
     "precio": 1500.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "30g",
       "cal": 125,
@@ -5592,8 +5929,9 @@
     "precio": 3490.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 105,
@@ -5608,8 +5946,9 @@
     "precio": 1390.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 18,
@@ -5624,8 +5963,9 @@
     "precio": 1250.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5640,8 +5980,9 @@
     "precio": 1195.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 18,
@@ -5656,8 +5997,9 @@
     "precio": 2000.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 18,
@@ -5672,8 +6014,9 @@
     "precio": 1900.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 18,
@@ -5688,8 +6031,9 @@
     "precio": 2450.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 18,
@@ -5704,8 +6048,9 @@
     "precio": 2490.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 18,
@@ -5720,8 +6065,9 @@
     "precio": 500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "3g (1 cdta)",
       "cal": 5,
@@ -5735,9 +6081,10 @@
     "nombre": "Tortillas Caseras de Maíz (3 Unid)",
     "precio": 1000.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 und (35g)",
       "cal": 85,
@@ -5752,8 +6099,9 @@
     "precio": 2500.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "100g",
       "cal": 40,
@@ -5768,8 +6116,9 @@
     "precio": 2800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 und (35g)",
       "cal": 85,
@@ -5784,8 +6133,9 @@
     "precio": 1695.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 und (35g)",
       "cal": 85,
@@ -5800,8 +6150,9 @@
     "precio": 1495.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 und (35g)",
       "cal": 85,
@@ -5816,8 +6167,9 @@
     "precio": 800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "1 und (35g)",
       "cal": 85,
@@ -5831,9 +6183,10 @@
     "nombre": "Uchuvas Dulces (Canastilla)",
     "precio": 1950.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5848,8 +6201,9 @@
     "precio": 1790.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5864,8 +6218,9 @@
     "precio": 3390.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5880,8 +6235,9 @@
     "precio": 2590.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5896,8 +6252,9 @@
     "precio": 4900.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5912,8 +6269,9 @@
     "precio": 2590.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5928,8 +6286,9 @@
     "precio": 4570.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 69,
@@ -5944,8 +6303,9 @@
     "precio": 1800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 31,
@@ -5960,8 +6320,9 @@
     "precio": 1600.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 31,
@@ -5976,8 +6337,9 @@
     "precio": 1450.0,
     "cat": "Hierbas & Especias",
     "emoji": "🌿",
-    "tag": "Hierbas & Especias",
-    "desc": "El mejor sabor para tu cocina.",
+    "tag": "🌿 Termogénico & Digestivo",
+    "benefit": "Acelera metabolismo, mejora digestión y aporta sabor cero calorías.",
+    "goal": "FIBER",
     "nutri": {
       "porcion": "15ml (1 cda)",
       "cal": 3,
@@ -5992,8 +6354,9 @@
     "precio": 850.0,
     "cat": "Proteínas",
     "emoji": "🧀",
-    "tag": "Lácteos Frescos",
-    "desc": "Quesos y lácteos frescos de calidad.",
+    "tag": "💪 Proteína & Calcio",
+    "benefit": "Aporte proteico fresco y fermentos para microbiota.",
+    "goal": "PROTEIN",
     "nutri": {
       "porcion": "100g",
       "cal": 90,
@@ -6008,8 +6371,9 @@
     "precio": 750.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 160,
@@ -6023,9 +6387,10 @@
     "nombre": "Yuplón Fresco",
     "precio": 300.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g (crudo)",
       "cal": 20,
@@ -6040,8 +6405,9 @@
     "precio": 1800.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 41,
@@ -6056,8 +6422,9 @@
     "precio": 670.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 41,
@@ -6072,8 +6439,9 @@
     "precio": 670.0,
     "cat": "Consumo Moderado",
     "emoji": "🍯",
-    "tag": "Despensa",
-    "desc": "Productos selectos para tu hogar.",
+    "tag": "🍯 Despensa & Endulzante",
+    "benefit": "Energía natural para desayunos o postres controlados.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 41,
@@ -6088,8 +6456,9 @@
     "precio": 1800.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 26,
@@ -6103,9 +6472,10 @@
     "nombre": "Zapote Colombiano Dulce",
     "precio": 1200.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 112,
@@ -6119,9 +6489,10 @@
     "nombre": "Zapote Fresco por Kilo",
     "precio": 1500.0,
     "cat": "Frutas & Vitaminas",
-    "emoji": "🍓",
-    "tag": "Fruta Fresca",
-    "desc": "Fruta dulce, jugosa y seleccionada.",
+    "emoji": "⚡",
+    "tag": "⚡ Energía Pre-Workout",
+    "benefit": "Fructosa natural para energía rápida e hidratación celular.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 112,
@@ -6136,8 +6507,9 @@
     "precio": 1500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -6152,8 +6524,9 @@
     "precio": 1500.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -6168,8 +6541,9 @@
     "precio": 2200.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -6184,8 +6558,9 @@
     "precio": 1750.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -6200,8 +6575,9 @@
     "precio": 1950.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -6216,8 +6592,9 @@
     "precio": 1950.0,
     "cat": "Carbos Complejos",
     "emoji": "🍠",
-    "tag": "Tubérculos & Granos",
-    "desc": "Energía natural y alimentos de la tierra.",
+    "tag": "⚡ Carbohidrato Complejo",
+    "benefit": "Recarga de glucógeno muscular y energía sostenida.",
+    "goal": "ENERGY",
     "nutri": {
       "porcion": "100g",
       "cal": 45,
@@ -6232,8 +6609,9 @@
     "precio": 750.0,
     "cat": "Verduras & Fibra",
     "emoji": "🥦",
-    "tag": "Verdura Fresca",
-    "desc": "Cosecha fresca, limpia y crujiente.",
+    "tag": "🔥 Déficit & Gran Volumen",
+    "benefit": "Máximo volumen en platos con menos de 30 kcal.",
+    "goal": "DEFICIT",
     "nutri": {
       "porcion": "100g",
       "cal": 15,
@@ -6245,6 +6623,7 @@
 ];
         const carrito = {};
         let categoriaActual = 'TODOS';
+        let metaDietActual = 'ALL';
         let terminoBusqueda = '';
         let metodoPagoSeleccionado = 'Sinpe Móvil';
 
@@ -6313,6 +6692,13 @@
             renderizarGrid();
         }
 
+        function filtrarMetaDiet(meta, btn) {
+            metaDietActual = meta;
+            document.querySelectorAll('.subcat-chip').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderizarGrid();
+        }
+
         function setPaymentMethod(method, btn) {
             metodoPagoSeleccionado = method;
             document.querySelectorAll('.pay-chip').forEach(el => el.classList.remove('active'));
@@ -6343,11 +6729,13 @@
 
         function resetearFiltros() {
             categoriaActual = 'TODOS';
+            metaDietActual = 'ALL';
             terminoBusqueda = '';
             document.getElementById('searchInput').value = '';
             document.getElementById('searchClearBtn').classList.remove('active');
             
             document.querySelectorAll('.cat-chip').forEach((el, idx) => el.classList.toggle('active', idx === 0));
+            document.querySelectorAll('.subcat-chip').forEach((el, idx) => el.classList.toggle('active', idx === 0));
             filtrarCategoria('TODOS', document.querySelector('.cat-chip'));
         }
 
@@ -6357,11 +6745,13 @@
 
             const filtrados = productos.filter(p => {
                 const matchCat = categoriaActual === 'TODOS' || p.cat === categoriaActual;
+                const matchMeta = metaDietActual === 'ALL' || p.goal === metaDietActual;
                 const matchSearch = terminoBusqueda === '' || 
                     p.nombre.toLowerCase().includes(terminoBusqueda) || 
                     p.id.toLowerCase().includes(terminoBusqueda) ||
-                    p.tag.toLowerCase().includes(terminoBusqueda);
-                return matchCat && matchSearch;
+                    p.tag.toLowerCase().includes(terminoBusqueda) ||
+                    p.benefit.toLowerCase().includes(terminoBusqueda);
+                return matchCat && matchMeta && matchSearch;
             });
 
             if (filtrados.length === 0) {
@@ -6369,7 +6759,7 @@
                     <div class="empty-state">
                         <div class="empty-state-icon">🔍</div>
                         <div class="empty-state-title">No se encontraron productos</div>
-                        <div class="empty-state-desc">Prueba buscando con otra palabra o revisa otra categoría.</div>
+                        <div class="empty-state-desc">Prueba cambiando tu objetivo fitness o buscando otra categoría.</div>
                         <button class="btn-reset-filters" onclick="resetearFiltros()">Ver Todo el Catálogo</button>
                     </div>
                 `;
@@ -6403,6 +6793,9 @@
                             <span class="diet-tag">${prod.tag}</span>
                         </div>
                         <h3 class="card-name">${prod.nombre}</h3>
+                        
+                        <!-- Gym & Diet Micro Benefit -->
+                        <div class="diet-benefit-pill">🎯 ${prod.benefit}</div>
                         
                         <!-- Nutritional Facts Box -->
                         <div class="nutri-box">

@@ -7520,6 +7520,20 @@
                             renderClientChecklist();
                         }
                     })
+                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'rutas_gps_envio' }, payload => {
+                        if (ultimoPedidoCreado && payload.new.pedido_id === ultimoPedidoCreado.id) {
+                            const lat = Number(payload.new.latitud_actual);
+                            const lng = Number(payload.new.longitud_actual);
+                            if (driverMarker && mapInstance) {
+                                driverMarker.setLatLng([lat, lng]);
+                                mapInstance.panTo([lat, lng]);
+                            }
+                            const gpsEta = document.getElementById('gpsEtaText');
+                            if (gpsEta) {
+                                gpsEta.innerText = `~${payload.new.minutos_estimados || 10} min (En Ruta 🛵)`;
+                            }
+                        }
+                    })
                     .subscribe();
             } catch(e) {
                 console.warn('Realtime subscription note:', e);

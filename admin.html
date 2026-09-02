@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet CSS & JS for Admin Fleet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
@@ -318,11 +321,11 @@
 
                 <div class="kpi-card">
                     <div class="kpi-header">
-                        <span class="kpi-lbl">Tiempo de Alisto</span>
+                        <span class="kpi-lbl">Tiempo Promedio Alisto</span>
                         <span class="kpi-icon">⏱️</span>
                     </div>
-                    <div class="kpi-val" style="color: #f59e0b;">18 seg</div>
-                    <div class="kpi-sub">Por producto en bodega</div>
+                    <div class="kpi-val" id="dashKpiAvgAlisto" style="color: #f59e0b;">—</div>
+                    <div class="kpi-sub" id="dashKpiAvgAlistoSub">Por pedido en bodega</div>
                 </div>
             </div>
 
@@ -384,15 +387,31 @@
                 </div>
             </div>
 
+            <!-- Live Fleet & Delivery Map -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1rem; margin-bottom: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">🛵</span>
+                        <h3 style="font-size: 0.92rem; font-weight: 800; color: var(--text-white);">Monitoreo de Flota en Vivo &amp; Ubicación de Repartidores</h3>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span id="adminLiveFleetCount" style="font-size: 0.72rem; color: #34d399; font-weight: 800; background: rgba(52, 211, 153, 0.15); padding: 3px 8px; border-radius: 9999px;">● Monitoreo GPS Activo</span>
+                        <button onclick="centrarMapaAdmin()" style="background: var(--bg-input); border: 1px solid var(--border-subtle); color: #60a5fa; font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; cursor: pointer;">🎯 Centrar Heredia</button>
+                    </div>
+                </div>
+                <div id="adminLiveMap" style="height: 320px; width: 100%; border-radius: 10px; border: 1px solid var(--border-subtle); z-index: 1;"></div>
+            </div>
+
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th>ID Orden</th>
-                            <th>Cliente</th>
+                            <th>ID &amp; Cliente</th>
+                            <th>Llegada &amp; Transcurrido</th>
                             <th>Modalidad &amp; Horario</th>
-                            <th>Total</th>
-                            <th>Pago</th>
+                            <th>Tiempos Operativos</th>
+                            <th>Ubicación Repartidor</th>
+                            <th>Total &amp; Pago</th>
                             <th>Estado Actual</th>
                             <th>Acciones de Despacho</th>
                         </tr>
@@ -469,6 +488,12 @@
             document.getElementById('adminTabPedidos').style.display = (tab === 'PEDIDOS') ? 'flex' : 'none';
             document.getElementById('adminTabProductos').style.display = (tab === 'PRODUCTOS') ? 'flex' : 'none';
 
+            if (tab === 'PEDIDOS') {
+                setTimeout(() => {
+                    initAdminMap();
+                    if (adminMap) adminMap.invalidateSize();
+                }, 200);
+            }
             if (tab === 'PRODUCTOS' && productosData.length === 0) cargarProductosAdmin();
         }
 
@@ -490,13 +515,101 @@
             } catch(e) {}
         }
 
+        let adminMap = null;
+        let adminMarkers = [];
+
+        function initAdminMap() {
+            if (adminMap || !document.getElementById('adminLiveMap')) return;
+            adminMap = L.map('adminLiveMap').setView([10.0020, -84.1150], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(adminMap);
+
+            const storeIcon = L.divIcon({
+                html: '<div style="background:#0e754a; color:#fff; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:18px; border:2px solid #fff; box-shadow:0 3px 8px rgba(0,0,0,0.5);">🏬</div>',
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+            L.marker([10.0020, -84.1150], { icon: storeIcon }).addTo(adminMap)
+                .bindPopup('<b>🏬 Country House (Tienda & Bodega)</b><br>Centro de Alisto y Despacho');
+        }
+
+        function centrarMapaAdmin() {
+            if (adminMap) adminMap.setView([10.0020, -84.1150], 14);
+        }
+
+        function enfocarEnMapa(lat, lng, orderId) {
+            if (adminMap) {
+                adminMap.setView([lat, lng], 16);
+                const item = adminMarkers.find(m => m.orderId === orderId);
+                if (item && item.marker) item.marker.openPopup();
+            }
+        }
+
+        function actualizarMarcadoresMapaAdmin() {
+            if (!adminMap) return;
+            // Limpiar marcadores viejos
+            adminMarkers.forEach(m => adminMap.removeLayer(m.marker));
+            adminMarkers = [];
+
+            let fleetCount = 0;
+
+            pedidosData.forEach(ord => {
+                // 1. Si tiene GPS de repartidor
+                if (ord.rutas_gps_envio && ord.rutas_gps_envio.length > 0 && ord.estado === 'EN_RUTA') {
+                    const ult = ord.rutas_gps_envio[ord.rutas_gps_envio.length - 1];
+                    const lat = Number(ult.latitud_actual);
+                    const lng = Number(ult.longitud_actual);
+                    fleetCount++;
+
+                    const driverIcon = L.divIcon({
+                        html: '<div style="font-size:26px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.6)); animation: pulse 2s infinite;">🛵</div>',
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15]
+                    });
+                    const marker = L.marker([lat, lng], { icon: driverIcon }).addTo(adminMap)
+                        .bindPopup(`
+                            <b>🛵 Repartidor en Ruta</b><br>
+                            Pedido: <b>#${ord.id}</b> (${ord.nombre_contacto})<br>
+                            Último reporte: ${new Date(ult.ultima_actualizacion).toLocaleTimeString()}
+                        `);
+                    adminMarkers.push({ orderId: ord.id, marker });
+                }
+
+                // 2. Si la orden tiene coordenadas de destino del cliente
+                const match = ord.direccion_entrega ? ord.direccion_entrega.match(/(-?\d{1,2}\.\d{3,})[,\s]+(-?\d{1,3}\.\d{3,})/) : null;
+                if (match && ord.estado !== 'ENTREGADO') {
+                    const cLat = Number(match[1]);
+                    const cLng = Number(match[2]);
+                    const clientIcon = L.divIcon({
+                        html: '<div style="background:#ef4444; color:#fff; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.4);">📍</div>',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    });
+                    const marker = L.marker([cLat, cLng], { icon: clientIcon }).addTo(adminMap)
+                        .bindPopup(`
+                            <b>📍 Destino de Entrega</b><br>
+                            Pedido: <b>#${ord.id}</b> • ${ord.nombre_contacto}<br>
+                            Estado: <b>${ord.estado}</b>
+                        `);
+                    adminMarkers.push({ orderId: ord.id + '_dest', marker });
+                }
+            });
+
+            const fleetBadge = document.getElementById('adminLiveFleetCount');
+            if (fleetBadge) {
+                fleetBadge.innerText = fleetCount > 0 ? `● ${fleetCount} Repartidor(es) en Ruta GPS` : '● Monitoreo GPS Activo';
+            }
+        }
+
         async function cargarPedidosAdmin() {
             if (!supabaseClient) return;
             const tbody = document.getElementById('adminOrdersTableBody');
             try {
                 const { data, error } = await supabaseClient
                     .from('pedidos')
-                    .select('*')
+                    .select('*, metricas_picking(*), rutas_gps_envio(*)')
                     .order('creado_en', { ascending: false });
 
                 if (error) throw error;
@@ -506,7 +619,7 @@
                 document.getElementById('dashKpiTotalOrders').innerText = pedidosData.length;
 
                 const domCount = pedidosData.filter(p => p.modalidad === 'DOMICILIO').length;
-                const pickCount = pedidosData.filter(p => p.modalidad === 'RECOGER_TIENDA').length;
+                const pickCount = pedidosData.filter(p => p.modalidad === 'RECOGER_TIENDA' || p.modalidad === 'RECOGER').length;
                 document.getElementById('dashKpiDeliverySplit').innerText = `${domCount} Domicilio • ${pickCount} Pickup`;
 
                 const totalRev = pedidosData.reduce((acc, p) => acc + Number(p.total_a_pagar || 0), 0);
@@ -515,57 +628,135 @@
                 const avgTicket = pedidosData.length > 0 ? Math.round(totalRev / pedidosData.length) : 0;
                 document.getElementById('dashKpiAvgTicket').innerText = '₡' + avgTicket.toLocaleString('es-CR');
 
+                // Calcular promedio real de alisto desde metricas_picking
+                const metricsValidas = [];
+                pedidosData.forEach(p => {
+                    if (p.metricas_picking && p.metricas_picking.length > 0) {
+                        p.metricas_picking.forEach(m => {
+                            if (m.duracion_segundos && m.duracion_segundos > 0) {
+                                metricsValidas.push(m.duracion_segundos);
+                            }
+                        });
+                    }
+                });
+
+                const kpiAlisto = document.getElementById('dashKpiAvgAlisto');
+                const kpiAlistoSub = document.getElementById('dashKpiAvgAlistoSub');
+                if (kpiAlisto && metricsValidas.length > 0) {
+                    const avgSeg = Math.round(metricsValidas.reduce((a, b) => a + b, 0) / metricsValidas.length);
+                    const min = Math.floor(avgSeg / 60);
+                    const seg = avgSeg % 60;
+                    kpiAlisto.innerText = `${min}m ${seg}s`;
+                    if (kpiAlistoSub) kpiAlistoSub.innerText = `Basado en ${metricsValidas.length} pedidos medidos`;
+                }
+
+                // Render Map Markers
+                actualizarMarcadoresMapaAdmin();
+
                 // Render Table
                 if (pedidosData.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-dim); padding:2rem;">No hay pedidos registrados en Supabase aún.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-dim); padding:2rem;">No hay pedidos registrados en Supabase aún.</td></tr>';
                 } else {
-                    tbody.innerHTML = pedidosData.map(ord => `
-                        <tr>
-                            <td><b>#${ord.id}</b></td>
-                            <td>
-                                <b>${ord.nombre_contacto}</b>
-                                <div style="font-size:0.7rem; color:var(--text-dim);">${ord.telefono_contacto}</div>
-                            </td>
-                            <td>
-                                <span style="color:${ord.modalidad === 'DOMICILIO' ? '#60a5fa' : '#34d399'}; font-weight:700;">${ord.modalidad === 'DOMICILIO' ? '🛵 Domicilio' : '🏬 Pickup'}</span>
-                                <div style="font-size:0.7rem; color:var(--text-muted);">${ord.horario_rango}</div>
-                            </td>
-                            <td><b style="color:#34d399; font-size:0.95rem;">₡${Number(ord.total_a_pagar).toLocaleString('es-CR')}</b></td>
-                            <td><span style="font-size:0.75rem; color:var(--text-muted);">${ord.forma_pago}</span></td>
-                            <td>
-                                <span class="status-badge ${
-                                    ord.estado === 'ENTREGADO' ? 'status-done' : 
-                                    (ord.estado === 'EN_RUTA' ? 'status-ruta' : 
-                                    (ord.estado === 'EMPACADO' ? 'status-ready' : 
-                                    (ord.estado === 'EN_ALISTO' ? 'status-alisto' : 'status-pend')))
-                                }">${ord.estado}</span>
-                            </td>
-                            <td>
-                                <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
-                                    ${ord.estado === 'PENDIENTE' ? `
-                                        <button onclick="actualizarEstadoPedido('${ord.id}', 'EN_ALISTO')" style="background:#8b5cf6; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px;">
-                                            ⏱️ Iniciar Alisto
-                                        </button>
-                                    ` : (ord.estado === 'EN_ALISTO' || ord.estado === 'EMPACADO') ? `
-                                        <button onclick="actualizarEstadoPedido('${ord.id}', 'EN_RUTA')" style="background:#f97316; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px;">
-                                            🛵 Despachar (En Ruta)
-                                        </button>
-                                    ` : ord.estado === 'EN_RUTA' ? `
-                                        <button onclick="actualizarEstadoPedido('${ord.id}', 'ENTREGADO')" style="background:#10b981; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px;">
-                                            ✅ Entregado
-                                        </button>
-                                    ` : ''}
-                                    <select onchange="actualizarEstadoPedido('${ord.id}', this.value)" style="background:var(--bg-input); border:1px solid var(--border-subtle); color:#fff; padding:4px 6px; border-radius:6px; font-size:0.72rem; outline:none;">
-                                        <option value="PENDIENTE" ${ord.estado === 'PENDIENTE' ? 'selected' : ''}>🟡 Pendiente</option>
-                                        <option value="EN_ALISTO" ${ord.estado === 'EN_ALISTO' ? 'selected' : ''}>🟣 En Alisto</option>
-                                        <option value="EMPACADO" ${ord.estado === 'EMPACADO' ? 'selected' : ''}>🔵 Empacado</option>
-                                        <option value="EN_RUTA" ${ord.estado === 'EN_RUTA' ? 'selected' : ''}>🟠 En Ruta</option>
-                                        <option value="ENTREGADO" ${ord.estado === 'ENTREGADO' ? 'selected' : ''}>🟢 Entregado</option>
-                                    </select>
+                    tbody.innerHTML = pedidosData.map(ord => {
+                        const horaLlegada = new Date(ord.creado_en).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const minTranscurridos = Math.max(0, Math.floor((Date.now() - new Date(ord.creado_en)) / 60000));
+                        const metric = (ord.metricas_picking && ord.metricas_picking.length > 0) ? ord.metricas_picking[0] : null;
+
+                        // Alisto string
+                        let alistoStr = '—';
+                        if (metric && metric.duracion_segundos > 0) {
+                            alistoStr = `<span style="color:#34d399; font-weight:800;">⏱️ ${Math.floor(metric.duracion_segundos / 60)}m ${metric.duracion_segundos % 60}s</span>`;
+                        } else if (ord.estado === 'EN_ALISTO') {
+                            const mActivo = metric?.hora_inicio ? Math.max(1, Math.floor((Date.now() - new Date(metric.hora_inicio)) / 60000)) : 1;
+                            alistoStr = `<span style="color:#c084fc; font-weight:800;">🟣 En alisto (~${mActivo}m)</span>`;
+                        }
+
+                        // Entrega string
+                        let entregaStr = '—';
+                        if (ord.estado === 'EN_RUTA') {
+                            const mRuta = metric?.hora_fin ? Math.max(1, Math.floor((Date.now() - new Date(metric.hora_fin)) / 60000)) : 1;
+                            entregaStr = `<span style="color:#fb923c; font-weight:800;">🛵 En calle (~${mRuta}m)</span>`;
+                        } else if (ord.estado === 'ENTREGADO') {
+                            entregaStr = `<span style="color:#34d399; font-weight:700;">✅ Entregado</span>`;
+                        }
+
+                        // Ubicación repartidor
+                        let ubicacionHtml = '<span style="color:var(--text-dim); font-size:0.72rem;">🏢 En Bodega</span>';
+                        if (ord.rutas_gps_envio && ord.rutas_gps_envio.length > 0) {
+                            const ult = ord.rutas_gps_envio[ord.rutas_gps_envio.length - 1];
+                            const lat = Number(ult.latitud_actual);
+                            const lng = Number(ult.longitud_actual);
+                            ubicacionHtml = `
+                                <div>
+                                    <div style="font-size:0.72rem; color:#34d399; font-weight:700;">📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}</div>
+                                    <button onclick="enfocarEnMapa(${lat}, ${lng}, '${ord.id}')" style="background:#1e3a8a; border:1px solid #3b82f6; color:#93c5fd; font-size:0.68rem; font-weight:700; padding:2px 7px; border-radius:4px; cursor:pointer; margin-top:3px;">
+                                        🗺️ Ver en Mapa
+                                    </button>
                                 </div>
-                            </td>
-                        </tr>
-                    `).join('');
+                            `;
+                        }
+
+                        return `
+                            <tr>
+                                <td>
+                                    <b>#${ord.id}</b>
+                                    <div style="font-weight:700; color:#fff; margin-top:2px;">${ord.nombre_contacto}</div>
+                                    <a href="https://api.whatsapp.com/send?phone=${ord.telefono_contacto}" target="_blank" style="font-size:0.7rem; color:#25D366; text-decoration:none;">💬 ${ord.telefono_contacto}</a>
+                                </td>
+                                <td>
+                                    <div style="font-weight:800; color:#fff;">${horaLlegada}</div>
+                                    <div style="font-size:0.72rem; color:#60a5fa; font-weight:700;">⏳ hace ${minTranscurridos} min</div>
+                                </td>
+                                <td>
+                                    <span style="color:${ord.modalidad === 'DOMICILIO' ? '#60a5fa' : '#34d399'}; font-weight:800;">${ord.modalidad === 'DOMICILIO' ? '🛵 Domicilio' : '🏬 Pickup'}</span>
+                                    <div style="font-size:0.7rem; color:var(--text-muted);">${ord.horario_rango}</div>
+                                </td>
+                                <td>
+                                    <div style="font-size:0.75rem;">Alisto: ${alistoStr}</div>
+                                    <div style="font-size:0.75rem; margin-top:3px;">Ruta: ${entregaStr}</div>
+                                </td>
+                                <td>
+                                    ${ubicacionHtml}
+                                </td>
+                                <td>
+                                    <div style="color:#34d399; font-size:0.95rem; font-weight:900;">₡${Number(ord.total_a_pagar).toLocaleString('es-CR')}</div>
+                                    <div style="font-size:0.7rem; color:var(--text-muted);">${ord.forma_pago}</div>
+                                </td>
+                                <td>
+                                    <span class="status-badge ${
+                                        ord.estado === 'ENTREGADO' ? 'status-done' : 
+                                        (ord.estado === 'EN_RUTA' ? 'status-ruta' : 
+                                        (ord.estado === 'EMPACADO' ? 'status-ready' : 
+                                        (ord.estado === 'EN_ALISTO' ? 'status-alisto' : 'status-pend')))
+                                    }">${ord.estado}</span>
+                                </td>
+                                <td>
+                                    <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+                                        ${ord.estado === 'PENDIENTE' ? `
+                                            <button onclick="actualizarEstadoPedido('${ord.id}', 'EN_ALISTO')" style="background:#8b5cf6; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer;">
+                                                ⏱️ Iniciar Alisto
+                                            </button>
+                                        ` : (ord.estado === 'EN_ALISTO' || ord.estado === 'EMPACADO') ? `
+                                            <button onclick="actualizarEstadoPedido('${ord.id}', 'EN_RUTA')" style="background:#f97316; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer;">
+                                                🛵 Despachar (En Ruta)
+                                            </button>
+                                        ` : ord.estado === 'EN_RUTA' ? `
+                                            <button onclick="actualizarEstadoPedido('${ord.id}', 'ENTREGADO')" style="background:#10b981; border:none; color:#fff; font-weight:800; font-size:0.72rem; padding:5px 9px; border-radius:6px; cursor:pointer;">
+                                                ✅ Entregado
+                                            </button>
+                                        ` : ''}
+                                        <select onchange="actualizarEstadoPedido('${ord.id}', this.value)" style="background:var(--bg-input); border:1px solid var(--border-subtle); color:#fff; padding:4px 6px; border-radius:6px; font-size:0.72rem; outline:none;">
+                                            <option value="PENDIENTE" ${ord.estado === 'PENDIENTE' ? 'selected' : ''}>🟡 Pendiente</option>
+                                            <option value="EN_ALISTO" ${ord.estado === 'EN_ALISTO' ? 'selected' : ''}>🟣 En Alisto</option>
+                                            <option value="EMPACADO" ${ord.estado === 'EMPACADO' ? 'selected' : ''}>🔵 Empacado</option>
+                                            <option value="EN_RUTA" ${ord.estado === 'EN_RUTA' ? 'selected' : ''}>🟠 En Ruta</option>
+                                            <option value="ENTREGADO" ${ord.estado === 'ENTREGADO' ? 'selected' : ''}>🟢 Entregado</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
                 }
 
                 // Render / Update Charts
@@ -686,26 +877,33 @@
             renderProductosAdmin(filt);
         }
 
-        // Supabase Realtime Listener for New Orders
+        // Supabase Realtime Listener for Orders, Live Fleet Routes & Picking Metrics
         function iniciarRealtimeAdmin() {
             if (!supabaseClient) return;
             try {
                 supabaseClient
-                    .channel('admin:pedidos')
+                    .channel('admin:fleet_sync')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, payload => {
-                        console.log('⚡ Cambio en pedidos:', payload);
                         if (payload.eventType === 'INSERT') {
                             sonarAlertaNuevoPedido();
-                            alert(`🔔 ¡Nuevo Pedido #${payload.new.id} de ${payload.new.nombre_contacto}!`);
                         }
+                        cargarPedidosAdmin();
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'rutas_gps_envio' }, payload => {
+                        cargarPedidosAdmin();
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'metricas_picking' }, payload => {
                         cargarPedidosAdmin();
                     })
                     .subscribe();
             } catch(e) { console.warn(e); }
         }
 
-        cargarPedidosAdmin();
-        iniciarRealtimeAdmin();
+        window.onload = () => {
+            initAdminMap();
+            cargarPedidosAdmin();
+            iniciarRealtimeAdmin();
+        };
     </script>
 </body>
 </html>

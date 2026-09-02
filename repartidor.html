@@ -285,7 +285,7 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('pedidos')
-                    .select('*')
+                    .select('*, detalles_pedido(*, productos(nombre))')
                     .eq('modalidad', 'DOMICILIO')
                     .neq('estado', 'ENTREGADO')
                     .order('creado_en', { ascending: false });
@@ -319,7 +319,7 @@
                                 ${ord.notas_cliente ? `<div style="color:#fef08a; margin-top:2px;">📝 <b>Notas:</b> ${ord.notas_cliente}</div>` : ''}
                             </div>
 
-                            <div style="display:flex; gap:0.4rem;">
+                            <div style="display:flex; gap:0.4rem; margin-bottom: 0.75rem;">
                                 <a href="https://waze.com/ul?q=${encodedAddr}&navigate=yes" target="_blank" class="btn-nav-action btn-waze" style="text-decoration:none;">
                                     🚗 Waze
                                 </a>
@@ -330,6 +330,20 @@
                                     💬 Contactar
                                 </a>
                             </div>
+
+                            ${ord.detalles_pedido && ord.detalles_pedido.length > 0 ? `
+                                <div style="margin-bottom: 0.75rem; border-top:1px solid var(--border-subtle); padding-top:0.75rem;">
+                                    <div style="font-size:0.8rem; font-weight:800; color:var(--text-white); margin-bottom:0.5rem;">📦 Ítems del Pedido (Checklist)</div>
+                                    ${ord.detalles_pedido.map(item => `
+                                        <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-input); padding:0.5rem 0.75rem; border-radius:8px; margin-bottom:0.3rem;">
+                                            <div style="font-size:0.78rem; color:${item.listo ? '#34d399' : 'var(--text-white)'}; text-decoration:${item.listo ? 'line-through' : 'none'};">
+                                                <b>${item.cantidad}x</b> ${item.productos?.nombre || 'Producto'}
+                                            </div>
+                                            <input type="checkbox" ${item.listo ? 'checked' : ''} onchange="toggleItemListo('${item.id}', this.checked)" style="width:18px; height:18px; accent-color:var(--brand-green); cursor:pointer;">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
 
                             <button class="btn-delivered" onclick="marcarEntregado('${ord.id}')">
                                 ✓ Confirmar Pedido Entregado
@@ -343,27 +357,41 @@
         }
 
         async function marcarEntregado(orderId) {
+            if (!supabaseClient) return;
             if (!confirm(`¿Confirmas que el pedido #${orderId} fue entregado exitosamente?`)) return;
-            if (supabaseClient) {
+            try {
                 await supabaseClient.from('pedidos').update({ estado: 'ENTREGADO' }).eq('id', orderId);
-            }
-            alert(`🎉 ¡Pedido #${orderId} marcado como entregado!`);
-            cargarPedidosRepartidor();
+                // Also update local ui
+                alert(`✅ ¡Pedido #${orderId} marcado como entregado!`);
+                cargarPedidosRepartidor();
+            } catch(e) { console.warn(e); }
         }
 
-        function iniciarRealtimeRepartidor() {
+        async function toggleItemListo(detalleId, listoState) {
+            if (!supabaseClient) return;
+            try {
+                await supabaseClient.from('detalles_pedido').update({ listo: listoState }).eq('id', detalleId);
+            } catch(e) { console.error('Error actualizando item:', e); }
+        }
+
+        function initRealtime() {
             if (!supabaseClient) return;
             supabaseClient
                 .channel('repartidor:pedidos')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, payload => {
                     cargarPedidosRepartidor();
                 })
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'detalles_pedido' }, payload => {
+                    cargarPedidosRepartidor();
+                })
                 .subscribe();
         }
 
-        initMap();
-        cargarPedidosRepartidor();
-        iniciarRealtimeRepartidor();
+        window.onload = () => {
+            initMap();
+            cargarPedidosRepartidor();
+            initRealtime();
+        };
     </script>
 </body>
 </html>

@@ -1132,6 +1132,14 @@
                     </div>
                 </div>
 
+                <!-- Live Checklist Details -->
+                <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.85rem; margin-top: 0.75rem;">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-white); margin-bottom: 0.5rem;">📦 Checklist de tu Pedido</div>
+                    <div id="clientOrderChecklistContainer">
+                        <div style="font-size: 0.75rem; color: var(--text-dim);">Esperando confirmación...</div>
+                    </div>
+                </div>
+
                 <!-- Driver Mode Switch & Live GPS Broadcast -->
                 <div style="margin-top: 0.85rem; padding: 0.85rem; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 14px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
@@ -6966,7 +6974,21 @@
                 try {
                     const { error } = await supabaseClient.from('pedidos').insert([ultimoPedidoCreado]);
                     if (error) console.warn('Supabase insert note:', error.message);
-                    else console.log('✅ Pedido insertado en Supabase Cloud con éxito');
+                    else {
+                        console.log('✅ Pedido insertado en Supabase Cloud con éxito');
+                        const orderItems = items.map(id => {
+                            const p = productos.find(x => x.id === id);
+                            return {
+                                pedido_id: orderId,
+                                producto_id: id,
+                                cantidad: carrito[id],
+                                precio_unitario: p.precio,
+                                subtotal_linea: p.precio * carrito[id],
+                                listo: false
+                            };
+                        });
+                        await supabaseClient.from('detalles_pedido').insert(orderItems);
+                    }
                 } catch(e) { console.warn(e); }
             }
 
@@ -6987,6 +7009,32 @@
         function verRastreoDesdeExito() {
             document.getElementById('orderSuccessModal').style.display = 'none';
             switchView('GPS', document.querySelectorAll('.module-tab-btn')[3]);
+            renderClientChecklist();
+        }
+
+        async function renderClientChecklist() {
+            if (!supabaseClient || !ultimoPedidoCreado) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('detalles_pedido')
+                    .select('*, productos(nombre)')
+                    .eq('pedido_id', ultimoPedidoCreado.id);
+                if (error) return;
+                
+                const container = document.getElementById('clientOrderChecklistContainer');
+                if (container && data) {
+                    container.innerHTML = data.map(item => `
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); border:1px solid var(--border-subtle); padding:0.5rem 0.75rem; border-radius:8px; margin-bottom:0.3rem;">
+                            <div style="font-size:0.78rem; color:${item.listo ? '#34d399' : 'var(--text-white)'}; text-decoration:${item.listo ? 'line-through' : 'none'};">
+                                <b>${item.cantidad}x</b> ${item.productos?.nombre || 'Producto'}
+                            </div>
+                            <div style="color:${item.listo ? '#34d399' : 'var(--text-dim)'}; font-size:1rem;">
+                                ${item.listo ? '✓' : '○'}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch(e) {}
         }
 
         function cerrarModalExito() {
@@ -7299,6 +7347,11 @@
                         reproducirCampanaNuevoPedido();
                         mostrarToast('🔔 ¡Nuevo pedido entrante: ' + payload.new.nombre_contacto + '!');
                         cargarPedidosSupabase();
+                    })
+                    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'detalles_pedido' }, payload => {
+                        if (ultimoPedidoCreado && payload.new.pedido_id === ultimoPedidoCreado.id) {
+                            renderClientChecklist();
+                        }
                     })
                     .subscribe();
             } catch(e) {
